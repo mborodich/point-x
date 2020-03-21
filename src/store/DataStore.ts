@@ -1,8 +1,8 @@
-import { observable, computed, onBecomeObserved, onBecomeUnobserved } from 'mobx';
+import { action, observable, computed, } from 'mobx';
 import { DataHolder } from './DataHolder';
 import taskListMockData from './MOCK_DATA.json';
 
-const FETCH_INTERVAL = 3000;
+const FETCH_LIMIT = 5;
 
 export interface ITaskDataResponseItem {
   caption: string;
@@ -14,28 +14,19 @@ export interface ITaskDataResponseItem {
 
 export default class DataStore {
   @observable public items: DataHolder<ITaskDataResponseItem[]> = new DataHolder();
-  private _interval: number = 0;
+  @observable isLoading: boolean = false;
+  @observable private _page: number = 1;
 
   constructor() {
-    // only start data fetching if items is actually used!
-    onBecomeObserved(this, "items", this._resume)
-    onBecomeUnobserved(this, "items", this._suspend)
-  }
-
-  private _resume = () => {
-    console.log(`Resuming`);
-    this._interval = setInterval(() => this._fetchTaskList(), FETCH_INTERVAL);
-  }
-
-  private _suspend = () => {
-    console.log(`Suspending`);
-    clearInterval(this._interval);
+    this._fetchTaskList();
   }
 
   private _fetchTaskList = () => {
-    console.log(`Fetching the data`);
+    const offset = this._page * FETCH_LIMIT;
     try {
-      this.items.setData(taskListMockData || []);
+      const prevousData = this.items.d || [];
+      const newData = taskListMockData.slice(offset - FETCH_LIMIT, offset)
+      this.items.setData(prevousData.concat(newData));
     } catch (e) {
       this.items.setError({msg: e});
       console.log('Error fetching the data:' + e);
@@ -44,6 +35,19 @@ export default class DataStore {
 
   @computed
   public get taskList() {
-    return this.items.isReady() && this.items.d;
+    return this.items.d;
+  }
+
+  @action
+  public loadMore() {
+    this._page++;
+    this._fetchTaskList();
+  }
+
+  @action
+  public refresh() {
+    this._page = 1;
+    this.items.setData([]);
+    this._fetchTaskList();
   }
 };

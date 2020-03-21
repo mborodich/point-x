@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { ScreenTaskList } from '../components/ScreenTaskList';
+import { ScreenTaskItem } from '../components/ScreenTaskItem';
 
 const Stack = createStackNavigator();
 
@@ -12,7 +13,7 @@ export function AppScreens() {
         component={ScreenTaskList}
         options={{title: 'TaskList'}}
       />
-      <Stack.Screen name="TaskView" component={ScreenTaskList}/>
+      <Stack.Screen name="TaskItem" component={ScreenTaskItem}/>
     </Stack.Navigator>
   );
 }

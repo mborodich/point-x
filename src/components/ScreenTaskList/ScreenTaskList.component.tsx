@@ -56,7 +56,7 @@ export class ScreenTaskList extends React.Component<dataStoreProps> {
 
       return (
         <TouchableOpacity onPress={() => navigation.navigate('TaskItem', {item})}>
-          <Card wrapperStyle={{opacity: isDone ? 0.2 : 1}}>
+          <Card containerStyle={{backgroundColor: isDone ? '#c0c0c0': undefined}}>
             <View style={{flex: 1, flexDirection: 'row'}}>
               <Image
                 source={{uri: item.image}}
@@ -69,10 +69,9 @@ export class ScreenTaskList extends React.Component<dataStoreProps> {
               </View>
             </View>
             <Text>{item.description}</Text>
-            {this._doneTasks}
             <Button
               title="Mark task as done"
-              type="clear"
+              type={!isDone ? 'outline' : undefined}
               onPress={() => {
                 this._doneTasks.set(item.value, !isDone);
                 Request({taskId: item.value, status: isDone});

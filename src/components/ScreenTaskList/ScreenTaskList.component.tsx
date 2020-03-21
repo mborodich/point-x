@@ -2,14 +2,16 @@ import { observable, ObservableMap } from 'mobx';
 import { inject, observer } from 'mobx-react';
 
 import React from 'react';
-import { View, ActivityIndicator, FlatList, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, FlatList, TouchableOpacity, View } from 'react-native';
 import { Button, Card, Image, Text } from 'react-native-elements';
 import DataStore, { ITaskDataResponseItem } from '../../store/DataStore';
+import Request from '../Actions/Request';
 
 interface dataStoreProps {
   dataStore: DataStore;
   navigation: { navigate: any; }
 }
+
 console.disableYellowBox = true;
 
 @inject('dataStore')
@@ -72,7 +74,8 @@ export class ScreenTaskList extends React.Component<dataStoreProps> {
               title="Mark task as done"
               type="clear"
               onPress={() => {
-                this._doneTasks.set(item.value, !isDone)
+                this._doneTasks.set(item.value, !isDone);
+                Request({taskId: item.value, status: isDone});
               }}
             />
           </Card>

@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		00E356F31AD99517003FC87E /* MulberrsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MulberrsTests.m */; };
+		00E356F31AD99517003FC87E /* PointXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PointXTests.m */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -15,11 +15,11 @@
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2DCD954D1E0B4F2C00145EB5 /* MulberrsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* MulberrsTests.m */; };
-		AE87B7F9844D638C782BEF94 /* libPods-Mulberrs-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053477BC8E3547B012CDBE0D /* libPods-Mulberrs-tvOS.a */; };
-		D1D7DBDF5D774A550C9EF440 /* libPods-MulberrsTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5819F3D0BDBC50C01EFFF7 /* libPods-MulberrsTests.a */; };
-		D1E39D1557B8031785FBC5A1 /* libPods-Mulberrs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D2398CFCC0ABDDACF6CFB0 /* libPods-Mulberrs.a */; };
-		F5D9C037589C5EA51DF947D1 /* libPods-Mulberrs-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E36C0C1FA525A0573F1CD7 /* libPods-Mulberrs-tvOSTests.a */; };
+		2DCD954D1E0B4F2C00145EB5 /* PointXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PointXTests.m */; };
+		AE87B7F9844D638C782BEF94 /* libPods-PointX-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053477BC8E3547B012CDBE0D /* libPods-PointX-tvOS.a */; };
+		D1D7DBDF5D774A550C9EF440 /* libPods-PointXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5819F3D0BDBC50C01EFFF7 /* libPods-PointXTests.a */; };
+		D1E39D1557B8031785FBC5A1 /* libPods-PointX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D2398CFCC0ABDDACF6CFB0 /* libPods-PointX.a */; };
+		F5D9C037589C5EA51DF947D1 /* libPods-PointX-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E36C0C1FA525A0573F1CD7 /* libPods-PointX-tvOSTests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,43 +28,43 @@
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 13B07F861A680F5B00A75B9A;
-			remoteInfo = Mulberrs;
+			remoteInfo = PointX;
 		};
 		2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 83CBB9F71A601CBA00E9B192 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 2D02E47A1E0B4A5D006451C7;
-			remoteInfo = "Mulberrs-tvOS";
+			remoteInfo = "PointX-tvOS";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
-		00E356EE1AD99517003FC87E /* MulberrsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MulberrsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		00E356EE1AD99517003FC87E /* PointXTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PointXTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		00E356F21AD99517003FC87E /* MulberrsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MulberrsTests.m; sourceTree = "<group>"; };
-		0507C195DA2E63A50C087EED /* Pods-Mulberrs-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Mulberrs-tvOS/Pods-Mulberrs-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		053477BC8E3547B012CDBE0D /* libPods-Mulberrs-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mulberrs-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		07558BF8BEF08EAE783CE865 /* Pods-MulberrsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MulberrsTests.debug.xcconfig"; path = "Target Support Files/Pods-MulberrsTests/Pods-MulberrsTests.debug.xcconfig"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* Mulberrs.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mulberrs.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Mulberrs/AppDelegate.h; sourceTree = "<group>"; };
-		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Mulberrs/AppDelegate.m; sourceTree = "<group>"; };
+		00E356F21AD99517003FC87E /* PointXTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PointXTests.m; sourceTree = "<group>"; };
+		0507C195DA2E63A50C087EED /* Pods-PointX-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-PointX-tvOS/Pods-PointX-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		053477BC8E3547B012CDBE0D /* libPods-PointX-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointX-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		07558BF8BEF08EAE783CE865 /* Pods-PointXTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointXTests.debug.xcconfig"; path = "Target Support Files/Pods-PointXTests/Pods-PointXTests.debug.xcconfig"; sourceTree = "<group>"; };
+		13B07F961A680F5B00A75B9A /* PointX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PointX.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PointX/AppDelegate.h; sourceTree = "<group>"; };
+		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PointX/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Mulberrs/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Mulberrs/Info.plist; sourceTree = "<group>"; };
-		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Mulberrs/main.m; sourceTree = "<group>"; };
-		2710DDF08ED6BC2474D77D09 /* Pods-Mulberrs-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Mulberrs-tvOSTests/Pods-Mulberrs-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		2D02E47B1E0B4A5D006451C7 /* Mulberrs-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mulberrs-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2D02E4901E0B4A5D006451C7 /* Mulberrs-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Mulberrs-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		482B0961096D24B5FF2681E8 /* Pods-Mulberrs-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Mulberrs-tvOS/Pods-Mulberrs-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		5B880DD72201E8F135B4E9FF /* Pods-Mulberrs.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs.debug.xcconfig"; path = "Target Support Files/Pods-Mulberrs/Pods-Mulberrs.debug.xcconfig"; sourceTree = "<group>"; };
-		60CE3FFBD5B61F9DF4A8DCA9 /* Pods-Mulberrs-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Mulberrs-tvOSTests/Pods-Mulberrs-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		64BEEF78CB05DBA5977F0622 /* Pods-MulberrsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MulberrsTests.release.xcconfig"; path = "Target Support Files/Pods-MulberrsTests/Pods-MulberrsTests.release.xcconfig"; sourceTree = "<group>"; };
-		6F23F76F0B02317E7287063A /* Pods-Mulberrs.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Mulberrs.release.xcconfig"; path = "Target Support Files/Pods-Mulberrs/Pods-Mulberrs.release.xcconfig"; sourceTree = "<group>"; };
-		B5D2398CFCC0ABDDACF6CFB0 /* libPods-Mulberrs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mulberrs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CA5819F3D0BDBC50C01EFFF7 /* libPods-MulberrsTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MulberrsTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2E36C0C1FA525A0573F1CD7 /* libPods-Mulberrs-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Mulberrs-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = PointX/Images.xcassets; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = PointX/Info.plist; sourceTree = "<group>"; };
+		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = PointX/main.m; sourceTree = "<group>"; };
+		2710DDF08ED6BC2474D77D09 /* Pods-PointX-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-PointX-tvOSTests/Pods-PointX-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		2D02E47B1E0B4A5D006451C7 /* PointX-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PointX-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D02E4901E0B4A5D006451C7 /* PointX-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PointX-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		482B0961096D24B5FF2681E8 /* Pods-PointX-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX-tvOS.release.xcconfig"; path = "Target Support Files/Pods-PointX-tvOS/Pods-PointX-tvOS.release.xcconfig"; sourceTree = "<group>"; };
+		5B880DD72201E8F135B4E9FF /* Pods-PointX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX.debug.xcconfig"; path = "Target Support Files/Pods-PointX/Pods-PointX.debug.xcconfig"; sourceTree = "<group>"; };
+		60CE3FFBD5B61F9DF4A8DCA9 /* Pods-PointX-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-PointX-tvOSTests/Pods-PointX-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
+		64BEEF78CB05DBA5977F0622 /* Pods-PointXTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointXTests.release.xcconfig"; path = "Target Support Files/Pods-PointXTests/Pods-PointXTests.release.xcconfig"; sourceTree = "<group>"; };
+		6F23F76F0B02317E7287063A /* Pods-PointX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PointX.release.xcconfig"; path = "Target Support Files/Pods-PointX/Pods-PointX.release.xcconfig"; sourceTree = "<group>"; };
+		B5D2398CFCC0ABDDACF6CFB0 /* libPods-PointX.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointX.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA5819F3D0BDBC50C01EFFF7 /* libPods-PointXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2E36C0C1FA525A0573F1CD7 /* libPods-PointX-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointX-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1D7DBDF5D774A550C9EF440 /* libPods-MulberrsTests.a in Frameworks */,
+				D1D7DBDF5D774A550C9EF440 /* libPods-PointXTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -82,7 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1E39D1557B8031785FBC5A1 /* libPods-Mulberrs.a in Frameworks */,
+				D1E39D1557B8031785FBC5A1 /* libPods-PointX.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AE87B7F9844D638C782BEF94 /* libPods-Mulberrs-tvOS.a in Frameworks */,
+				AE87B7F9844D638C782BEF94 /* libPods-PointX-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -98,20 +98,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F5D9C037589C5EA51DF947D1 /* libPods-Mulberrs-tvOSTests.a in Frameworks */,
+				F5D9C037589C5EA51DF947D1 /* libPods-PointX-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		00E356EF1AD99517003FC87E /* MulberrsTests */ = {
+		00E356EF1AD99517003FC87E /* PointXTests */ = {
 			isa = PBXGroup;
 			children = (
-				00E356F21AD99517003FC87E /* MulberrsTests.m */,
+				00E356F21AD99517003FC87E /* PointXTests.m */,
 				00E356F01AD99517003FC87E /* Supporting Files */,
 			);
-			path = MulberrsTests;
+			path = PointXTests;
 			sourceTree = "<group>";
 		};
 		00E356F01AD99517003FC87E /* Supporting Files */ = {
@@ -122,7 +122,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		13B07FAE1A68108700A75B9A /* Mulberrs */ = {
+		13B07FAE1A68108700A75B9A /* PointX */ = {
 			isa = PBXGroup;
 			children = (
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
@@ -133,7 +133,7 @@
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
-			name = Mulberrs;
+			name = PointX;
 			sourceTree = "<group>";
 		};
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
@@ -141,10 +141,10 @@
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				B5D2398CFCC0ABDDACF6CFB0 /* libPods-Mulberrs.a */,
-				053477BC8E3547B012CDBE0D /* libPods-Mulberrs-tvOS.a */,
-				E2E36C0C1FA525A0573F1CD7 /* libPods-Mulberrs-tvOSTests.a */,
-				CA5819F3D0BDBC50C01EFFF7 /* libPods-MulberrsTests.a */,
+				B5D2398CFCC0ABDDACF6CFB0 /* libPods-PointX.a */,
+				053477BC8E3547B012CDBE0D /* libPods-PointX-tvOS.a */,
+				E2E36C0C1FA525A0573F1CD7 /* libPods-PointX-tvOSTests.a */,
+				CA5819F3D0BDBC50C01EFFF7 /* libPods-PointXTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,9 +159,9 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				13B07FAE1A68108700A75B9A /* Mulberrs */,
+				13B07FAE1A68108700A75B9A /* PointX */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
-				00E356EF1AD99517003FC87E /* MulberrsTests */,
+				00E356EF1AD99517003FC87E /* PointXTests */,
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				B3462889625BCD8324389784 /* Pods */,
@@ -174,10 +174,10 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Mulberrs.app */,
-				00E356EE1AD99517003FC87E /* MulberrsTests.xctest */,
-				2D02E47B1E0B4A5D006451C7 /* Mulberrs-tvOS.app */,
-				2D02E4901E0B4A5D006451C7 /* Mulberrs-tvOSTests.xctest */,
+				13B07F961A680F5B00A75B9A /* PointX.app */,
+				00E356EE1AD99517003FC87E /* PointXTests.xctest */,
+				2D02E47B1E0B4A5D006451C7 /* PointX-tvOS.app */,
+				2D02E4901E0B4A5D006451C7 /* PointX-tvOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,14 +185,14 @@
 		B3462889625BCD8324389784 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				5B880DD72201E8F135B4E9FF /* Pods-Mulberrs.debug.xcconfig */,
-				6F23F76F0B02317E7287063A /* Pods-Mulberrs.release.xcconfig */,
-				0507C195DA2E63A50C087EED /* Pods-Mulberrs-tvOS.debug.xcconfig */,
-				482B0961096D24B5FF2681E8 /* Pods-Mulberrs-tvOS.release.xcconfig */,
-				60CE3FFBD5B61F9DF4A8DCA9 /* Pods-Mulberrs-tvOSTests.debug.xcconfig */,
-				2710DDF08ED6BC2474D77D09 /* Pods-Mulberrs-tvOSTests.release.xcconfig */,
-				07558BF8BEF08EAE783CE865 /* Pods-MulberrsTests.debug.xcconfig */,
-				64BEEF78CB05DBA5977F0622 /* Pods-MulberrsTests.release.xcconfig */,
+				5B880DD72201E8F135B4E9FF /* Pods-PointX.debug.xcconfig */,
+				6F23F76F0B02317E7287063A /* Pods-PointX.release.xcconfig */,
+				0507C195DA2E63A50C087EED /* Pods-PointX-tvOS.debug.xcconfig */,
+				482B0961096D24B5FF2681E8 /* Pods-PointX-tvOS.release.xcconfig */,
+				60CE3FFBD5B61F9DF4A8DCA9 /* Pods-PointX-tvOSTests.debug.xcconfig */,
+				2710DDF08ED6BC2474D77D09 /* Pods-PointX-tvOSTests.release.xcconfig */,
+				07558BF8BEF08EAE783CE865 /* Pods-PointXTests.debug.xcconfig */,
+				64BEEF78CB05DBA5977F0622 /* Pods-PointXTests.release.xcconfig */,
 			);
 			name = Pods;
 			path = Pods;
@@ -201,9 +201,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		00E356ED1AD99517003FC87E /* MulberrsTests */ = {
+		00E356ED1AD99517003FC87E /* PointXTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MulberrsTests" */;
+			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PointXTests" */;
 			buildPhases = (
 				FB3DB397ABF57B021B2B806E /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
@@ -215,14 +215,14 @@
 			dependencies = (
 				00E356F51AD99517003FC87E /* PBXTargetDependency */,
 			);
-			name = MulberrsTests;
-			productName = MulberrsTests;
-			productReference = 00E356EE1AD99517003FC87E /* MulberrsTests.xctest */;
+			name = PointXTests;
+			productName = PointXTests;
+			productReference = 00E356EE1AD99517003FC87E /* PointXTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		13B07F861A680F5B00A75B9A /* Mulberrs */ = {
+		13B07F861A680F5B00A75B9A /* PointX */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Mulberrs" */;
+			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PointX" */;
 			buildPhases = (
 				55A8EED451155EB80A7BABBA /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
@@ -236,14 +236,14 @@
 			);
 			dependencies = (
 			);
-			name = Mulberrs;
-			productName = Mulberrs;
-			productReference = 13B07F961A680F5B00A75B9A /* Mulberrs.app */;
+			name = PointX;
+			productName = PointX;
+			productReference = 13B07F961A680F5B00A75B9A /* PointX.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E47A1E0B4A5D006451C7 /* Mulberrs-tvOS */ = {
+		2D02E47A1E0B4A5D006451C7 /* PointX-tvOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Mulberrs-tvOS" */;
+			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PointX-tvOS" */;
 			buildPhases = (
 				1B4AF229E8229EE88D1B592B /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
@@ -256,14 +256,14 @@
 			);
 			dependencies = (
 			);
-			name = "Mulberrs-tvOS";
-			productName = "Mulberrs-tvOS";
-			productReference = 2D02E47B1E0B4A5D006451C7 /* Mulberrs-tvOS.app */;
+			name = "PointX-tvOS";
+			productName = "PointX-tvOS";
+			productReference = 2D02E47B1E0B4A5D006451C7 /* PointX-tvOS.app */;
 			productType = "com.apple.product-type.application";
 		};
-		2D02E48F1E0B4A5D006451C7 /* Mulberrs-tvOSTests */ = {
+		2D02E48F1E0B4A5D006451C7 /* PointX-tvOSTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Mulberrs-tvOSTests" */;
+			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PointX-tvOSTests" */;
 			buildPhases = (
 				3127C1E6D870BD981C48B299 /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
@@ -275,9 +275,9 @@
 			dependencies = (
 				2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */,
 			);
-			name = "Mulberrs-tvOSTests";
-			productName = "Mulberrs-tvOSTests";
-			productReference = 2D02E4901E0B4A5D006451C7 /* Mulberrs-tvOSTests.xctest */;
+			name = "PointX-tvOSTests";
+			productName = "PointX-tvOSTests";
+			productReference = 2D02E4901E0B4A5D006451C7 /* PointX-tvOSTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -304,7 +304,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Mulberrs" */;
+			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PointX" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -317,10 +317,10 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				13B07F861A680F5B00A75B9A /* Mulberrs */,
-				00E356ED1AD99517003FC87E /* MulberrsTests */,
-				2D02E47A1E0B4A5D006451C7 /* Mulberrs-tvOS */,
-				2D02E48F1E0B4A5D006451C7 /* Mulberrs-tvOSTests */,
+				13B07F861A680F5B00A75B9A /* PointX */,
+				00E356ED1AD99517003FC87E /* PointXTests */,
+				2D02E47A1E0B4A5D006451C7 /* PointX-tvOS */,
+				2D02E48F1E0B4A5D006451C7 /* PointX-tvOSTests */,
 			);
 		};
 /* End PBXProject section */
@@ -389,7 +389,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mulberrs-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PointX-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -402,7 +402,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Mulberrs/Pods-Mulberrs-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-PointX/Pods-PointX-resources.sh",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/AntDesign.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/Entypo.ttf",
 				"${PODS_ROOT}/../../node_modules/react-native-vector-icons/Fonts/EvilIcons.ttf",
@@ -441,7 +441,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Mulberrs/Pods-Mulberrs-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PointX/Pods-PointX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
@@ -473,7 +473,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mulberrs-tvOSTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PointX-tvOSTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -495,7 +495,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Mulberrs-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PointX-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -517,7 +517,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-MulberrsTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PointXTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -569,7 +569,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00E356F31AD99517003FC87E /* MulberrsTests.m in Sources */,
+				00E356F31AD99517003FC87E /* PointXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,7 +595,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2DCD954D1E0B4F2C00145EB5 /* MulberrsTests.m in Sources */,
+				2DCD954D1E0B4F2C00145EB5 /* PointXTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -604,12 +604,12 @@
 /* Begin PBXTargetDependency section */
 		00E356F51AD99517003FC87E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 13B07F861A680F5B00A75B9A /* Mulberrs */;
+			target = 13B07F861A680F5B00A75B9A /* PointX */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
 		};
 		2D02E4921E0B4A5D006451C7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 2D02E47A1E0B4A5D006451C7 /* Mulberrs-tvOS */;
+			target = 2D02E47A1E0B4A5D006451C7 /* PointX-tvOS */;
 			targetProxy = 2D02E4911E0B4A5D006451C7 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -621,7 +621,7 @@
 				13B07FB21A68108700A75B9A /* Base */,
 			);
 			name = LaunchScreen.xib;
-			path = Mulberrs;
+			path = PointX;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -629,14 +629,14 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07558BF8BEF08EAE783CE865 /* Pods-MulberrsTests.debug.xcconfig */;
+			baseConfigurationReference = 07558BF8BEF08EAE783CE865 /* Pods-PointXTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = MulberrsTests/Info.plist;
+				INFOPLIST_FILE = PointXTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -646,17 +646,17 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mulberrs.app/Mulberrs";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PointX.app/PointX";
 			};
 			name = Debug;
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 64BEEF78CB05DBA5977F0622 /* Pods-MulberrsTests.release.xcconfig */;
+			baseConfigurationReference = 64BEEF78CB05DBA5977F0622 /* Pods-PointXTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
-				INFOPLIST_FILE = MulberrsTests/Info.plist;
+				INFOPLIST_FILE = PointXTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
@@ -666,18 +666,18 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mulberrs.app/Mulberrs";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PointX.app/PointX";
 			};
 			name = Release;
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B880DD72201E8F135B4E9FF /* Pods-Mulberrs.debug.xcconfig */;
+			baseConfigurationReference = 5B880DD72201E8F135B4E9FF /* Pods-PointX.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				INFOPLIST_FILE = Mulberrs/Info.plist;
+				INFOPLIST_FILE = PointX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -685,18 +685,18 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Mulberrs;
+				PRODUCT_NAME = PointX;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6F23F76F0B02317E7287063A /* Pods-Mulberrs.release.xcconfig */;
+			baseConfigurationReference = 6F23F76F0B02317E7287063A /* Pods-PointX.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
-				INFOPLIST_FILE = Mulberrs/Info.plist;
+				INFOPLIST_FILE = PointX/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -704,14 +704,14 @@
 					"-lc++",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Mulberrs;
+				PRODUCT_NAME = PointX;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0507C195DA2E63A50C087EED /* Pods-Mulberrs-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 0507C195DA2E63A50C087EED /* Pods-PointX-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -722,14 +722,14 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Mulberrs-tvOS/Info.plist";
+				INFOPLIST_FILE = "PointX-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Mulberrs-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PointX-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -739,7 +739,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 482B0961096D24B5FF2681E8 /* Pods-Mulberrs-tvOS.release.xcconfig */;
+			baseConfigurationReference = 482B0961096D24B5FF2681E8 /* Pods-PointX-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -750,14 +750,14 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Mulberrs-tvOS/Info.plist";
+				INFOPLIST_FILE = "PointX-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Mulberrs-tvOS";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PointX-tvOS";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
 				TARGETED_DEVICE_FAMILY = 3;
@@ -767,7 +767,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 60CE3FFBD5B61F9DF4A8DCA9 /* Pods-Mulberrs-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = 60CE3FFBD5B61F9DF4A8DCA9 /* Pods-PointX-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -777,24 +777,24 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Mulberrs-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "PointX-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Mulberrs-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PointX-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mulberrs-tvOS.app/Mulberrs-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PointX-tvOS.app/PointX-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Debug;
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2710DDF08ED6BC2474D77D09 /* Pods-Mulberrs-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 2710DDF08ED6BC2474D77D09 /* Pods-PointX-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -804,17 +804,17 @@
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_NO_COMMON_BLOCKS = YES;
-				INFOPLIST_FILE = "Mulberrs-tvOSTests/Info.plist";
+				INFOPLIST_FILE = "PointX-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.Mulberrs-tvOSTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.facebook.REACT.PointX-tvOSTests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = appletvos;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Mulberrs-tvOS.app/Mulberrs-tvOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PointX-tvOS.app/PointX-tvOS";
 				TVOS_DEPLOYMENT_TARGET = 10.1;
 			};
 			name = Release;
@@ -921,7 +921,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "MulberrsTests" */ = {
+		00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "PointXTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
@@ -930,7 +930,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Mulberrs" */ = {
+		13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "PointX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
@@ -939,7 +939,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Mulberrs-tvOS" */ = {
+		2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PointX-tvOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4971E0B4A5E006451C7 /* Debug */,
@@ -948,7 +948,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Mulberrs-tvOSTests" */ = {
+		2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "PointX-tvOSTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				2D02E4991E0B4A5E006451C7 /* Debug */,
@@ -957,7 +957,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "Mulberrs" */ = {
+		83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "PointX" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,

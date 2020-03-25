@@ -1,4 +1,4 @@
-package com.mulberrs;
+package co.point-x.app;
 
 import android.app.Application;
 import android.content.Context;

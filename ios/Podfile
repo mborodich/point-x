@@ -1,8 +1,8 @@
 platform :ios, '9.0'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-target 'Mulberrs' do
-  # Pods for Mulberrs
+target 'PointX' do
+  # Pods for PointX
   pod 'FBLazyVector', :path => "../node_modules/react-native/Libraries/FBLazyVector"
   pod 'FBReactNativeSpec', :path => "../node_modules/react-native/Libraries/FBReactNativeSpec"
   pod 'RCTRequired', :path => "../node_modules/react-native/Libraries/RCTRequired"
@@ -35,7 +35,7 @@ target 'Mulberrs' do
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
-  target 'MulberrsTests' do
+  target 'PointXTests' do
     inherit! :search_paths
     # Pods for testing
   end
@@ -43,10 +43,10 @@ target 'Mulberrs' do
   use_native_modules!
 end
 
-target 'Mulberrs-tvOS' do
-  # Pods for Mulberrs-tvOS
+target 'PointX-tvOS' do
+  # Pods for PointX-tvOS
 
-  target 'Mulberrs-tvOSTests' do
+  target 'PointX-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

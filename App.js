@@ -5,6 +5,7 @@ import stores from './src/store';
 import { Provider } from 'mobx-react';
 
 const Stores = React.createContext({});
+console.disableYellowBox = true;
 
 export default class App extends React.Component {
   render() {

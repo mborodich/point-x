@@ -7,14 +7,13 @@ interface Props {
   route: { params: { item: ITaskDataResponseItem; } }
 }
 
-export class ScreenTaskItem extends React.Component<Props> {
+export class TaskItemScreen extends React.Component<Props> {
   public render() {
     const {route} = this.props;
     const item = route.params.item;
     return (
-      <Card title={item.caption} image={{uri: item.image}}>
-        <Text>Value: {item.value}</Text>
-        <Text>Decription: {item.description}</Text>
+      <Card title={item.caption} image={{uri: 'https://picsum.photos/200/200?random=1' + Math.random()}}>
+        <Text>{item.description}</Text>
       </Card>
     );
   }

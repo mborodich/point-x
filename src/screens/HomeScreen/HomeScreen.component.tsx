@@ -4,6 +4,7 @@ import { ScrollView } from 'react-native';
 import {
   Header, PricingCard, ListItem, Card,
 } from 'react-native-elements';
+import { Drizzle } from '../../shared/Drizzle';
 
 interface HomeScreenProps {
   navigation: { navigate: any };
@@ -11,6 +12,7 @@ interface HomeScreenProps {
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
+@Drizzle
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
   public render() {

@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Icon } from 'react-native-elements'
+import { Icon } from 'react-native-elements';
+import { View } from 'react-native';
 import { HomeScreen } from '../screens/HomeScreen';
 import { TasksScreen } from '../screens/TasksScreen';
 import { PartnerScreen } from '../screens/PartnerScreen';
 import { RewardsScreen } from '../screens/RewardsScreen';
-import { View } from 'react-native';
 import { TaskItemScreen } from '../screens/TaskItemScreen';
+import { RewardItemScreen } from '../screens/RewardItemScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,20 +29,45 @@ const TasksStack = function () {
         name="TaskItemScreen"
         component={TaskItemScreen}
       />
+      <Stack.Screen
+        name="RewardItemScreen"
+        component={RewardItemScreen}
+      />
     </Stack.Navigator>
-  )
-}
+  );
+};
+
+const RewardsStack = function () {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="RewardsScreen"
+        component={RewardsScreen}
+      />
+      <Stack.Screen
+        name="RewardItemScreen"
+        component={RewardItemScreen}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export function AppScreens() {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      tabBarOptions={{
+        activeTintColor: TAB_COLOR,
+      }}
+      lazy={false}
+      backBehavior={'history'}
+    >
       <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: () => (
-            <Icon name='home' type='font-awesome' color={TAB_COLOR}/>
+            <Icon name="home" type="font-awesome" color={TAB_COLOR} />
           ),
         }}
       />
@@ -51,27 +77,27 @@ export function AppScreens() {
         options={{
           tabBarLabel: 'Tasks',
           tabBarIcon: () => (
-            <Icon name='list' type='font-awesome' color={TAB_COLOR}/>
+            <Icon name="list" type="font-awesome" color={TAB_COLOR} />
           ),
         }}
       />
       <Tab.Screen
         name="RewardsScreen"
-        component={RewardsScreen}
+        component={RewardsStack}
         options={{
           tabBarLabel: 'Rewards',
           tabBarIcon: () => (
-            <Icon name='gift' type='font-awesome' color={TAB_COLOR}/>
+            <Icon name="gift" type="font-awesome" color={TAB_COLOR} />
           ),
         }}
       />
       <Tab.Screen
         name="ProfileScreen"
-        component={() => <View/>}
+        component={() => <View />}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: () => (
-            <Icon name='user-circle' type='font-awesome' color={TAB_COLOR}/>
+            <Icon name="user-circle" type="font-awesome" color={TAB_COLOR} />
           ),
         }}
       />

@@ -4,9 +4,9 @@ import { ScrollView } from 'react-native';
 import {
   Header, PricingCard, ListItem, Card,
 } from 'react-native-elements';
-import { Drizzle } from '../../shared/Drizzle';
+import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 
-interface HomeScreenProps {
+interface HomeScreenProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
@@ -16,6 +16,10 @@ const LIST = Array.from({ length: 5 }, (_, i) => i);
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
   public render() {
+    const { props } = this;
+    const { navigation, drizzle, drizzleState } = props;
+
+    console.log('drizzle', drizzleState);
     return (
       <ScrollView>
         <Header

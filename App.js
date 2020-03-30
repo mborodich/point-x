@@ -4,28 +4,13 @@ import { AppScreens } from './src/navigation';
 import stores from './src/store';
 import { Provider } from 'mobx-react';
 import { Drizzle, generateStore } from 'drizzle';
-import PointX from 'pointxio-contracts/build/contracts/PointX';
-import { DrizzleContext } from 'drizzle-react';
+import { DrizzleContext } from '@drizzle/react-plugin';
+import drizzleOptions from './drizzleOptions';
 
 console.disableYellowBox = true;
 
-
-const options = {
-  contracts: [PointX],
-  polls: {
-    accounts: 10000,
-    blocks: 10000,
-  },
-  web3: {
-    fallback: {
-      type: 'ws',
-      url: 'ws://127.0.0.1:7545',
-    },
-  },
-};
-
-const drizzleStore = generateStore({ drizzleOptions: options });
-const drizzle = new Drizzle(options, drizzleStore);
+const drizzleStore = generateStore({ drizzleOptions });
+const drizzle = new Drizzle(drizzleOptions, drizzleStore);
 
 export default class App extends React.Component {
   render() {

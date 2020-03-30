@@ -4,7 +4,7 @@ import { Card, Text, Button } from 'react-native-elements';
 interface Props {
 }
 
-export class RewardItemScreen extends React.Component<Props> {
+export class RewardItemScreen extends React.PureComponent<Props> {
   public render() {
     return (
       <Card title="Reward info" image={{ uri: `https://picsum.photos/200/200?random=1${Math.random()}` }}>

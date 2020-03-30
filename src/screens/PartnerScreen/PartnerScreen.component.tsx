@@ -8,7 +8,7 @@ interface PartnerScreenProps {
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
-export class PartnerScreen extends React.Component<PartnerScreenProps> {
+export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
   public render() {
     const { navigation } = this.props;
 

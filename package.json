@@ -10,6 +10,7 @@
     "lint": "eslint --ext=jsx,ts,tsx src"
   },
   "dependencies": {
+    "@drizzle/react-components": "^1.5.1",
     "@drizzle/react-plugin": "^1.5.1",
     "@drizzle/store": "^1.5.1",
     "@react-native-community/masked-view": "^0.1.7",
@@ -25,6 +26,7 @@
     "mobx-react": "^6.1.8",
     "node-libs-react-native": "^1.0.3",
     "pointxio-contracts": "github:pointxio/contracts",
+    "pointxio-partner-client-old": "github:pointxio/partner-client-old",
     "react": "16.9.0",
     "react-native": "0.61.5",
     "react-native-elements": "^1.2.7",

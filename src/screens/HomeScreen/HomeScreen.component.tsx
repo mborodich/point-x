@@ -15,11 +15,23 @@ const LIST = Array.from({ length: 5 }, (_, i) => i);
 @Drizzle
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
+  private tasksCount: any;
+
+  componentDidMount(): void {
+    const { props } = this;
+    const { contractsCall } = props;
+    this.tasksCount = contractsCall.getTasksCount.cacheCall();
+  }
+
+
   public render() {
     const { props } = this;
-    const { navigation, drizzle, drizzleState } = props;
+    const { navigation, contractsGet } = props;
+    let tasksCount = [];
+    if (this.tasksCount) {
+      tasksCount = contractsGet.getTasksCount[this.tasksCount];
+    }
 
-    console.log('drizzle', drizzleState);
     return (
       <ScrollView>
         <Header
@@ -29,11 +41,12 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
             backgroundColor: '#00aced',
           }}
         />
+
         <PricingCard
           color="#c0c0c0"
-          title="Account details"
-          price="$1000"
-          info={['Address: X01212']}
+          title="Contracts count:"
+          price={tasksCount.value}
+          info={['Some details']}
           button={{ title: 'Check it out', icon: '' }}
         />
         <Card

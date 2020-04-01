@@ -6,6 +6,8 @@ export interface DrizzleProps {
   drizzle: Dz;
   drizzleState: DrizzleState;
   initialized: boolean;
+  contractsCall: any;
+  contractsGet: any;
 }
 
 function drizzleDecoratorFactory<TProps extends DrizzleProps>(
@@ -17,7 +19,19 @@ function drizzleDecoratorFactory<TProps extends DrizzleProps>(
         <DrizzleContext.Consumer>
           {(contextProps: any) => {
             const { drizzle, drizzleState, initialized } = contextProps;
-            return <WrappedComponent drizzle={drizzle} drizzleState={drizzleState} initialized={initialized} {...this.props} />;
+            if (!initialized) {
+              return false;
+            }
+            return (
+              <WrappedComponent
+                drizzle={drizzle}
+                contractsCall={drizzle.contracts.PointX.methods}
+                contractsGet={drizzleState.contracts.PointX}
+                drizzleState={drizzleState}
+                initialized={initialized}
+                {...this.props}
+              />
+            );
           }}
         </DrizzleContext.Consumer>
       );

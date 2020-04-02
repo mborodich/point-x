@@ -19,8 +19,9 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
 
   componentDidMount(): void {
     const { props } = this;
-    const { contractsCall } = props;
+    const { contractsCall, drizzle } = props;
     this.tasksCount = contractsCall.getTasksCount.cacheCall();
+    //drizzle.callMethod('getTasksCount').then(e => console.log('Tasks count: ', e));
   }
 
 

@@ -11,7 +11,6 @@ export interface IPointX {
   getTasksCount: IContractValue;
 }
 
-
 export class PointX {
   private drizzle: any;
   private contracts: any;

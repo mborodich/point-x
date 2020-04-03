@@ -5,6 +5,7 @@ import {
   Header, PricingCard, ListItem, Card,
 } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { DrizzleStore } from '../../store/Drizzle.store';
 
 interface HomeScreenProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -17,11 +18,17 @@ const LIST = Array.from({ length: 5 }, (_, i) => i);
 export class HomeScreen extends React.Component<HomeScreenProps> {
   private tasksCount: any;
 
-  componentDidMount(): void {
+  async componentDidMount(): void {
     const { props } = this;
-    const { contractsCall, drizzle } = props;
+    const { contractsCall, contractsGet, drizzle } = props;
+    const DS = new DrizzleStore(drizzle);
+
+
     this.tasksCount = contractsCall.getTasksCount.cacheCall();
-    //drizzle.callMethod('getTasksCount').then(e => console.log('Tasks count: ', e));
+    //DS.callMethod('getTasksCount').then((e) => console.log('Tasks count: ', e));
+
+    const taskLen = await contractsCall.getTasksCount().call();
+    console.log(taskLen);
   }
 
 

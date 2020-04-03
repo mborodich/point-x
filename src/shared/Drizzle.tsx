@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle as Dz, DrizzleState } from 'drizzle';
+import { ActivityIndicator } from "react-native";
 
 export interface DrizzleProps {
   drizzle: Dz;
@@ -20,7 +21,7 @@ function drizzleDecoratorFactory<TProps extends DrizzleProps>(
           {(contextProps: any) => {
             const { drizzle, drizzleState, initialized } = contextProps;
             if (!initialized) {
-              return false;
+              return <ActivityIndicator size="large" />;
             }
             return (
               <WrappedComponent

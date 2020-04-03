@@ -59,24 +59,27 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             </Text>
           </View>
           {!this.state.carouselViewed && <IntroSlider onDone={this.onCarouselDone}/>}
-          <View style={styles.buttonContainer}>
-            <Input placeholder='Test placeholder' style={{ justifyContent: 'center' }} placeholderTextColor='#BDBDBD' containerStyle={styles.input}/>
-            <Button buttonStyle={styles.button} title='Next' />
-          </View>
-          <View style={styles.noteContainer}>
-            <Text style={styles.noteCaption}>
-              Note:
-            </Text>
-            <Text style={styles.noteContent}>
-              To fully use the application, you need to pass KYC/AML verification.
-            </Text>
-          </View>
         </SafeAreaView>
       </LinearGradient>
     );
   }
 
 }
+
+/**
+ <View style={styles.buttonContainer}>
+ <Input placeholder='Test placeholder' style={{ justifyContent: 'center' }} placeholderTextColor='#BDBDBD' containerStyle={styles.input}/>
+ <Button buttonStyle={styles.button} title='Next' />
+ </View>
+ <View style={styles.noteContainer}>
+ <Text style={styles.noteCaption}>
+ Note:
+ </Text>
+ <Text style={styles.noteContent}>
+ To fully use the application, you need to pass KYC/AML verification.
+ </Text>
+ </View>
+ */
 
 
 const styles = StyleSheet.create({

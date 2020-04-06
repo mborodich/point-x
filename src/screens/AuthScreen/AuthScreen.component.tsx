@@ -3,19 +3,23 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 
-import { Input, Button } from 'react-native-elements';
-
+import AuthWizard from './AuthWizard.component';
 import IntroSlider from './IntroSlider.component';
+import Input from './Input.component';
+import Button from './Button.component';
 
-import { View, StyleSheet, Text, Image, SafeAreaView } from "react-native";
+import { StyleSheet, View, Text, TouchableOpacity, Dimensions } from "react-native";
 
 interface LoginScreenProps {
   navigation: { navigate: any }
 }
 
+
 export class LoginScreen extends React.Component<LoginScreenProps> {
   state = {
-    carouselViewed: false
+    carouselViewed: false,
+    initialIndex: 0,
+    active: 'reg'
   };
 
   async onCarouselDone() : Promise<void> {
@@ -39,102 +43,124 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     SplashScreen.hide();
   }
 
-  public render() {
-    const logo = require('../../assets/img/logo.png');
 
+  setFlow(v: 'reg' | 'log') : void {
+    this.setState({
+      active: v
+    });
+  }
+
+  renderNote() : JSX.Element {
     return (
-      <LinearGradient
-        colors={[ "#383838", "#131313" ]}
-        style={{ flex: 1 }}
-      >
-        <SafeAreaView style={styles.container}>
-          <View style={styles.logoContainer}>
-            <Image source={logo} style={styles.logo} />
-            <Text style={styles.captionText}>
-              PointX {'\n'}
-              <Text style={styles.rewardText}>
-                Blockchain Rewards{'\n'}
-                Program
-              </Text>
-            </Text>
-          </View>
-          {!this.state.carouselViewed && <IntroSlider onDone={this.onCarouselDone}/>}
-        </SafeAreaView>
-      </LinearGradient>
+      <View style={styles.noteContainer}>
+        <Text style={styles.noteCaption}>
+          Note:
+        </Text>
+        <Text style={styles.noteContent}>
+          To fully use the application, you need to pass KYC/AML verification.
+        </Text>
+      </View>
     );
   }
 
-}
+  renderSignUp() : JSX.Element {
+    return (
+      <React.Fragment>
+        <AuthWizard.Step
+          childrenStyle={styles.stepContainer}
+        >
+          <Input placeholder="Phone Number"/>
+          <Button title="Next" style={{ marginTop: 40 }} />
+          {this.renderNote()}
+          <View style={{ marginTop: 32 }}>
+            <TouchableOpacity onPress={() => this.setFlow('log')}>
+              <Text style={styles.flowSwitcher}>
+                Log in
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </AuthWizard.Step>
+        <AuthWizard.Step header={false}>
+          <Text style={{ fontSize: 16, lineHeight: 19, textAlign: 'center' }}>Code sent to number{'\n'} +371 2 6624068</Text>
+          <Input style={{ marginTop: 35 }} placeholder="SMS-Code"/>
+          <Button style={{ marginTop: 40 }} title="Resend 00:59"/>
+        </AuthWizard.Step>
+        <AuthWizard.Step header={false}>
+          <Text>Create New Account</Text>
+          <Input style={{ marginTop: 40 }} placeholder="Nickname" />
+          <Input style={{ marginTop: 40 }} placeholder="PIN Number" />
+          <Button style={{ marginTop: 40 }} title="Login" />
+        </AuthWizard.Step>
+      </React.Fragment>
+    );
+  }
 
-/**
- <View style={styles.buttonContainer}>
- <Input placeholder='Test placeholder' style={{ justifyContent: 'center' }} placeholderTextColor='#BDBDBD' containerStyle={styles.input}/>
- <Button buttonStyle={styles.button} title='Next' />
- </View>
- <View style={styles.noteContainer}>
- <Text style={styles.noteCaption}>
- Note:
- </Text>
- <Text style={styles.noteContent}>
- To fully use the application, you need to pass KYC/AML verification.
- </Text>
- </View>
- */
+  renderLogin() : JSX.Element {
+    return (
+      <React.Fragment>
+        <AuthWizard.Step
+          childrenStyle={styles.stepContainer}
+        >
+          <Input placeholder="Mnemonics"/>
+          <Button title="Sign In" style={{ marginTop: 40 }} />
+          {this.renderNote()}
+          <View style={{ marginTop: 32 }}>
+            <TouchableOpacity  onPress={() => this.setFlow('reg')}>
+              <Text style={styles.flowSwitcher}>
+                Registration
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </AuthWizard.Step>
+      </React.Fragment>
+    );
+  }
+
+
+  public render() {
+    return (
+      <LinearGradient
+        colors={[ "#383838", "#131313" ]}
+        style={styles.rootContainer}
+      >
+        <AuthWizard>
+          <AuthWizard.Step>
+            <IntroSlider onDone={this.onCarouselDone} />
+          </AuthWizard.Step>
+          { this.state.active === 'reg' ? this.renderSignUp() : this.renderLogin() }
+        </AuthWizard>
+      </LinearGradient>
+    );
+  }
+}
 
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column'
+  rootContainer: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    paddingVertical: 10,
+    paddingHorizontal: 24,
   },
-  logoContainer: {
-    paddingLeft: 15,
+  stepContainer: {
     position: 'relative',
-    top: 85,
-    left: 5,
-    height: 185
-  },
-  buttonContainer: {
-    top: 100,
-    height: 180,
-    alignItems: 'center'
+    top: 350
   },
   noteContainer: {
-
-  },
-  captionText: {
-    fontFamily: 'Helvetica',
-    fontStyle: 'normal',
-    fontWeight: 'bold',
-    color: '#ffffff',
-    fontSize: 30,
-    lineHeight: 28,
-    paddingTop: 15
+    marginTop: 16
   },
   noteCaption: {
     color: '#2F80ED',
-
+  },
+  flowSwitcher: {
+    color: '#2F80ED',
+    textAlign: 'center',
+    fontSize: 17,
+    fontStyle: 'normal',
+    fontWeight: 'normal'
   },
   noteContent: {
+    marginTop: 15,
     color: 'rgba(255, 255, 255, 0.5);'
   },
-  rewardText: {
-    fontWeight: '400',
-    fontSize: 26,
-    color: '#ffffff',
-  },
-  logo: {
-    width: 67,
-    height: 80
-  },
-  input: {
-    width: 390,
-    justifyContent: 'center'
-  },
-  button: {
-    backgroundColor: '#FF375F',
-    width: 330,
-    height: 48,
-    borderRadius: 8
-  }
 });

@@ -2,55 +2,49 @@ import React from 'react';
 import {View} from 'react-native';
 
 import AuthStep from './AuthStep.component';
-import {TProps as StepProps} from "./AuthStep.component";
 
 type TProps = {
-
+  children: JSX.Element[],
+  initialIndex?: number
 };
 
-type TState = {
-  index: number;
-};
+const AuthWizard = (props: TProps) => {
+  const [state, setState] = React.useState({
+    index: props.initialIndex || 0
+  });
 
-class AuthWizard extends React.PureComponent<TProps> {
-  static Step = (props : StepProps) : JSX.Element => <AuthStep {...props} />;
-
-  state : TState = {
-    index: 0
-  };
-
-  getChildsLength() : number {
-    const children = this.props && this.props.children as JSX.Element[];
+  const getChildsLen = React.useCallback(() => {
+    const children = props && props.children;
     return children && children.length;
-  }
+  }, [props.children]);
 
-  _nextStep = () : void => {
-    const length = this.getChildsLength();
-    if (length && this.state.index !== length - 1) {
-      this.setState((prevState : TState) => ({
+
+  const _nextStep = React.useCallback(() => {
+    const len = getChildsLen();
+    if (len && state.index !== len - 1) {
+      setState((prevState) => ({
         index: prevState.index + 1
       }));
     }
-  };
+  }, [state.index]);
 
-  public render() {
-    return (
-      <View>
-        {React.Children.map(this.props.children, (el, index) => {
-          if (index === this.state.index) {
-            return React.cloneElement(el as JSX.Element, {
-              currentIndex: this.state.index,
-              nextStep: this._nextStep,
-              isLast: this.state.index === this.getChildsLength() - 1
-            });
-          }
-          return ;
-        })}
-      </View>
-    );
-  }
-}
+  return (
+    <View style={{flex: 1}}>
+      {React.Children.map(props.children, (el, index) => {
+        console.log(el, index);
+        if (index === state.index) {
+          return React.cloneElement(el as JSX.Element, {
+            currentIndex: state.index,
+            nextStep: _nextStep,
+            isLast: state.index === getChildsLen() - 1
+          });
+        }
+        return ;
+      })}
+    </View>
+  );
+};
 
-
+AuthWizard.Step = AuthStep;
 
 export default AuthWizard;

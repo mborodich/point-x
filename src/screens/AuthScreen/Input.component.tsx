@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {Input, InputProps} from 'react-native-elements';
 
 interface TProps extends InputProps {
-  // onChangeValue: () => void; // todo:
 }
 
 const Input_ = (props: TProps) => {
@@ -14,6 +13,10 @@ const Input_ = (props: TProps) => {
         ...styles.rootInputContainer,
         ...containerStyle as object
       }}
+      inputStyle={{
+        color: '#BDBDBD'
+      }}
+      placeholderTextColor="#BDBDBD"
       {...rest}
     />
   );
@@ -22,8 +25,9 @@ const Input_ = (props: TProps) => {
 
 const styles = StyleSheet.create({
   rootInputContainer: {
-    width: 390,
-    justifyContent: 'center'
+    width: 355,
+    // position: 'relative',
+    // left: 20
   }
 });
 

@@ -35,7 +35,7 @@ const Button_ = (props: TProps) => {
 const styles = StyleSheet.create({
   rootButtonStyle: {
     backgroundColor: '#FF375F',
-    width: 330,
+    width: 350,
     height: 48,
     borderRadius: 8
   },

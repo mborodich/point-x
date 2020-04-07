@@ -6,7 +6,7 @@ interface TProps extends InputProps {
 }
 
 const Input_ = (props: TProps) => {
-  const { containerStyle, ...rest } = props;
+  const { containerStyle, inputStyle, ...rest } = props;
   return (
     <Input
       containerStyle={{
@@ -14,7 +14,8 @@ const Input_ = (props: TProps) => {
         ...containerStyle as object
       }}
       inputStyle={{
-        color: '#BDBDBD'
+        color: '#BDBDBD',
+        ...inputStyle as object
       }}
       placeholderTextColor="#BDBDBD"
       {...rest}
@@ -25,7 +26,7 @@ const Input_ = (props: TProps) => {
 
 const styles = StyleSheet.create({
   rootInputContainer: {
-    width: 355,
+    width: '101%', // have to add, idk why this input is incorrectly sized in RN
     // position: 'relative',
     // left: 20
   }

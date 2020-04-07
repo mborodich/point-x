@@ -3,29 +3,24 @@ import {Button, ButtonProps} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
 
-interface TProps extends ButtonProps {
-  buttonStyle?: object;
-  containerStyle?: object;
-  titleStyle?: object;
-}
+interface TProps extends ButtonProps {}
 
 const Button_ = (props: TProps) => {
-  const {
-    buttonStyle = {},
-    containerStyle = {},
-    titleStyle = {}
-  } = props;
   return (
     <Button
       buttonStyle={{
         ...styles.rootButtonStyle,
-        ...buttonStyle
+        ...props.buttonStyle as object
       }}
       titleStyle={{
         ...styles.rootTitleStyle,
-        ...titleStyle
+        ...props.titleStyle as object
       }}
-      containerStyle={containerStyle}
+      disabledStyle={{
+        ...styles.rootDisabledStyle,
+        ...props.disabledStyle as object
+      }}
+      containerStyle={props.containerStyle}
       title={props.title}
       {...props}
     />
@@ -41,7 +36,14 @@ const styles = StyleSheet.create({
   },
   rootTitleStyle: {
     color: '#ffffff',
-    fontWeight: '600'
+    fontWeight: '600',
+    fontStyle: 'normal',
+    fontSize: 16,
+    lineHeight: 18,
+  },
+  rootDisabledStyle: {
+    opacity: 0.3,
+    backgroundColor: '#FF375F'
   }
 });
 

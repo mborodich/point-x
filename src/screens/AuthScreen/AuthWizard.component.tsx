@@ -5,38 +5,38 @@ import AuthStep from './AuthStep.component';
 
 type TProps = {
   children: JSX.Element[],
-  initialIndex?: number
+  initialIndex: number
 };
 
 const AuthWizard = (props: TProps) => {
-  const [state, setState] = React.useState({
-    index: props.initialIndex || 0
-  });
+  const [index_, setIndex] = React.useState(0);
+  const [prevIdx, setPrevIdx] = React.useState(0);
 
   const getChildsLen = React.useCallback(() => {
     const children = props && props.children;
     return children && children.length;
   }, [props.children]);
 
+  if (props.initialIndex !== prevIdx) {
+    setIndex(props.initialIndex);
+    setPrevIdx(props.initialIndex);
+  }
 
   const _nextStep = React.useCallback(() => {
     const len = getChildsLen();
-    if (len && state.index !== len - 1) {
-      setState((prevState) => ({
-        index: prevState.index + 1
-      }));
+    if (len && index_ !== len - 1) {
+      setIndex((prevState) => prevState + 1);
     }
-  }, [state.index]);
+  }, [index_]);
 
   return (
     <View style={{flex: 1}}>
       {React.Children.map(props.children, (el, index) => {
-        console.log(el, index);
-        if (index === state.index) {
+        if (index === index_) {
           return React.cloneElement(el as JSX.Element, {
-            currentIndex: state.index,
+            currentIndex: index_,
             nextStep: _nextStep,
-            isLast: state.index === getChildsLen() - 1
+            setIndex
           });
         }
         return ;

@@ -5,7 +5,8 @@ import {
   Header, PricingCard, ListItem, Card,
 } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { DrizzleStore } from '../../store/Drizzle.store';
+import { CardComponent } from '../../components';
+
 
 interface HomeScreenProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -16,44 +17,24 @@ const LIST = Array.from({ length: 5 }, (_, i) => i);
 @Drizzle
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
-  private tasksCount: any;
-
   async componentDidMount(): void {
     const { props } = this;
     const { contractsCall, contractsGet, drizzle } = props;
-    const DS = new DrizzleStore(drizzle);
-
-
-    this.tasksCount = contractsCall.getTasksCount.cacheCall();
-    //DS.callMethod('getTasksCount').then((e) => console.log('Tasks count: ', e));
-
-    const taskLen = await contractsCall.getTasksCount().call();
-    console.log(taskLen);
   }
 
 
   public render() {
     const { props } = this;
+
     const { navigation, contractsGet } = props;
-    let tasksCount = [];
-    if (this.tasksCount) {
-      tasksCount = contractsGet.getTasksCount[this.tasksCount];
-    }
 
     return (
       <ScrollView>
-        <Header
-          centerComponent={{ text: 'Home screen', style: { color: '#fff' } }}
-          rightComponent={{ icon: 'user-circle', type: 'font-awesome', color: '#fff' }}
-          containerStyle={{
-            backgroundColor: '#00aced',
-          }}
-        />
-
+        <CardComponent />
         <PricingCard
           color="#c0c0c0"
           title="Contracts count:"
-          price={tasksCount.value}
+          price={0}
           info={['Some details']}
           button={{ title: 'Check it out', icon: '' }}
         />

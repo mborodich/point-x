@@ -5,8 +5,8 @@ import { observer, inject } from "mobx-react";
 import {numKeyboardType} from "../../../utils/const";
 import {NewAccStore} from '../../../store/'
 
-import Input from '../Input.component';
-import Button from '../Button.component';
+import {Input} from '../../../components/';
+import {Button} from '../../../components/';
 
 type TProps = {
   newAccForm: NewAccStore;

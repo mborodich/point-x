@@ -14,12 +14,12 @@ interface HomeScreenProps extends DrizzleProps {
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
-@Drizzle
+// @Drizzle
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
   async componentDidMount(): void {
     const { props } = this;
-    const { contractsCall, contractsGet, drizzle } = props;
+    // const { contractsCall, contractsGet, drizzle } = props;
   }
 
 

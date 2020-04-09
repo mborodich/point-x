@@ -7,6 +7,10 @@
       "es6",
       "dom"
     ],
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["./*"]
+    },
     "sourceMap": true,
     "allowJs": true,
     "jsx": "preserve",

@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {Input, InputProps} from 'react-native-elements';
+import {Input as Input_, InputProps} from 'react-native-elements';
 
 interface TProps extends InputProps {
 }
 
-const Input_ = (props: TProps) => {
+export const Input = (props: TProps) => {
   const { containerStyle, inputStyle, ...rest } = props;
   return (
-    <Input
+    <Input_
       containerStyle={{
         ...styles.rootInputContainer,
         ...containerStyle as object
@@ -26,7 +26,7 @@ const Input_ = (props: TProps) => {
 
 const styles = StyleSheet.create({
   rootInputContainer: {
-    width: '101%', // have to add, idk why this input is incorrectly sized in RN
+    width: '100%', // have to add, idk why this input is incorrectly sized in RN
     // position: 'relative',
     // left: 20
   }

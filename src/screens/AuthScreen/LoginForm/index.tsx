@@ -2,8 +2,8 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import Input from '../Input.component';
-import Button from '../Button.component';
+import {Input} from '../../../components/';
+import {Button} from '../../../components/';
 import {LoginStore} from '../../../store/';
 
 type TProps = {
@@ -15,6 +15,11 @@ const behavior = Platform.OS === "ios" ? "position" : "height";
 @inject('loginForm')
 @observer
 class LoginForm extends React.PureComponent<TProps> {
+
+  componentDidMount(): void {
+    console.log(this);
+  }
+
   public render() {
     const {form, onFieldChange} = this.props.loginForm;
     return (

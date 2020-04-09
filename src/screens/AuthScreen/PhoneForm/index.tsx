@@ -14,6 +14,8 @@ type TProps = {
   phoneForm: PhoneStore;
 };
 
+const behavior = Platform.OS === "ios" ? "position" : "height";
+
 @inject('phoneForm')
 @observer
 class PhoneForm extends React.PureComponent<TProps> {
@@ -30,7 +32,7 @@ class PhoneForm extends React.PureComponent<TProps> {
     const { form: _form, onFieldChange } = this.props.phoneForm;
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : "height"}
+        behavior={behavior}
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
@@ -42,7 +44,7 @@ class PhoneForm extends React.PureComponent<TProps> {
           />
           <Button
             title="Next"
-            style={{ marginTop: 40 }}
+            style={styles.button}
             onPress={this.wrapperSubmit}
             disabled={!_form.meta.isValid}
           />
@@ -58,6 +60,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginBottom: 25
+  },
+  button: {
+    marginTop: 40
   }
 });
 

@@ -1,24 +1,28 @@
 import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
-import { observer } from "mobx-react";
-import NewAccStore from "../../../store/forms/NewAccStore";
+import { observer, inject } from "mobx-react";
+
+import {numKeyboardType} from "../../../utils/const";
+import {NewAccStore} from '../../../store/'
 
 import Input from '../Input.component';
 import Button from '../Button.component';
 
-type TProps = {};
+type TProps = {
+  newAccForm: NewAccStore;
+};
 
+const behavior = Platform.OS === "ios" ? "padding" : "height";
 
-const newAccForm = new NewAccStore();
-
+@inject('newAccForm')
 @observer
 class NewAccForm extends React.PureComponent<TProps> {
   public render() {
-    const { form, onFieldChange } = newAccForm;
+    const { form, onFieldChange } = this.props.newAccForm;
 
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={behavior}
         style={styles.container}
       >
         <Text style={styles.captionText}>
@@ -26,21 +30,21 @@ class NewAccForm extends React.PureComponent<TProps> {
         </Text>
         <Input
           placeholder={form.fields.nickname.placeholder}
-          inputContainerStyle={{ marginTop: 40 }}
+          inputContainerStyle={styles.marginTop_}
           value={form.fields.nickname.value}
           onChangeText={text => onFieldChange('nickname', text)}
           autoFocus={true}
         />
         <Input
           placeholder={form.fields.pin.placeholder}
-          inputContainerStyle={{ marginTop: 40 }}
+          inputContainerStyle={styles.marginTop_}
           value={form.fields.pin.value}
-          keyboardType={Platform.OS === "android" ? "numeric" : "number-pad"}
+          keyboardType={numKeyboardType}
           onChangeText={text => onFieldChange('pin', text)}
         />
         <Button
           title="Next"
-          style={{ marginTop: 40 }}
+          style={styles.marginTop_}
           disabled={!form.meta.isValid}
         />
       </KeyboardAvoidingView>
@@ -62,6 +66,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginBottom: 25
+  },
+  marginTop_ : {
+    marginTop: 40
   }
 });
 

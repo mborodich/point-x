@@ -10,6 +10,8 @@ type TProps = {
   loginForm: LoginStore;
 };
 
+const behavior = Platform.OS === "ios" ? "position" : "height";
+
 @inject('loginForm')
 @observer
 class LoginForm extends React.PureComponent<TProps> {
@@ -17,7 +19,7 @@ class LoginForm extends React.PureComponent<TProps> {
     const {form, onFieldChange} = this.props.loginForm;
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "position" : "height"}
+        behavior={behavior}
         contentContainerStyle={styles.contentContainer}
         style={styles.container}
       >
@@ -29,7 +31,7 @@ class LoginForm extends React.PureComponent<TProps> {
         />
         <Button
           title="Sign In"
-          style={{ marginTop: 40 }}
+          style={styles.button}
           disabled={!form.meta.isValid}
         />
       </KeyboardAvoidingView>
@@ -44,6 +46,9 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     marginBottom: 25
+  },
+  button: {
+    marginTop: 40
   }
 });
 

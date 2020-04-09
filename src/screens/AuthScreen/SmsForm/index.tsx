@@ -14,17 +14,12 @@ type TProps = {
   phoneForm: PhoneStore;
 };
 
+
+const behavior = Platform.OS === "ios" ? "padding" : "height";
+
 @inject('smsForm', 'phoneForm')
 @observer
 class SmsForm extends React.PureComponent<TProps> {
-  private countdown : NodeJS.Timeout | null = null;
-
-  state = {
-    timer: 59,
-    title: `Resend 00:59`,
-    canResend: false
-  };
-
   fieldChangeReaction(field: string, val: string) : void {
     if (val && val.length === 4) {
       this.props.smsForm.onFieldChange(field, val);
@@ -33,54 +28,31 @@ class SmsForm extends React.PureComponent<TProps> {
   }
 
   resendWrapper = async () : Promise<void> => {
-    if (this.state.canResend) {
+    if (this.props.smsForm.canResend) {
       try {
         // async stuff then start lifecycle
-        this.startLifecycle();
       } catch (error) {
         // handle error
       }
     }
   };
 
-  decrTimer = () =>
-    this.setState(({timer} : {timer: number}) => {
-      if (timer === 0 && this.countdown) {
-        clearInterval(this.countdown);
-        return { timer, title: 'Resend', canResend: true }
-      }
-      const nextTimer = timer - 1;
-      const nextTitle = nextTimer > 9 ?
-        `Resend 00:${nextTimer}` : `Resend 00:${'0' + nextTimer}`;
-      return {
-        title: nextTitle,
-        timer: nextTimer
-      };
-    });
-
-  startLifecycle = () : NodeJS.Timeout =>
-    this.countdown = setInterval(() => {
-      this.decrTimer();
-    }, 1000);
-
   componentDidMount(): void {
-    this.startLifecycle();
+    this.props.smsForm.startCountdown();
   }
 
   componentWillUnmount(): void {
-    if (this.countdown) {
-      clearInterval(this.countdown);
-    }
+    this.props.smsForm.stopCountdown();
   }
 
   public render() {
-    const { form: _form } = this.props.smsForm
-      , { title, canResend } = this.state
-      , { form: {fields: {telephone}} } = this.props.phoneForm;
+    const { form: {fields: {telephone}} } = this.props.phoneForm;
+    const { form: _form, canResend, formattedResult } = this.props.smsForm;
+    const title = canResend ? 'Resend' : 'Resend ' + formattedResult;
 
     return (
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={behavior}
         style={styles.container}
       >
         <Text style={styles.codeSentText}>
@@ -90,16 +62,16 @@ class SmsForm extends React.PureComponent<TProps> {
           placeholder={_form.fields.sms.placeholder}
           textAlignVertical="center"
           keyboardType={numKeyboardType}
-          inputStyle={{ textAlign: 'center' }}
-          inputContainerStyle={{ marginTop: 90 }}
+          inputStyle={styles.smsInput}
+          inputContainerStyle={styles.smsInputContainer_}
           onChangeText={text => this.fieldChangeReaction('sms', text)}
           autoFocus={true}
         />
         <Button
           title={title}
-          disabled={!canResend}
+          disabled={!this.props.smsForm.canResend}
           onPress={this.resendWrapper}
-          style={{ marginTop: 40 }}
+          style={styles.button}
         />
       </KeyboardAvoidingView>
     )
@@ -116,6 +88,15 @@ const styles = StyleSheet.create({
     lineHeight: 19,
     textAlign: 'center',
     color: '#ffffff'
+  },
+  smsInput: {
+    textAlign: 'center'
+  },
+  smsInputContainer_: {
+    marginTop: 90
+  },
+  button: {
+    marginTop: 40
   }
 });
 

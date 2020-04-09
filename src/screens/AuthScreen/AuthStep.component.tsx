@@ -12,11 +12,12 @@ export type TProps = {
   switchIdx?: number;
 };
 
+const logo = require('../../assets/img/logo.png');
+
 const AuthStep = (props: TProps) => {
   const { children, switchIdx, switchText, setIndex, flowSwitch = false, note = false, header = true } = props;
 
   const renderHeader = React.useCallback(() => {
-    const logo = require('../../assets/img/logo.png');
     return (
       <View style={styles.logoContainer}>
         <Image source={logo} style={styles.logo} />
@@ -43,7 +44,7 @@ const AuthStep = (props: TProps) => {
   ), [note]);
 
   const renderSwitcher = React.useCallback(() => (
-    <View style={{ marginTop: 32, marginBottom: 29 }}>
+    <View style={styles.switcherContainer}>
       <TouchableOpacity onPress={() => setIndex(switchIdx as number)}>
         <Text style={styles.flowSwitcher}>
           {switchText}
@@ -53,7 +54,7 @@ const AuthStep = (props: TProps) => {
   ), [flowSwitch]);
 
   return (
-    <SafeAreaView style={{ ...styles.container }}>
+    <SafeAreaView style={styles.container}>
       {header && renderHeader()}
       {React.cloneElement(children as JSX.Element, props)}
       {note && renderNote()}
@@ -104,6 +105,10 @@ const styles = StyleSheet.create({
     fontStyle: 'normal',
     fontWeight: 'normal',
     marginBottom: 15
+  },
+  switcherContainer: {
+    marginTop: 32,
+    marginBottom: 29
   }
 });
 

@@ -21,28 +21,16 @@ interface LoginScreenProps {
 @observer
 export class LoginScreen extends React.Component<LoginScreenProps> {
   state = {
-    carouselViewed: false,
-    initialIndex: 0,
+    initialIndex : 0
   };
 
   onCarouselDone = async () : Promise<void> => {
-    await AsyncStorage.setItem('@carouselViewed', '1');
-    this.setState({
-      carouselViewed: true
-    });
+    await AsyncStorage.setItem('@carouselViewed', true.toString());
   };
 
-  async getCarouselViewed() : Promise<boolean> {
-    const val = await AsyncStorage.getItem('@carouselViewed');
-    if (val !== null) {
-      return !!parseInt(val);
-    }
-    return false;
-  }
-
   async componentDidMount(): Promise<void> {
-    const carouselViewed = await this.getCarouselViewed();
-    this.setState({ carouselViewed, initialIndex: carouselViewed ? 1 : 0 });
+    const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
+    this.setState({ initialIndex: Boolean(carouselViewed) ? 1 : 0 });
     SplashScreen.hide();
   }
 

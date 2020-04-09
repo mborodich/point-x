@@ -20,10 +20,7 @@ type TProps = {
 };
 
 const IntroSlider = ({onDone} : TProps) => {
-
-
   const _keyExtractor = (item: TSlide) => `${item.key}`;
-
   const _renderItem = ({item}: {item: TSlide}) => {
     return (
       <View>
@@ -31,10 +28,11 @@ const IntroSlider = ({onDone} : TProps) => {
       </View>
     );
   };
+
   return (
     <View style={styles.sliderContainer}>
       <AppIntroSlider
-        keyExtractor={(item : TSlide) => item.key.toString()}
+        keyExtractor={_keyExtractor}
         renderItem={_renderItem}
         onDone={onDone}
         onSkip={onDone}

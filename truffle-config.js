@@ -1,6 +1,12 @@
 const path = require("path");
 
 module.exports = {
-  contracts_build_directory: path.join(__dirname, "/node_modules/pointxio-contracts/build/contracts"),
-  networks: {}
+  networks: {
+    develop: {
+      port: 7545,
+      network_id: "5777", // Match any network id
+      from: "0x77cBFd20156d5a3dA59aF105853B3279abf84fb8",
+      gas: 999999999
+    },
+  },
 };

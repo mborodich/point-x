@@ -1,46 +1,37 @@
 import React from 'react';
 import { FlatList, TouchableOpacity, View } from 'react-native';
 import {
-  Avatar, Badge, Button, Card, Header, ListItem, Text,
+  Avatar, Badge, Button, Card, ListItem, Text,
 } from 'react-native-elements';
-import { inject, observer } from 'mobx-react';
-import DataStore, { ITaskDataResponseItem } from '../../store/DataStore';
+import { observer } from 'mobx-react';
 
 interface RewardsScreenProps {
-  dataStore: DataStore;
   navigation: { navigate: any };
 }
 
-@inject('dataStore')
 @observer
 export class RewardsScreen extends React.Component<RewardsScreenProps> {
   public render() {
-    const { dataStore } = this.props;
-
     return (
       <FlatList
-        data={dataStore.taskList}
+        data={undefined}
         renderItem={this._renderRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
         onEndReached={this._loadMore}
-        onRefresh={this._onRefresh}
-        refreshing={dataStore.isLoading}
       />
     );
   }
 
-  private _keyExtractor = (item: ITaskDataResponseItem) => `${item.value}`;
+  private _keyExtractor = (item) => `${item.value}`;
 
   private _loadMore = () => {
-    this.props.dataStore.loadMore();
   };
 
   private _onRefresh = () => {
-    this.props.dataStore.refresh();
   };
 
-  private _renderRow = ({ item }: { item: ITaskDataResponseItem }) => {
+  private _renderRow = ({ item }: { item }) => {
     const { navigation } = this.props;
     const Item = observer(() => (
       <Card>

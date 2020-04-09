@@ -9,4 +9,4 @@ module.exports = {
       gas: 999999999
     },
   },
-}
+};

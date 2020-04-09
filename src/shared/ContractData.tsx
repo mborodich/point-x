@@ -28,17 +28,12 @@ export class ContractData extends Component<ContractDataProps, ContractDataState
     const {
       drizzle, methodArgs, contract, method, drizzleState,
     } = props;
-
     this.contracts = drizzle.contracts;
-
-    console.log('contract', contract, method);
     this.state = {
       dataKey: this.contracts[contract].methods[
         method
       ].cacheCall(),
     };
-
-    console.log('this.state', this.state);
   }
 
   // Will not fix legacy component

@@ -9,6 +9,11 @@ export class Theme {
   }
 
   @computed
+  public get white() {
+    return this.colorWrapper(colorsMap.white);
+  }
+
+  @computed
   public get title() {
     return this.colorWrapper(colorsMap.title);
   }
@@ -37,10 +42,22 @@ export class Theme {
   public get gray5() {
     return this.colorWrapper(colorsMap.gray5);
   }
+
   @computed
   public get gray6() {
     return this.colorWrapper(colorsMap.gray6);
   }
+
+  @computed
+  public get accent() {
+    return this.colorWrapper(colorsMap.accent);
+  }
+
+  @computed
+  public get accentBg() {
+    return this.backgroundWrapper(colorsMap.accent);
+  }
+
 
   private colorWrapper(color: string) {
     return { color }

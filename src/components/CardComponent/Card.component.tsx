@@ -2,14 +2,17 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import {
   Text,
+  Image
 } from 'react-native-elements';
-import QRcode from '../../assets/svg/qrcode.svg';
+
+
+const QRcode = require('../../assets/svg/qrcode.svg');
 
 export class CardComponent extends React.PureComponent {
   public render() {
     return (
       <View style={styles.container}>
-        <QRcode style={styles.qrcode} width="32" height="32" />
+        <Image style={styles.qrcode} src={QRcode} />
         <Text style={styles.title}>5.6 PNTX</Text>
         <Text style={styles.subtitle}>5.6 EURO</Text>
       </View>
@@ -29,6 +32,8 @@ const styles = StyleSheet.create({
   qrcode: {
     left: 10,
     top: 10,
+    width: 32,
+    height: 32
   },
   title: {
     marginLeft: 10,

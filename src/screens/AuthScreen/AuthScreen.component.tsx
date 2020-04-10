@@ -71,7 +71,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             note
             flowSwitch
           >
-            <LoginForm />
+            <LoginForm navigation={this.props.navigation} />
           </AuthWizard.Step>
         </AuthWizard>
       </LinearGradient>

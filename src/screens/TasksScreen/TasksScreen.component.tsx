@@ -1,25 +1,28 @@
 import { observer } from 'mobx-react';
 
 import React from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
-import {
-  Avatar, Badge, Button, Card, ListItem, Text,
-} from 'react-native-elements';
+import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Avatar, Text } from 'react-native-elements';
+import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 
-interface dataStoreProps {
+interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
+const LIST = Array.from({ length: 5 }, (_, i) => i);
+
 @observer
+@Drizzle
 export class TasksScreen extends React.Component<dataStoreProps> {
-  constructor(props) {
+  constructor(props: Readonly<dataStoreProps>) {
     super(props);
   }
 
   public render() {
+    console.log('theme', this.props.theme)
     return (
       <FlatList
-        data={undefined}
+        data={LIST}
         renderItem={this._renderRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
@@ -28,60 +31,59 @@ export class TasksScreen extends React.Component<dataStoreProps> {
     );
   }
 
-  private _keyExtractor = (item) => `${item.value}`;
+  private _keyExtractor = (_: any, index: any) => `${index}`;
 
   private _loadMore = () => {
   };
 
-  private _onRefresh = () => {
-  };
 
-  private _renderRow = ({ item }: { item }) => {
-    const { navigation } = this.props;
+  private _renderRow = () => {
+    const { navigation, theme: { color, style } } = this.props;
     const Item = observer(() => (
-      <Card>
-        <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', { item })}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View>
-              <Avatar
-                rounded
-                source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
-                size="large"
-              />
-              <Badge
-                status="success"
-                value={`${item.value}/100`}
-                containerStyle={{ position: 'absolute', top: -4, right: -15 }}
-              />
-            </View>
-            <View style={{ marginLeft: 20 }}>
-              <Text h4>{item.caption}</Text>
-              <Text>
-                {item.value}
-                {' '}
-                TOKENS (2 days left)
-              </Text>
-            </View>
-            <Button
-              title="Try it"
-              buttonStyle={[{
-                position: 'absolute', top: -4, right: -100, padding: 3, width: 60,
-              }]}
-            />
+      <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen')}>
+        <View style={styles.containerRow}>
+          <Avatar
+            rounded
+            source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
+            size="medium"
+          />
+          <View style={styles.containerRowMiddle}>
+            <Text style={[style.companyName, color.title]}>Сhoose the packaging you like</Text>
+            <Text style={[style.caption2, color.gray3]}>from the proposed options, select</Text>
           </View>
-          <Text style={{ paddingVertical: 20 }}>{item.description.substr(0, 150)}</Text>
-        </TouchableOpacity>
-        <ListItem
-          leftAvatar={{ source: { uri: `https://picsum.photos/100/100?random=1${Math.random()}` } }}
-          title="Author"
-          subtitle="subtitle"
-          chevron
-          topDivider
-          onPress={() => navigation.navigate('PartnerScreen', { item })}
-        />
-      </Card>
+          <View style={styles.containerRowRight}>
+            <Text style={[style.companyName, color.title]}>19.0</Text>
+            <Text style={[style.caption2, color.gray3]}>Starbucks</Text>
+            <Text style={[style.caption2, color.gray3]}>8 days left</Text>
+          </View>
+        </View>
+        <View style={styles.bottomDeriver} />
+      </TouchableOpacity>
     ));
 
     return <Item />;
   };
 }
+
+
+const styles = StyleSheet.create({
+  containerRow: {
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    padding: 16,
+  },
+  containerRowMiddle: {
+    flex: 1,
+    marginLeft: 10,
+    marginTop: 10
+  },
+  containerRowRight: {
+    alignItems: 'flex-end'
+  },
+  bottomDeriver: {
+    borderBottomColor: '#E0E0E0',
+    borderBottomWidth: 0.5,
+    paddingHorizontal: 16,
+    marginHorizontal: 16,
+  }
+});

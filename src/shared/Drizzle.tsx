@@ -2,6 +2,7 @@ import * as React from 'react';
 import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle as Dz, DrizzleState } from 'drizzle';
 import { ActivityIndicator } from "react-native";
+import theme from '../theme';
 
 export interface DrizzleProps {
   drizzle: Dz;
@@ -9,6 +10,7 @@ export interface DrizzleProps {
   initialized: boolean;
   contractsCall: any;
   contractsGet: any;
+  theme: any;
 }
 
 function drizzleDecoratorFactory<TProps extends DrizzleProps>(
@@ -30,6 +32,7 @@ function drizzleDecoratorFactory<TProps extends DrizzleProps>(
                 contractsGet={drizzleState.contracts.PointX}
                 drizzleState={drizzleState}
                 initialized={initialized}
+                theme={theme}
                 {...this.props}
               />
             );

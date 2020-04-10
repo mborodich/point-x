@@ -26,6 +26,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
 
   onCarouselDone = async () : Promise<void> => {
     await AsyncStorage.setItem('@carouselViewed', true.toString());
+    this.setState({ initialIndex: 1 });
   };
 
   async componentDidMount(): Promise<void> {

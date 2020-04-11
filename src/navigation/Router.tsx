@@ -76,10 +76,6 @@ const Tabs = function () {
       backBehavior={'history'}
     >
       <Tab.Screen
-        name="AuthScreen"
-        component={AuthStack}
-      />
-      <Tab.Screen
         name="HomeScreen"
         component={HomeScreen}
         options={{

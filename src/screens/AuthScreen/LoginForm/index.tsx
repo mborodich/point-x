@@ -8,6 +8,7 @@ import {LoginStore} from '../../../store/';
 
 type TProps = {
   loginForm: LoginStore;
+  navigation: { navigate: any };
 };
 
 const behavior = Platform.OS === "ios" ? "position" : "height";
@@ -15,10 +16,7 @@ const behavior = Platform.OS === "ios" ? "position" : "height";
 @inject('loginForm')
 @observer
 class LoginForm extends React.PureComponent<TProps> {
-
-  componentDidMount(): void {
-    console.log(this);
-  }
+  go = () => this.props.navigation.navigate({ name : 'Application' });
 
   public render() {
     const {form, onFieldChange} = this.props.loginForm;
@@ -38,6 +36,7 @@ class LoginForm extends React.PureComponent<TProps> {
           title="Sign In"
           style={styles.button}
           disabled={!form.meta.isValid}
+          onPress={this.go}
         />
       </KeyboardAvoidingView>
     );

@@ -1,6 +1,6 @@
 import { TextStyle } from 'react-native';
 
-const textStyles: { [key: string]: TextStyle } = {
+export const textStyles: { [key: string]: TextStyle } = {
   // ✅
   title: {
     fontFamily: 'Helvetica',
@@ -22,6 +22,13 @@ const textStyles: { [key: string]: TextStyle } = {
     fontWeight: 'normal',
     lineHeight: 14,
   },
+
+  screenHeader: {
+    fontFamily: 'Helvetica',
+    fontSize: 16,
+    fontWeight: 'normal',
+    lineHeight: 28,
+  }
 };
 
 export type TextStyles = keyof typeof textStyles;

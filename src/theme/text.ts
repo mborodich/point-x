@@ -3,21 +3,21 @@ import { TextStyle } from 'react-native';
 export const textStyles: { [key: string]: TextStyle } = {
   // ✅
   title: {
-    fontFamily: 'Helvetica',
-    fontSize: 32,
+    fontFamily: 'System',
+    fontSize: 16,
     fontWeight: 'bold',
-    lineHeight: 26,
+    lineHeight: 18,
   },
   // ✅
   companyName: {
-    fontFamily: 'SF Pro Text',
-    fontSize: 14,
+    fontFamily: 'System',
+    fontSize: 16,
     fontWeight: 'normal',
     lineHeight: 17,
   },
   // ✅
-  caption1: {
-    fontFamily: 'SF Pro Text',
+  caption2: {
+    fontFamily: 'System',
     fontSize: 12,
     fontWeight: 'normal',
     lineHeight: 14,
@@ -32,3 +32,4 @@ export const textStyles: { [key: string]: TextStyle } = {
 };
 
 export type TextStyles = keyof typeof textStyles;
+export type TextStylesMap = { [textName in TextStyles]: string };

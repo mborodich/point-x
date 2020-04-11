@@ -33,6 +33,10 @@ const TasksStack = function () {
       <Stack.Screen
         name="TasksScreen"
         component={TasksScreen}
+        options={{
+          title: "Tasks",
+          cardStyle: { backgroundColor: 'white' },
+        }}
       />
       <Stack.Screen
         name="PartnerScreen"
@@ -120,7 +124,7 @@ const Tabs = function () {
 };
 
 
-export function AppScreens () {
+export function AppScreens() {
   return (
     <Stack.Navigator headerMode="none">
       <Stack.Screen

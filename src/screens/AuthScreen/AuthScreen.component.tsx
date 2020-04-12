@@ -63,7 +63,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             header={false}
             flowSwitch={false}
           >
-            <NewAccForm />
+            <NewAccForm navigation={this.props.navigation} />
           </AuthWizard.Step>
           <AuthWizard.Step
             switchText="Registration"

@@ -2,11 +2,9 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import {numKeyboardType} from "../../../utils/const";
-import {NewAccStore} from '../../../store/'
-
-import {Input} from '../../../components/';
-import {Button} from '../../../components/';
+import {numKeyboardType} from "@app/utils/const";
+import {NewAccStore} from '@app/store/'
+import {Input, Button} from '@app/components/';
 
 type TProps = {
   newAccForm: NewAccStore;

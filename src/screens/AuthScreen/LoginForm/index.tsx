@@ -2,9 +2,8 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import {Input} from '../../../components/';
-import {Button} from '../../../components/';
-import {LoginStore} from '../../../store/';
+import {Input, Button} from '@app/components/';
+import {LoginStore} from '@app/store/';
 
 type TProps = {
   loginForm: LoginStore;

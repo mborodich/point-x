@@ -1,11 +1,9 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { ScrollView, View, StyleSheet } from 'react-native';
-import {
-  PricingCard, ListItem, Card, Text
-} from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { CardComponent, Header } from '../../components';
+import { ListItem, Text } from 'react-native-elements';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import { CardComponent, Header } from '@app/components';
 
 
 interface HomeScreenProps extends DrizzleProps {
@@ -27,20 +25,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
       <ScrollView style={styles.rootContainer}>
         <Header />
         <CardComponent />
-        {/*<PricingCard*/}
-        {/*  color="#c0c0c0"*/}
-        {/*  title="Contracts count:"*/}
-        {/*  price={0}*/}
-        {/*  info={['Some details']}*/}
-        {/*  button={{ title: 'Check it out', icon: '' }}*/}
-        {/*/>*/}
         <Text style={styles.historyTitle}>History</Text>
-        {/*<Card*/}
-        {/*  title="History"*/}
-        {/*  titleStyle={styles.historyTitle}*/}
-        {/*  containerStyle={{ padding: 0 }}*/}
-        {/*  dividerStyle={{ backgroundColor: '#fff' }}*/}
-        {/*>*/}
           {
             LIST.map((_, i) => (
               <ListItem

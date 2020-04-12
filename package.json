@@ -9,6 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint --ext=jsx,ts,tsx src",
+    "linkk": "react-native link",
+    "unlinkk": "react-native unlink",
     "rpc": "ganache-cli --port 7545 --networkId 5777 --gasLimit 99999999 --gasPrice 0x01 --mnemonic \"dust turn excite exercise space light now divert idle include bird arrow\"",
     "migrate": "rm -rf contracts-build && truffle migrate"
   },

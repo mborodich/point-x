@@ -12,7 +12,7 @@ export type TProps = {
   switchIdx?: number;
 };
 
-const logo = require('../../assets/img/logo.png');
+const logo = require('@app/assets/img/logo.png');
 
 const AuthStep = (props: TProps) => {
   const { children, switchIdx, switchText, setIndex, flowSwitch = false, note = false, header = true } = props;

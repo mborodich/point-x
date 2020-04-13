@@ -39,6 +39,11 @@ export class Theme {
   }
 
   @computed
+  public get gray4bg() {
+    return this.backgroundWrapper(colorsMap.gray4);
+  }
+
+  @computed
   public get gray5() {
     return this.colorWrapper(colorsMap.gray5);
   }

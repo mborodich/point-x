@@ -19,7 +19,6 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   }
 
   public render() {
-    console.log('theme', this.props.theme)
     return (
       <FlatList
         data={LIST}

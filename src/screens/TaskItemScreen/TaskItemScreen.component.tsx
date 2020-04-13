@@ -1,15 +1,22 @@
+import { observer } from 'mobx-react';
 import React from 'react';
-import { Avatar, Tile, Text } from 'react-native-elements';
+import { Tile, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { ScrollView, View, StyleSheet } from 'react-native';
+import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
+import { action, observable } from 'mobx';
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
 @Drizzle
+@observer
 export class TaskItemScreen extends React.Component<DrizzleProps> {
   static navigationOptions = { tabBarVisible: false }
-
+  private _totalSteps: number = 4;
+  @observable private _activeItem: number = 0;
+  @observable private _activeStep: number = 1;
+  @observable private _selected: number[] = [];
+  @observable private _isComplete: boolean = false;
 
   public render() {
     const { theme: { color, style, colorsMap } } = this.props;
@@ -47,38 +54,83 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
             <Text style={[style.title, color.title, { flex: 1 }]}>
               Lorem ipsum dolor sit amet? Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod temp ?
             </Text>
-            <Avatar
-              rounded
-              source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
-              size="medium"
-            />
+            <Text style={[style.title, color.title]}>
+              {this._activeStep}/{this._totalSteps}
+            </Text>
           </View>
-
-          {
-            LIST.map(() => (
-              this.taskQuestionItem()
-            ))
-          }
+          {!this._isComplete ? this._renderItems() : (
+            <View style={styles.containerTitle}><Text>Done</Text></View>
+          )}
         </View>
-        <View style={[styles.button, color.accentBg]}>
-          <Text style={[style.companyName, color.white]}>
-            Publish
-          </Text>
+
+        <View style={{ position: 'absolute', bottom: 20, width: '100%' }}>
+          {!this._isComplete && this._activeStep > 1 && (
+            <TouchableOpacity onPress={this._back}>
+              <Text style={[style.companyName, color.gray2, { margin: 20 }]}>
+                {'← back'}
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {!this._isComplete && (
+            <TouchableOpacity onPress={this._selectAnswer}>
+              <View style={[styles.button, color.accentBg, { ...!this._activeItem ? { opacity: 0.2 } : undefined }]}>
+                <Text style={[style.companyName, color.white]}>
+                  {this._totalSteps === this._activeStep ? 'Publish' : 'Next'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          )}
         </View>
       </ScrollView>
     );
   }
 
-  private taskQuestionItem() {
-    const { theme: { color, style } } = this.props;
 
+  private _renderItems = () => {
+    const offset = this._activeStep * 5 - 5;
+    return LIST.map((_, i) => (
+      this.taskQuestionItem(i + 1 + offset)
+    ))
+  };
+
+  private taskQuestionItem(id: number) {
+    const { theme: { color, style } } = this.props;
+    const isActive = this._activeItem === id;
     return (
-      <View style={styles.taskQuestion}>
-        <Text style={[style.companyName, color.gray2]}>
-          Lorem ipsum dolor sit amet
-      </Text>
-      </View>
+      <TouchableOpacity onPress={() => this._setActive(id)}>
+        <View style={[styles.taskQuestion, { ...isActive ? color.gray4bg : undefined }]}>
+          <Text style={[style.companyName, { ...isActive ? color.white : color.gray2 }]}>
+            {id}: Lorem ipsum dolor sit amet
+        </Text>
+        </View>
+      </TouchableOpacity >
     );
+  }
+
+  @action.bound
+  private _selectAnswer() {
+    if (this._activeItem) {
+      this._selected.push(this._activeItem)
+      this._activeItem = 0;
+      if (this._totalSteps === this._activeStep) {
+        this._isComplete = true;
+      } else {
+        this._activeStep++;
+      }
+    }
+  }
+
+  @action.bound
+  private _setActive(id: number) {
+    this._activeItem = id
+  }
+
+  @action.bound
+  private _back() {
+    this._activeItem = 0;
+    this._activeStep--;
+    this._selected.pop();
   }
 };
 

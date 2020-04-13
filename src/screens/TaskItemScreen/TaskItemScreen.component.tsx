@@ -2,6 +2,7 @@ import React from 'react';
 import { Avatar, Tile, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 import { ScrollView, View, StyleSheet } from 'react-native';
+import * as Progress from 'react-native-progress';
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
@@ -11,17 +12,32 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   public render() {
-    const { theme: { color, style } } = this.props;
+    const { theme: { color, style, colorsMap } } = this.props;
     return (
       <ScrollView>
         <View style={{ marginBottom: 60 }}>
           <View style={styles.container}>
             <Text style={[style.title, color.title]}>
               Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod tem  / 85 Symb
-          </Text>
+            </Text>
             <Text style={[style.caption2, color.gray2, { marginTop: 5 }]}>
               Stdescription. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim  venia / 150 Symbarbucks
-          </Text>
+            </Text>
+
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+              <View style={{ marginTop: 30 }}>
+                <View style={{ flex: 1, flexDirection: 'row', width: 150, justifyContent: 'space-between' }}>
+                  <Text style={[style.caption2, color.title]}>Left 50</Text>
+                  <Text style={[style.caption2, color.title]}>Total 100</Text>
+                </View>
+                <Progress.Bar progress={0.5} width={150} color={colorsMap.accent} />
+              </View>
+              <View>
+                <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price 25</Text>
+                <Text style={[style.companyName, color.gray3, { textAlign: 'right' }]}>2 Days Ago</Text>
+              </View>
+            </View>
+
           </View>
           <Tile
             imageSrc={{ uri: `https://picsum.photos/250/200?random=1${Math.random()}` }}
@@ -30,7 +46,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
           <View style={styles.containerTitle}>
             <Text style={[style.title, color.title, { flex: 1 }]}>
               Lorem ipsum dolor sit amet? Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod temp ?
-          </Text>
+            </Text>
             <Avatar
               rounded
               source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}

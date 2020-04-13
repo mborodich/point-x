@@ -70,5 +70,6 @@ export class Theme {
 
 export default {
   color: new Theme,
-  style: textStyles
+  style: textStyles,
+  colorsMap
 }

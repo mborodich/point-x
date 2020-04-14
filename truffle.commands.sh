@@ -3,7 +3,7 @@
 ## sudo npm install -g truffle
 
 cd node_modules/pointxio-contracts/
-npm i
+## npm i
 truffle compile
 truffle migrate
-truffle test
+## truffle test

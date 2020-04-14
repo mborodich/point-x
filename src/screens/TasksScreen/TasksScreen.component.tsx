@@ -3,7 +3,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 
 interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -19,7 +19,6 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   }
 
   public render() {
-    console.log('theme', this.props.theme)
     return (
       <FlatList
         data={LIST}
@@ -35,7 +34,6 @@ export class TasksScreen extends React.Component<dataStoreProps> {
 
   private _loadMore = () => {
   };
-
 
   private _renderRow = () => {
     const { navigation, theme: { color, style } } = this.props;

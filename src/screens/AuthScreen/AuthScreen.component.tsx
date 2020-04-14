@@ -32,6 +32,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     this.setState({ initialIndex: Boolean(carouselViewed) ? 1 : 0 });
+
     SplashScreen.hide();
   }
 

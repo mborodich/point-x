@@ -5,6 +5,7 @@ import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { action, observable } from 'mobx';
+import CircularProgress from '../../components/CircularProgress/CircularProgress.component'
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
@@ -14,7 +15,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   static navigationOptions = { tabBarVisible: false }
   private _totalSteps: number = 4;
   @observable private _activeItem: number = 0;
-  @observable private _activeStep: number = 1;
+  @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
   @observable private _isComplete: boolean = false;
 
@@ -54,9 +55,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
             <Text style={[style.title, color.title, { flex: 1 }]}>
               Lorem ipsum dolor sit amet? Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod temp ?
             </Text>
-            <Text style={[style.title, color.title]}>
-              {this._activeStep}/{this._totalSteps}
-            </Text>
+            <CircularProgress activeStep={this._activeStep} totalSteps={this._totalSteps} isComplete={this._isComplete} />
           </View>
           {!this._isComplete ? this._renderItems() : (
             <View style={styles.containerTitle}><Text>Done</Text></View>
@@ -64,7 +63,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
         </View>
 
         <View style={{ position: 'absolute', bottom: 20, width: '100%' }}>
-          {!this._isComplete && this._activeStep > 1 && (
+          {!this._isComplete && this._activeStep > 0 && (
             <TouchableOpacity onPress={this._back}>
               <Text style={[style.companyName, color.gray2, { margin: 20 }]}>
                 {'← back'}
@@ -88,7 +87,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   private _renderItems = () => {
-    const offset = this._activeStep * 5 - 5;
+    const offset = (this._activeStep + 1) * 5 - 5;
     return LIST.map((_, i) => (
       this.taskQuestionItem(i + 1 + offset)
     ))
@@ -113,11 +112,10 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
     if (this._activeItem) {
       this._selected.push(this._activeItem)
       this._activeItem = 0;
-      if (this._totalSteps === this._activeStep) {
+      if (this._totalSteps === this._activeStep + 1) {
         this._isComplete = true;
-      } else {
-        this._activeStep++;
       }
+      this._activeStep++;
     }
   }
 

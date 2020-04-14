@@ -56,7 +56,7 @@ const TasksStack = function () {
 
 const RewardsStack = function () {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode="none">
       <Stack.Screen
         name="RewardsScreen"
         component={RewardsScreen}
@@ -106,7 +106,7 @@ const Tabs = function () {
           tabBarLabel: 'Rewards',
           tabBarIcon: () => (
             <Icon name="gift" type="font-awesome" color={TAB_COLOR} />
-          ),
+          )
         }}
       />
       <Tab.Screen

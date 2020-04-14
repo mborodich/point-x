@@ -5,9 +5,15 @@ const defaultGradient = [ "#383838", "#131313" ];
 const {width: deviceWidth, height: deviceHeight} = Dimensions.get('window');
 
 
+const LIST_TYPES = {
+  GRID: 'grid',
+  LIST: 'list'
+};
+
 export {
   numKeyboardType,
   defaultGradient,
   deviceHeight,
-  deviceWidth
+  deviceWidth,
+  LIST_TYPES
 }

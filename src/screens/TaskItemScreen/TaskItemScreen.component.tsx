@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Tile, Text } from 'react-native-elements';
+import { AirbnbRating, Tile, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
@@ -9,11 +9,21 @@ import CircularProgress from '../../components/CircularProgress/CircularProgress
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
+export enum TaskTypeEnum {
+  List = 'list',
+  Star = 'star',
+}
+
+function randomInt(min: number, max: number) {
+  return min + Math.floor((max - min) * Math.random());
+}
+
 @Drizzle
 @observer
 export class TaskItemScreen extends React.Component<DrizzleProps> {
   static navigationOptions = { tabBarVisible: false }
-  private _totalSteps: number = 4;
+  private _taskType: TaskTypeEnum = randomInt(1, 3) === 1 ? TaskTypeEnum.List : TaskTypeEnum.Star;
+  private _totalSteps: number = this._taskType === TaskTypeEnum.List ? 4 : 1;
   @observable private _activeItem: number = 0;
   @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
@@ -87,11 +97,35 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   private _renderItems = () => {
-    const offset = (this._activeStep + 1) * 5 - 5;
-    return LIST.map((_, i) => (
-      this.taskQuestionItem(i + 1 + offset)
-    ))
+    if (this._taskType === TaskTypeEnum.List) {
+      const offset = (this._activeStep + 1) * 5 - 5;
+      return LIST.map((_, i) => (
+        this.taskQuestionItem(i + 1 + offset)
+      ))
+    } else {
+      return this.taskRate();
+    }
   };
+
+  private taskRate() {
+    const { theme: { color, style, colorsMap } } = this.props;
+    return (
+      <AirbnbRating
+        size={40}
+        showRating={false}
+        onFinishRating={(id) => {
+          console.log('id', id)
+          this._activeItem = id
+        }}
+        selectedColor={colorsMap.accent}
+        starContainerStyle={{
+          alignSelf: "flex-start",
+          margin: 20,
+        }}
+      />
+    );
+  }
+
 
   private taskQuestionItem(id: number) {
     const { theme: { color, style } } = this.props;

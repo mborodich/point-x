@@ -28,24 +28,30 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
   @observable private _isComplete: boolean = false;
-  private tasksCount: any;
+  @observable private _taskData: any[] = [];
 
-  async componentDidMount(): void {
+  async componentDidMount() {
     const { props } = this;
-    const { contractsCall, contractsGet, drizzle } = props;
-
-    this.tasksCount = contractsCall.getTasksCount.cacheCall();
-
+    this._taskData = props.route.params.task;
   }
 
 
   public render() {
-    const { theme: { color, style, colorsMap }, contractsGet } = this.props;
+    const { theme: { color, style, colorsMap } } = this.props;
 
-    if (this.tasksCount) {
-      const tasksCount = contractsGet.getTasksCount[this.tasksCount];
-      console.log('tasksCount', tasksCount)
-    }
+    const [
+      caption,
+      description,
+      image,
+      value,
+      owner,
+      status,
+      itemType,
+      taskData,
+      totalAmount,
+      resultsAmount,
+      number
+    ] = this._taskData;
 
 
     return (
@@ -53,29 +59,29 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
         <View style={{ marginBottom: 60 }}>
           <View style={styles.container}>
             <Text style={[style.title, color.title]}>
-              Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod tem  / 85 Symb
+              {caption}
             </Text>
             <Text style={[style.caption2, color.gray2, { marginTop: 5 }]}>
-              Stdescription. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim  venia / 150 Symbarbucks
+              {description}
             </Text>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ marginTop: 30 }}>
                 <View style={{ flex: 1, flexDirection: 'row', width: 150, justifyContent: 'space-between' }}>
-                  <Text style={[style.caption2, color.title]}>Left 50</Text>
-                  <Text style={[style.caption2, color.title]}>Total 100</Text>
+                  <Text style={[style.caption2, color.title]}>Left {resultsAmount}</Text>
+                  <Text style={[style.caption2, color.title]}>Total {totalAmount}</Text>
                 </View>
-                <Progress.Bar progress={0.5} width={150} color={colorsMap.accent} />
+                <Progress.Bar progress={0.0} width={150} color={colorsMap.accent} />
               </View>
               <View>
-                <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price 25</Text>
+                <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price {value}</Text>
                 <Text style={[style.companyName, color.gray3, { textAlign: 'right' }]}>2 Days Ago</Text>
               </View>
             </View>
 
           </View>
           <Tile
-            imageSrc={{ uri: `https://picsum.photos/250/200?random=1${Math.random()}` }}
+            imageSrc={{ uri: image }}
             containerStyle={{ height: 250 }}
           />
           <View style={styles.containerTitle}>

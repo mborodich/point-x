@@ -5,13 +5,10 @@ import { Provider } from "mobx-react";
 
 import { AppScreens } from './src/navigation';
 import drizzleOptions from './src/store/Drizzle.options';
-import { Drizzle, generateStore } from 'drizzle';
+import { Drizzle, generateStore } from '@drizzle/store';
 import stores from './src/store';
 
 console.disableYellowBox = true;
-
-// const store = new DrizzleStore();
-// store.start().then();
 
 const drizzleStore = generateStore({ drizzleOptions });
 const drizzle = new Drizzle(drizzleOptions, drizzleStore);

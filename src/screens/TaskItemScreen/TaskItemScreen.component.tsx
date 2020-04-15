@@ -28,9 +28,26 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
   @observable private _isComplete: boolean = false;
+  private tasksCount: any;
+
+  async componentDidMount(): void {
+    const { props } = this;
+    const { contractsCall, contractsGet, drizzle } = props;
+
+    this.tasksCount = contractsCall.getTasksCount.cacheCall();
+
+  }
+
 
   public render() {
-    const { theme: { color, style, colorsMap } } = this.props;
+    const { theme: { color, style, colorsMap }, contractsGet } = this.props;
+
+    if (this.tasksCount) {
+      const tasksCount = contractsGet.getTasksCount[this.tasksCount];
+      console.log('tasksCount', tasksCount)
+    }
+
+
     return (
       <ScrollView>
         <View style={{ marginBottom: 60 }}>

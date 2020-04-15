@@ -1,8 +1,9 @@
 import React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View, Image } from 'react-native';
-import { Header, Icon, ListItem } from 'react-native-elements';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Header, Icon, ListItem, TextProps } from 'react-native-elements';
 import { observer, inject } from 'mobx-react';
 
+import { RewardListItem, RewardGridItem } from '../../components';
 import { RewardsStore } from '../../store/';
 
 interface RewardsScreenProps {
@@ -15,46 +16,44 @@ type RendersType = {
   list: (item: any) => JSX.Element;
 };
 
-type TReward = {
+export type TReward = {
   title: string;
   value: number;
   company: string;
   expiration: string;
+  amountLeft: number;
+  totalAmount: number;
+  image: string;
 };
 
+const HEADER : TextProps = {
+  // @ts-ignore
+  text: 'Rewards',
+  style: {
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 'normal'
+  }
+};
 
-const mockReward : TReward[] = [{
+const mockFactory = () : TReward => ({
   title: 'Apple Watch Series 3',
   value: 170,
   company: 'Apple',
-  expiration: 'Nov 21.'
-}, {
-  title: 'Apple Watch Series 3',
-  value: 170,
-  company: 'Apple',
-  expiration: 'Nov 21.'
-},{
-  title: 'Apple Watch Series 3',
-  value: 170,
-  company: 'Apple',
-  expiration: 'Nov 21.'
-},{
-  title: 'Apple Watch Series 3',
-  value: 170,
-  company: 'Apple',
-  expiration: 'Nov 21.'
-}];
+  expiration: '175 days left',
+  amountLeft: 50,
+  totalAmount: 175,
+  image: `https://picsum.photos/100/100?random=${Math.random()}`
+});
 
-@observer
+const mockReward : TReward[] =
+  Array.from({ length: 15 }).map(() => mockFactory());
+
 @inject('rewardsStore')
+@observer
 export class RewardsScreen extends React.Component<RewardsScreenProps> {
-  private renderSort = () : JSX.Element => (
-    <TouchableOpacity onPress={this.props.rewardsStore.toggleListView}>
-      <Icon name="info" type="material" />
-    </TouchableOpacity>
-  );
 
-  private _renderRow = ({item}: {item: TReward}) : JSX.Element => {
+  private _renderRow = ({ item }: {item: TReward}) : JSX.Element => {
     const renders: RendersType = {
       'grid': this._renderGridItem,
       'list': this._renderListItem
@@ -62,51 +61,15 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
     return renders[this.props.rewardsStore.listView].call(this, item);
   };
 
-  // todo: typing
   private _renderGridItem = (item: TReward) : JSX.Element => {
     return (
-      <ListItem
-
-      />
-    );
-  };
-
-  private renderCompany = (company: string, expiration: string) : JSX.Element => {
-    return (
-      <View>
-        <View>
-          <Text>
-
-          </Text>
-          <Text>
-
-          </Text>
-        </View>
-        <Image
-
-        />
-      </View>
+      <RewardGridItem item={item} />
     );
   };
 
   private _renderListItem = (item: TReward) : JSX.Element => {
     return (
-      <ListItem
-        containerStyle={styles.listItemContainer}
-        leftAvatar={{
-          rounded: false,
-          source: { uri: `https://picsum.photos/100/100?random=${Math.random()}`},
-          containerStyle: {
-            ...styles.avatarListItem,
-          }
-        }}
-        rightElement={this.renderCompany(item.company, item.expiration)}
-        title={item.title}
-        subtitle={item.value && item.value.toString()}
-        titleStyle={styles.listItemTitle}
-        subtitleStyle={styles.listItemPrice}
-        pad={24}
-      />
+      <RewardListItem item={item} />
     );
   };
 
@@ -114,25 +77,19 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
     return (
       <View style={styles.container}>
         <Header
-          centerComponent={{
-            text: 'Rewards',
-            style: {
-              fontSize: 16,
-              lineHeight: 19,
-              fontWeight: 'normal'
-            }
-          }}
           rightComponent={this.renderSort()}
+          centerComponent={HEADER}
           backgroundColor="#F8F8F8"
         />
         <FlatList
           data={mockReward}
+          contentContainerStyle={styles.listContainer}
+          key={this.props.rewardsStore.columnsNum}
           numColumns={this.props.rewardsStore.columnsNum}
           renderItem={this._renderRow}
+          onEndReached={this._loadMore}
           keyExtractor={this._keyExtractor}
           onEndReachedThreshold={0.4}
-          onEndReached={this._loadMore}
-          contentContainerStyle={{ alignItems: 'center' }}
         />
       </View>
     );
@@ -140,61 +97,20 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
 
   private _keyExtractor = (_: TReward, index: number) => index.toString();
   private _loadMore = () => {};
-  // private _onRefresh = () => {};
+  private renderSort = () : JSX.Element => (
+    <TouchableOpacity onPress={this.props.rewardsStore.toggleListView}>
+      <Icon name="info" type="material" />
+    </TouchableOpacity>
+  );
 }
 
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    backgroundColor: '#F8F8F8'
   },
-  headerText: {},
-  listItemContainer: {
-    width: 343,
-    height: 112,
-    borderRadius: 16,
-    borderWidth: 0.5,
-    marginVertical: 16
-  },
-  listItemTitle: {
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 14,
-    lineHeight: 14,
-    marginBottom: 10,
-    color: '#4F4F4F'
-  },
-  gridItemTitle: {},
-  listItemPrice: {
-    fontStyle: 'normal',
-    fontWeight: '600',
-    fontSize: 16,
-    lineHeight: 18,
-    alignSelf: 'flex-start',
-    textTransform: 'capitalize',
-    marginBottom: 25
-  },
-  gridItemPrice: {},
-  avatarListItem: {
-    width: 96,
-    height: 96
-  },
-  avatarGridItem: {},
-  companyTitle: {
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 10,
-    lineHeight: 12
-  },
-  expirationText: {
-    color: '#828282',
-    fontSize: 10,
-    lineHeight: 12,
-    fontStyle: 'normal',
-    fontWeight: 'normal'
-  },
-  companyLogo: {
-    width: 24,
-    height: 24
+  listContainer: {
+    alignItems: 'center'
   }
 });

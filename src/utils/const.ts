@@ -10,10 +10,16 @@ const LIST_TYPES = {
   LIST: 'list'
 };
 
+const PROGRESS_COLORS = {
+  default: '#3785F7',
+  secondary: '#FF375F'
+};
+
 export {
   numKeyboardType,
   defaultGradient,
   deviceHeight,
   deviceWidth,
-  LIST_TYPES
+  LIST_TYPES,
+  PROGRESS_COLORS
 }

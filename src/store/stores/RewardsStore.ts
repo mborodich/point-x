@@ -7,8 +7,14 @@ export default class RewardsStore {
   listView : ListView = 'list';
 
   @action.bound toggleListView() : void {
-    if (this.listView === 'list') this.listView = 'grid';
-    if (this.listView === 'grid') this.listView = 'list';
+    if (this.listView === 'list') {
+      this.listView = 'grid';
+      return ;
+    }
+    if (this.listView === 'grid') {
+      this.listView = 'list';
+      return ;
+    };
   }
 
   @computed get columnsNum() {

@@ -166,7 +166,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   private _renderItems = (type, rows) => {
     if (type === "0") {
       return rows.map((answer, i) => (
-        this.taskQuestionItem(answer, i)
+        this.taskQuestionItem(answer, i + 1)
       ))
     } else if (type === "1" || type === "2") {
       return this.taskRate()

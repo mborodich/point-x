@@ -4,18 +4,18 @@ import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { PointX } from '../../shared/PointX';
+import { observable } from 'mobx';
 
 interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
-const LIST = Array.from({ length: 5 }, (_, i) => i);
-
 @observer
 @Drizzle
 export class TasksScreen extends React.Component<dataStoreProps> {
-  private tasksCount: any;
   private tasksList: any[] = [];
+  @observable private pointX;
 
   constructor(props: Readonly<dataStoreProps>) {
     super(props);
@@ -23,7 +23,11 @@ export class TasksScreen extends React.Component<dataStoreProps> {
 
   async componentDidMount() {
     const { props } = this;
-    const { contractsCall } = props;
+    const { contractsCall, contractsGet } = props;
+    this.pointX = new PointX(contractsCall, contractsGet);
+
+    this.pointX.fetchTasksCount()
+    //this.pointX.fetchTaskById(1);
 
     Array.from({ length: 3 }, (_, i) => {
       this.tasksList[i] = contractsCall.getTask.cacheCall(i + 1);
@@ -38,7 +42,6 @@ export class TasksScreen extends React.Component<dataStoreProps> {
         return contractsGet.getTask[i];
       })
     }
-
 
     return (
       <FlatList

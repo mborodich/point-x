@@ -83,18 +83,16 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
           centerComponent={HEADER}
           backgroundColor="#F8F8F8"
         />
-        <View style={{flex: 1}}>
-          <FlatList
-            data={mockReward}
-            contentContainerStyle={styles.listContainer}
-            key={this.props.rewardsStore.columnsNum}
-            numColumns={this.props.rewardsStore.columnsNum}
-            renderItem={this._renderRow}
-            onEndReached={this._loadMore}
-            keyExtractor={this._keyExtractor}
-            onEndReachedThreshold={0.4}
-          />
-        </View>
+        <FlatList
+          data={mockReward}
+          contentContainerStyle={styles.listContainer}
+          key={this.props.rewardsStore.columnsNum}
+          numColumns={this.props.rewardsStore.columnsNum}
+          renderItem={this._renderRow}
+          onEndReached={this._loadMore}
+          keyExtractor={this._keyExtractor}
+          onEndReachedThreshold={0.4}
+        />
       </View>
     );
   }
@@ -115,6 +113,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#F8F8F8'
   },
   listContainer: {
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 8.5
   }
 });

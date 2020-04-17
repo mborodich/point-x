@@ -57,20 +57,6 @@ const TasksStack = function () {
   );
 };
 
-const RewardsStack = function () {
-  return (
-    <Stack.Navigator headerMode="none">
-      <Stack.Screen
-        name="RewardsScreen"
-        component={RewardsScreen}
-      />
-      <Stack.Screen
-        name="RewardItemScreen"
-        component={RewardItemScreen}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const Tabs = function () {
   return (
@@ -104,7 +90,7 @@ const Tabs = function () {
       />
       <Tab.Screen
         name="RewardsScreen"
-        component={RewardsStack}
+        component={RewardsScreen}
         options={{
           tabBarLabel: 'Rewards',
           tabBarIcon: () => (
@@ -137,6 +123,10 @@ export function AppScreens() {
       <Stack.Screen
         name="Application"
         component={Tabs}
+      />
+      <Stack.Screen
+        name="RewardItemScreen"
+        component={RewardItemScreen}
       />
     </Stack.Navigator>
   );

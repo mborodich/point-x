@@ -1,8 +1,9 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {ProgressBar, CompanyLabel, RewardPrice} from '..';
 import {TReward} from '../../screens/RewardsScreen/RewardsScreen.component';
+import {deviceWidth} from "../../utils/const";
 
 type TProps = {
   item: TReward;
@@ -12,7 +13,7 @@ type TProps = {
 export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
-      <TouchableOpacity style={styles.progressBarContainer} onPress={onPress}>
+      <View style={styles.progressBarContainer}>
         <ProgressBar
           unfilledColor="#E0E0E0"
           width={95}
@@ -20,7 +21,7 @@ export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
           borderWidth={0}
           {...item}
         />
-      </TouchableOpacity>
+      </View>
     );
   }, [item]);
 
@@ -40,6 +41,7 @@ export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
       rightSubtitle={<CompanyLabel {...item} />}
       titleStyle={styles.listItemTitle}
       rightTitleStyle={styles.listItemPrice}
+      onPress={onPress}
       bottomDivider
     />
   );
@@ -48,10 +50,9 @@ export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    width: 370,
+    width: deviceWidth,
     height: 64,
-    padding: 7,
-    marginTop: 8.5,
+    // marginTop: 8.5,
     backgroundColor: '#F8F8F8'
   },
   listItemTitle: {
@@ -74,8 +75,7 @@ const styles = StyleSheet.create({
   avatarListItem: {
     width: 56,
     height: 56,
-    borderRadius: 8,
-    borderColor: '#F2F2F2',
+    borderColor: '#F2F2F2'
   },
   progressBarContainer: {
     flex: 1,

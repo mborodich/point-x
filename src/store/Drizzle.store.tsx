@@ -1,4 +1,4 @@
-import { Drizzle, generateStore } from 'drizzle';
+import { Drizzle, generateStore } from '@drizzle/store';
 import drizzleOptions from './Drizzle.options';
 
 const PRIORITY_METHODS = [

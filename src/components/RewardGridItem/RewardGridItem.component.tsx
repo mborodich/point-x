@@ -3,24 +3,16 @@ import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {ProgressBar, CompanyLabel, RewardPrice} from "..";
 import {TReward} from '../../screens/RewardsScreen/RewardsScreen.component';
 
-
-
 type TProps = {
-  item: TReward
+  item: TReward;
+  onPress: () => any;
 };
 
-export const RewardGridItem = ({ item }: TProps) => {
-  const _renderPrice = React.useCallback(() => (
-    <View style={styles.priceContainer}>
-      <Text style={styles.listItemPrice}>{item.value}</Text>
-      <Text style={styles.pntxLabel}>pntx</Text>
-    </View>
-  ), [item]);
-
+export const RewardGridItem = ({ item, onPress }: TProps) => {
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: item.image }} style={styles.imageContainer} />
-      <View style={styles.titleContainer}>
+      <View>
         <Text style={styles.titleText}>
           {item.title}
         </Text>
@@ -44,8 +36,16 @@ export const RewardGridItem = ({ item }: TProps) => {
 
 
 const styles = StyleSheet.create({
+  titleText: {
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 12,
+    color: '#4F4F4F',
+    lineHeight: 14
+  },
   container: {
-    padding: 15
+    padding: 15,
+    maxWidth: '50%'
   },
   propsContainer: {
     flexDirection: 'row',

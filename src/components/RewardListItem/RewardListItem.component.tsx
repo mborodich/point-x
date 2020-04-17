@@ -1,17 +1,18 @@
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {ListItem} from 'react-native-elements';
 import {ProgressBar, CompanyLabel, RewardPrice} from '..';
 import {TReward} from '../../screens/RewardsScreen/RewardsScreen.component';
 
 type TProps = {
-  item: TReward
+  item: TReward;
+  onPress: () => any;
 };
 
-export const RewardListItem = ({ item }: TProps) : JSX.Element => {
+export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
-      <View style={styles.progressBarContainer}>
+      <TouchableOpacity style={styles.progressBarContainer} onPress={onPress}>
         <ProgressBar
           unfilledColor="#E0E0E0"
           width={95}
@@ -19,7 +20,7 @@ export const RewardListItem = ({ item }: TProps) : JSX.Element => {
           borderWidth={0}
           {...item}
         />
-      </View>
+      </TouchableOpacity>
     );
   }, [item]);
 

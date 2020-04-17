@@ -51,8 +51,7 @@ const mockReward : TReward[] =
 
 @inject('rewardsStore')
 @observer
-export class RewardsScreen extends React.Component<RewardsScreenProps> {
-
+export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
   private _renderRow = ({ item }: {item: TReward}) : JSX.Element => {
     const renders: RendersType = {
       'grid': this._renderGridItem,
@@ -63,15 +62,18 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
 
   private _renderGridItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardGridItem item={item} />
+      <RewardGridItem onPress={this.navigateToDetail} item={item} />
     );
   };
 
   private _renderListItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardListItem item={item} />
+      <RewardListItem onPress={this.navigateToDetail} item={item} />
     );
   };
+
+  private navigateToDetail = () : Promise<void> =>
+    this.props.navigation.navigate('RewardItemScreen');
 
   public render() {
     return (
@@ -81,16 +83,18 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
           centerComponent={HEADER}
           backgroundColor="#F8F8F8"
         />
-        <FlatList
-          data={mockReward}
-          contentContainerStyle={styles.listContainer}
-          key={this.props.rewardsStore.columnsNum}
-          numColumns={this.props.rewardsStore.columnsNum}
-          renderItem={this._renderRow}
-          onEndReached={this._loadMore}
-          keyExtractor={this._keyExtractor}
-          onEndReachedThreshold={0.4}
-        />
+        <View style={{flex: 1}}>
+          <FlatList
+            data={mockReward}
+            contentContainerStyle={styles.listContainer}
+            key={this.props.rewardsStore.columnsNum}
+            numColumns={this.props.rewardsStore.columnsNum}
+            renderItem={this._renderRow}
+            onEndReached={this._loadMore}
+            keyExtractor={this._keyExtractor}
+            onEndReachedThreshold={0.4}
+          />
+        </View>
       </View>
     );
   }

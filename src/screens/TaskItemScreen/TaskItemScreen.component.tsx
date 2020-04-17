@@ -1,63 +1,93 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { Tile, Text } from 'react-native-elements';
+import { AirbnbRating, Tile, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { action, observable } from 'mobx';
 import CircularProgress from '../../components/CircularProgress/CircularProgress.component'
+import E16 from '../../utils/E16';
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
+
+export enum TaskTypeEnum {
+  List = 'list',
+  Star = 'star',
+}
+
+function randomInt(min: number, max: number) {
+  return min + Math.floor((max - min) * Math.random());
+}
 
 @Drizzle
 @observer
 export class TaskItemScreen extends React.Component<DrizzleProps> {
   static navigationOptions = { tabBarVisible: false }
-  private _totalSteps: number = 4;
+  private _taskType: TaskTypeEnum = randomInt(1, 3) === 1 ? TaskTypeEnum.List : TaskTypeEnum.Star;
+  private _totalSteps: number = this._taskType === TaskTypeEnum.List ? 4 : 1;
   @observable private _activeItem: number = 0;
   @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
   @observable private _isComplete: boolean = false;
+  @observable private _taskData: any[] = [];
+
+  async componentDidMount() {
+    const { props } = this;
+    this._taskData = props.route.params.task;
+  }
 
   public render() {
     const { theme: { color, style, colorsMap } } = this.props;
+
+    let {
+      caption,
+      description,
+      image,
+      value,
+      itemType,
+      totalAmount,
+      resultsAmount,
+    } = this._taskDetails();
+
+    const { title, rows } = this._decodeTaskDetails();
+
     return (
       <ScrollView>
         <View style={{ marginBottom: 60 }}>
           <View style={styles.container}>
             <Text style={[style.title, color.title]}>
-              Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod tem  / 85 Symb
+              {caption}
             </Text>
             <Text style={[style.caption2, color.gray2, { marginTop: 5 }]}>
-              Stdescription. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim  venia / 150 Symbarbucks
+              {description}
             </Text>
 
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ marginTop: 30 }}>
                 <View style={{ flex: 1, flexDirection: 'row', width: 150, justifyContent: 'space-between' }}>
-                  <Text style={[style.caption2, color.title]}>Left 50</Text>
-                  <Text style={[style.caption2, color.title]}>Total 100</Text>
+                  <Text style={[style.caption2, color.title]}>Left {resultsAmount}</Text>
+                  <Text style={[style.caption2, color.title]}>Total {totalAmount}</Text>
                 </View>
-                <Progress.Bar progress={0.5} width={150} color={colorsMap.accent} />
+                <Progress.Bar progress={0.0} width={150} color={colorsMap.accent} />
               </View>
               <View>
-                <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price 25</Text>
+                <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price {value}</Text>
                 <Text style={[style.companyName, color.gray3, { textAlign: 'right' }]}>2 Days Ago</Text>
               </View>
             </View>
 
           </View>
           <Tile
-            imageSrc={{ uri: `https://picsum.photos/250/200?random=1${Math.random()}` }}
+            imageSrc={{ uri: image }}
             containerStyle={{ height: 250 }}
           />
           <View style={styles.containerTitle}>
             <Text style={[style.title, color.title, { flex: 1 }]}>
-              Lorem ipsum dolor sit amet? Сhoose the packaging you like  Lorem ipsum dolor sit amet sed do eiusmod temp ?
+              {title}
             </Text>
             <CircularProgress activeStep={this._activeStep} totalSteps={this._totalSteps} isComplete={this._isComplete} />
           </View>
-          {!this._isComplete ? this._renderItems() : (
+          {!this._isComplete ? this._renderItems(itemType, rows) : (
             <View style={styles.containerTitle}><Text>Done</Text></View>
           )}
         </View>
@@ -85,23 +115,92 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
     );
   }
 
+  private _decodeTaskDetails = () => {
+    let { taskData } = this._taskDetails();
+    let items: any[] = [];
+    let title: string = '';
+    let rows: any[] = [];
 
-  private _renderItems = () => {
-    const offset = (this._activeStep + 1) * 5 - 5;
-    return LIST.map((_, i) => (
-      this.taskQuestionItem(i + 1 + offset)
-    ))
+    if (taskData) {
+      items = E16.decoder(taskData);
+      this._totalSteps = items.length;
+      items = items[this._activeStep];
+      if (items) {
+        title = items[0]
+        rows = items.slice(1);
+      }
+    }
+    return { title, rows }
+  }
+
+
+  private _taskDetails = () => {
+    const [
+      caption,
+      description,
+      image,
+      value,
+      owner,
+      status,
+      itemType,
+      taskData,
+      totalAmount,
+      resultsAmount,
+      number
+    ] = this._taskData;
+    return {
+      caption,
+      description,
+      image,
+      value,
+      owner,
+      status,
+      itemType,
+      taskData,
+      totalAmount,
+      resultsAmount,
+      number
+    }
+  }
+
+  private _renderItems = (type, rows) => {
+    if (type === "0") {
+      return rows.map((answer, i) => (
+        this.taskQuestionItem(answer, i + 1)
+      ))
+    } else if (type === "1" || type === "2") {
+      return this.taskRate()
+    }
   };
 
-  private taskQuestionItem(id: number) {
+  private taskRate() {
+    const { theme: { color, style, colorsMap } } = this.props;
+    return (
+      <AirbnbRating
+        size={40}
+        showRating={false}
+        onFinishRating={(id) => {
+          this._activeItem = id
+        }}
+        selectedColor={colorsMap.accent}
+        starContainerStyle={{
+          alignSelf: "flex-start",
+          margin: 20,
+        }}
+      />
+    );
+  }
+
+
+  private taskQuestionItem(answer: string, id: number) {
     const { theme: { color, style } } = this.props;
     const isActive = this._activeItem === id;
     return (
       <TouchableOpacity onPress={() => this._setActive(id)}>
         <View style={[styles.taskQuestion, { ...isActive ? color.gray4bg : undefined }]}>
           <Text style={[style.companyName, { ...isActive ? color.white : color.gray2 }]}>
-            {id}: Lorem ipsum dolor sit amet
-        </Text>
+            {answer}
+          </Text>
         </View>
       </TouchableOpacity >
     );

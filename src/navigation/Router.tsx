@@ -45,6 +45,9 @@ const TasksStack = function () {
       <Stack.Screen
         name="TaskItemScreen"
         component={TaskItemScreen}
+        options={{
+          title: "Starbucks",
+        }}
       />
       <Stack.Screen
         name="RewardItemScreen"
@@ -127,10 +130,10 @@ const Tabs = function () {
 export function AppScreens() {
   return (
     <Stack.Navigator headerMode="none">
-      <Stack.Screen
+      {/* <Stack.Screen
         name="AuthScreen"
         component={AuthStack}
-      />
+      /> */}
       <Stack.Screen
         name="Application"
         component={Tabs}

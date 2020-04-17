@@ -1,6 +1,6 @@
-import { computed } from 'mobx';
+import { action, computed, observable } from 'mobx';
 
-export interface IContractValue {
+export interface IContractData {
   args: {};
   fnIndex: number;
   value: string;
@@ -8,22 +8,52 @@ export interface IContractValue {
 }
 
 export interface IPointX {
-  getTasksCount: IContractValue;
+  contractResponse: IContractData;
 }
 
 export class PointX {
-  private drizzle: any;
-  private contracts: any;
-  private state: any;
+  @observable public store = {
+    getTasksCount: 0,
+    tasks: {}
+  };
+  private contractsCall: any;
+  private contractsGet: any;
 
-  constructor(drizzle: any, state: any) {
-    this.drizzle = drizzle;
-    this.state = state;
-    this.contracts = this.drizzle.contracts.PointX;
+  constructor(contractsCall: any, contractsGet: any) {
+    this.contractsCall = contractsCall;
+    this.contractsGet = contractsGet;
+  }
+
+
+  @action.bound
+  public fetchTasksCount() {
+    const key = this.contractsCall.getTasksCount.cacheCall();
+    this.store['getTasksCount'] = key;
   }
 
   @computed
-  public get getTasksCount() {
-    return this.contracts.getTasksCount.cacheCall();
+  public get tasksCount() {
+    const key = this.store['getTasksCount'];
+    return key ? this.contractsGet.getTasksCount[key] : undefined;
+  }
+
+  @action.bound
+  public fetchTaskById(id: number) {
+    const key = this.contractsCall.getTask.cacheCall(id);
+    this.store.tasks[id] = key;
+  }
+
+  @action.bound
+  public getTaskById(id: number): IContractData {
+    const key = this.store.tasks[id];
+    return this.contractsGet.getTask[key];
+  }
+
+  @action.bound
+  public fetchAllTasks() {
+    const length = this.store['getTasksCount'].value;
+    Array.from({ length }, (_, i) => {
+      this.fetchTaskById(i + 1);
+    });
   }
 }

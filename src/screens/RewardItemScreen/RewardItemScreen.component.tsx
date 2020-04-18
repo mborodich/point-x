@@ -42,6 +42,10 @@ export class RewardItemScreen extends React.PureComponent<Props> {
     );
   }
 
+  private navigateToDetail = () =>
+    this.props.navigation.navigate('PartnerScreen');
+
+
   public render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -53,7 +57,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
         <View style={{ height: 237 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: 16 }}>
             <Text style={styles.price}>170 Tokens</Text>
-            <CompanyLabel company="Starbucks" expiration="Nov 21." />
+            <CompanyLabel company="Apple" expiration="Nov 21." onPress={this.navigateToDetail} />
           </View>
           <View style={{ alignItems: 'flex-start', margin: 16 }}>
             <Text style={styles.price}>Apple Watch Series 3</Text>

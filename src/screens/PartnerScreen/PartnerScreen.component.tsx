@@ -95,10 +95,10 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        {/*<FlatList*/}
-        {/*  data={MOCKS}*/}
-        {/*  renderItem={({item}) => <RewardListItem navigation={this.props.navigation}  onPress={() => {}} item={item} />}*/}
-        {/*/>*/}
+        <FlatList
+          data={MOCKS}
+          renderItem={({item}) => <RewardListItem navigation={this.props.navigation} item={item} />}
+        />
       </View>
     );
   }

@@ -15,18 +15,6 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TAB_COLOR = '#00aced';
 
-const AuthStack = function () {
-  return (
-    <Stack.Navigator headerMode="none">
-      <Stack.Screen
-        name="LoginScreen"
-        component={LoginScreen}
-      />
-    </Stack.Navigator>
-  );
-};
-
-
 const TasksStack = function () {
   return (
     <Stack.Navigator>
@@ -86,7 +74,7 @@ const Tabs = function () {
       />
       <Tab.Screen
         name="RewardsScreen"
-        component={() => <View />}
+        component={RewardsScreen}
         options={{
           tabBarLabel: 'Rewards',
           tabBarIcon: () => (
@@ -112,10 +100,10 @@ const Tabs = function () {
 export function AppScreens() {
   return (
     <Stack.Navigator headerMode="none">
-      {/* <Stack.Screen
+      <Stack.Screen
         name="AuthScreen"
-        component={AuthStack}
-      /> */}
+        component={LoginScreen}
+      />
       <Stack.Screen
         name="Application"
         component={Tabs}

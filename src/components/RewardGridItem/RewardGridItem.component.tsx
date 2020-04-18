@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import {ProgressBar, CompanyLabel, RewardPrice} from "..";
-import {TReward} from '../../screens/RewardsScreen/RewardsScreen.component';
+import {ProgressBar, CompanyLabel, RewardPrice} from "@app/components";
+import {TReward} from '@app/screens/RewardsScreen/RewardsScreen.component';
 
 type TProps = {
   item: TReward;
@@ -9,9 +9,10 @@ type TProps = {
   onPress: () => any;
 };
 
-export const RewardGridItem = ({ item, onPress, navigation }: TProps) => {
+export const RewardGridItem = ({ item, navigation }: TProps) => {
 
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen'), [item]);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>

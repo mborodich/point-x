@@ -1,27 +1,18 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {ListItem} from 'react-native-elements';
-import {ProgressBar, CompanyLabel, RewardPrice} from '..';
+import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
 import {TReward} from '@app/screens/RewardsScreen/RewardsScreen.component';
 import {deviceWidth} from '@app/utils/const';
 
 type TProps = {
   item: TReward;
   navigation: { navigate: any };
-  onPress: () => any;
 };
 
-export const RewardListItem = ({ item = {
-  title: 'Apple Watch Series 3',
-  value: 170,
-  company: 'Apple',
-  expiration: '175 days left',
-  amountLeft: 50,
-  totalAmount: 175,
-  image: `https://picsum.photos/100/100?random=${Math.random()}`
-}, onPress, navigation }: TProps) : JSX.Element => {
-  console.log(item, onPress, navigation)
+export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen'), [item]);
 
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
@@ -50,10 +41,11 @@ export const RewardListItem = ({ item = {
         size: 56,
         imageProps: { borderRadius: 8 }
       }}
+
       title={item.title}
       subtitle={_renderItemsLeft()}
-      rightTitle={<RewardPrice {...item} />}
-      rightSubtitle={<CompanyLabel {...item} />}
+      rightTitle={<RewardPrice {...item}  />}
+      rightSubtitle={<CompanyLabel {...item} onPress={onCompanyPress} />}
       titleStyle={styles.listItemTitle}
       rightTitleStyle={styles.listItemPrice}
       onPress={onPress}

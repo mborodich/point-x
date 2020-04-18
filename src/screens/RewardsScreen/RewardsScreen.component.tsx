@@ -1,9 +1,9 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Header, Icon, TextProps } from 'react-native-elements';
+import { Header, Icon, TextProps, Text } from 'react-native-elements';
 import { observer, inject } from 'mobx-react';
 
-import { RewardListItem, RewardGridItem } from '@app/components';
+import { RewardListItem, RewardGridItem } from '@app/components/';
 import { RewardsStore } from '@app/store/';
 
 interface RewardsScreenProps {
@@ -71,18 +71,19 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
 
   private _renderGridItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardGridItem navigation={this.props.navigation} onPress={this.navigateToDetail} item={item} />
+      <RewardGridItem navigation={this.props.navigation} item={item} />
     );
   };
 
   private _renderListItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardListItem navigation={this.props.navigation} onPress={this.navigateToDetail} item={item} />
+      <RewardListItem navigation={this.props.navigation} item={item} />
     );
   };
 
   private navigateToDetail = () : Promise<void> =>
     this.props.navigation.navigate('RewardItemScreen');
+
 
   public render() {
     return (

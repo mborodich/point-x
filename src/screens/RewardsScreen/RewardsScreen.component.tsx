@@ -62,13 +62,13 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
 
   private _renderGridItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardGridItem onPress={this.navigateToDetail} item={item} />
+      <RewardGridItem navigation={this.props.navigation} onPress={this.navigateToDetail} item={item} />
     );
   };
 
   private _renderListItem = (item: TReward) : JSX.Element => {
     return (
-      <RewardListItem onPress={this.navigateToDetail} item={item} />
+      <RewardListItem navigation={this.props.navigation} onPress={this.navigateToDetail} item={item} />
     );
   };
 

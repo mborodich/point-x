@@ -39,10 +39,6 @@ const TasksStack = function () {
         }}
       />
       <Stack.Screen
-        name="PartnerScreen"
-        component={PartnerScreen}
-      />
-      <Stack.Screen
         name="TaskItemScreen"
         component={TaskItemScreen}
         options={{
@@ -127,6 +123,10 @@ export function AppScreens() {
       <Stack.Screen
         name="RewardItemScreen"
         component={RewardItemScreen}
+      />
+      <Stack.Screen
+        name="PartnerScreen"
+        component={PartnerScreen}
       />
     </Stack.Navigator>
   );

@@ -5,10 +5,14 @@ import {TReward} from '../../screens/RewardsScreen/RewardsScreen.component';
 
 type TProps = {
   item: TReward;
+  navigation: { navigate: any };
   onPress: () => any;
 };
 
-export const RewardGridItem = ({ item, onPress }: TProps) => {
+export const RewardGridItem = ({ item, onPress, navigation }: TProps) => {
+
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: item.image }} style={styles.imageContainer} />
@@ -29,7 +33,7 @@ export const RewardGridItem = ({ item, onPress }: TProps) => {
         </View>
         <RewardPrice {...item} />
       </View>
-      <CompanyLabel {...item} />
+      <CompanyLabel onPress={onCompanyPress} {...item} />
     </TouchableOpacity>
   );
 };

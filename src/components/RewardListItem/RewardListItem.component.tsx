@@ -7,10 +7,13 @@ import {deviceWidth} from "../../utils/const";
 
 type TProps = {
   item: TReward;
+  navigation: { navigate: any };
   onPress: () => any;
 };
 
-export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
+export const RewardListItem = ({ item, onPress, navigation }: TProps) : JSX.Element => {
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
+
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
       <View style={styles.progressBarContainer}>
@@ -38,7 +41,7 @@ export const RewardListItem = ({ item, onPress }: TProps) : JSX.Element => {
       title={item.title}
       subtitle={_renderItemsLeft()}
       rightTitle={<RewardPrice {...item} />}
-      rightSubtitle={<CompanyLabel {...item} />}
+      rightSubtitle={<CompanyLabel onPress={onCompanyPress} {...item} />}
       titleStyle={styles.listItemTitle}
       rightTitleStyle={styles.listItemPrice}
       onPress={onPress}

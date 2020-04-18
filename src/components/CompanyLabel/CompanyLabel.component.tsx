@@ -1,16 +1,17 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Avatar} from 'react-native-elements';
 
 type TProps = {
   company: string;
   logo?: string;
   expiration?: string;
+  onPress?: () => any;
 };
 
-export const CompanyLabel = ({ company, expiration, logo }: TProps) => {
+export const CompanyLabel = ({ company, expiration, onPress, logo }: TProps) => {
   return (
-    <View style={styles.companyContainer}>
+    <TouchableOpacity onPress={onPress} style={styles.companyContainer}>
       <View style={styles.companyTextContainer}>
         <Text style={styles.companyTitle}>
           {company}
@@ -24,7 +25,7 @@ export const CompanyLabel = ({ company, expiration, logo }: TProps) => {
         containerStyle={styles.companyLogo}
         rounded
       />
-    </View>
+    </TouchableOpacity>
   );
 };
 

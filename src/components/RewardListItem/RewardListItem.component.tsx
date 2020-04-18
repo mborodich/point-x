@@ -4,6 +4,7 @@ import {ListItem} from 'react-native-elements';
 import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
 import {TReward} from '@app/screens/RewardsScreen/RewardsScreen.component';
 import {deviceWidth} from '@app/utils/const';
+import {getMocksByName} from "@app/utils";
 
 type TProps = {
   item: TReward;
@@ -11,8 +12,8 @@ type TProps = {
 };
 
 export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
-  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen'), [item]);
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: getMocksByName(item.company) }), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: getMocksByName(item.company).rewards[0] }), [item]);
 
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
@@ -45,7 +46,7 @@ export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
       title={item.title}
       subtitle={_renderItemsLeft()}
       rightTitle={<RewardPrice {...item}  />}
-      rightSubtitle={<CompanyLabel {...item} onPress={onCompanyPress} />}
+      rightSubtitle={<CompanyLabel {...item} logo={getMocksByName(item.company).image} onPress={onCompanyPress} />}
       titleStyle={styles.listItemTitle}
       rightTitleStyle={styles.listItemPrice}
       onPress={onPress}

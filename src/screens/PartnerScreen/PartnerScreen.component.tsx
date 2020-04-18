@@ -85,6 +85,8 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
   }
 
   private _renderActive() : JSX.Element {
+    const partner = this.props.route.params.partner;
+
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -96,7 +98,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={MOCKS}
+          data={partner.rewards}
           renderItem={({item}) => <RewardListItem navigation={this.props.navigation} item={item} />}
         />
       </View>
@@ -104,6 +106,8 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
   }
 
   private _renderArchive() : JSX.Element {
+    const partner = this.props.route.params.partner;
+
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -114,10 +118,10 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        {/*<FlatList*/}
-        {/*  data={MOCKS}*/}
-        {/*  renderItem={({item}) => <RewardListItem navigation={this.props.navigation}  onPress={() => {}} item={item} />}*/}
-        {/*/>*/}
+        <FlatList
+          data={partner.rewards}
+          renderItem={({item}) => <RewardListItem navigation={this.props.navigation}  onPress={() => {}} item={item} />}
+        />
       </View>
     );
   }
@@ -131,28 +135,30 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
       default:
         return null;
     }
-  }
+  };
 
   public render() {
     const { navigation } = this.props;
+    const partner = this.props.route.params.partner;
 
     return (
       <ScrollView style={styles.container}>
         <Header
-          centerComponent={{ text: 'Apple' }}
+          centerComponent={{ text: partner.name }}
           leftComponent={{ icon: 'chevron-left', type: 'material', onPress: this.props.navigation.goBack }}
           backgroundColor="#fff"
         />
         <View style={styles.avatarContainer}>
           <Avatar
-            source={{ uri: `https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png` }}
+            source={{ uri: partner.image }}
             size="large"
             rounded
           />
         </View>
         <View style={styles.textParagraphContainer}>
           <Text style={styles.textParagraph}>
-            Apple Inc. is an American multinational technology company headquartered in Cupertino, California, that designs, develops, and sells consumer electronics, computer software, and online services.          </Text>
+            {partner.description}
+          </Text>
         </View>
         <TabView
           navigationState={{ index: this.currentIdx, routes }}

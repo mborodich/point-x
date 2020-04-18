@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {ProgressBar, CompanyLabel, RewardPrice} from "@app/components";
 import {TReward} from '@app/screens/RewardsScreen/RewardsScreen.component';
+import {getMocksByName} from "@app/utils";
 
 type TProps = {
   item: TReward;
@@ -11,8 +12,8 @@ type TProps = {
 
 export const RewardGridItem = ({ item, navigation }: TProps) => {
 
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen'), [item]);
-  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen'), [item]);
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', {partner: getMocksByName(item.company)}), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', {reward: getMocksByName(item.company).rewards[0]}), [item]);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
@@ -34,7 +35,7 @@ export const RewardGridItem = ({ item, navigation }: TProps) => {
         </View>
         <RewardPrice {...item} />
       </View>
-      <CompanyLabel onPress={onCompanyPress} {...item} />
+      <CompanyLabel logo={getMocksByName(item.company).image} onPress={onCompanyPress} {...item} />
     </TouchableOpacity>
   );
 };

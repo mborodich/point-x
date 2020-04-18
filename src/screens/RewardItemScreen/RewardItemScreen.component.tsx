@@ -6,10 +6,11 @@ import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 
 import { CompanyLabel, ProgressBar } from '../../components';
+import {getMocksByName} from "@app/utils";
 
 
 interface Props {
-  navigation: {navigate: any, goBack: any}
+  navigation: {navigate: any, goBack: any, item}
 }
 
 
@@ -43,27 +44,26 @@ export class RewardItemScreen extends React.PureComponent<Props> {
   }
 
   private navigateToDetail = () =>
-    this.props.navigation.navigate('PartnerScreen');
+    this.props.navigation.navigate('PartnerScreen', { partner: getMocksByName(this.props.route.params.reward.company)});
 
 
   public render() {
+    const reward = this.props.route.params.reward;
+
     return (
       <SafeAreaView style={styles.container}>
-        <ImageBackground style={styles.img} source={{ uri: `https://picsum.photos/200/200?random=1${Math.random()}` }}>
+        <ImageBackground style={styles.img} source={{ uri: reward.image }}>
           <TouchableOpacity onPress={this.props.navigation.goBack} style={{ width: 48, height: 48, top: 10 }}>
             <Icon type="material" name="chevron-left"/>
           </TouchableOpacity>
         </ImageBackground>
         <View style={{ height: 237 }}>
           <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: 16 }}>
-            <Text style={styles.price}>170 Tokens</Text>
-            <CompanyLabel company="Apple" expiration="Nov 21." onPress={this.navigateToDetail} />
+            <Text style={styles.price}>{reward.value} Tokens</Text>
+            <CompanyLabel company={reward.company} expiration={reward.expiration} logo={getMocksByName(reward.company).image} onPress={this.navigateToDetail} />
           </View>
           <View style={{ alignItems: 'flex-start', margin: 16 }}>
-            <Text style={styles.price}>Apple Watch Series 3</Text>
-            <Text style={styles.desc}>корпус из серебристого алюминия.
-              с основными функциями, чтобы следить за здоровьем, отслеживать тренировки и оставаться на связи.
-              В корпусе 42 мм или 38 мм.</Text>
+            <Text style={styles.desc}>{reward.description}</Text>
             <View style={{ marginLeft: 4, marginTop: 16 }}>
               <ProgressBar
                 totalAmount={170}

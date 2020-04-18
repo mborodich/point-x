@@ -26,7 +26,7 @@ export class TasksScreen extends React.Component<dataStoreProps> {
     const { contractsCall, contractsGet } = props;
     this.pointX = new PointX(contractsCall, contractsGet);
 
-    this.pointX.fetchTasksCount()
+    this.pointX.fetchTasksCount();
     //this.pointX.fetchTaskById(1);
 
     Array.from({ length: 3 }, (_, i) => {

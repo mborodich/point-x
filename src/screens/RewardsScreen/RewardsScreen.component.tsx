@@ -5,6 +5,7 @@ import { observer, inject } from 'mobx-react';
 
 import { RewardListItem, RewardGridItem } from '@app/components/';
 import { RewardsStore } from '@app/store/';
+import {FULL_MOCKS} from "@app/utils";
 
 interface RewardsScreenProps {
   navigation: { navigate: any };
@@ -36,28 +37,6 @@ const HEADER : TextProps = {
   }
 };
 
-const MOCKS = [
-  {
-    title: `Apple Watch Series 3`,
-    value: 170,
-    company: 'Apple',
-    expiration: '175 days left',
-    amountLeft: 50,
-    totalAmount: 175,
-    image: `https://www.apple.com/newsroom/images/product/watch/standard/watch_series_3_incoming_two-wrap_big.gif.large.gif`
-  },
-  {
-    title: 'Iphone X',
-    value: 1000,
-    company: 'Apple',
-    expiration: '100 days left',
-    amountLeft: 30,
-    totalAmount: 300,
-    image: `https://items.s1.citilink.ru/1361005_v01_b.jpg`
-  }
-];
-
-
 @inject('rewardsStore')
 @observer
 export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
@@ -86,6 +65,13 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
 
 
   public render() {
+
+    let MOCKS = [];
+    for (const {rewards} of FULL_MOCKS) {
+      if (rewards)
+        MOCKS.push(rewards[0]);
+    }
+
     return (
       <View style={styles.container}>
         <Header

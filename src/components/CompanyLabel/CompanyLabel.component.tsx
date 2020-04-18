@@ -21,7 +21,7 @@ export const CompanyLabel = ({ company, expiration, onPress, logo }: TProps) => 
         </Text>
       </View>
       <Avatar
-        source={{ uri: `https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png` }}
+        source={{ uri: logo }}
         containerStyle={styles.companyLogo}
         rounded
       />

@@ -4,6 +4,7 @@ import { ScrollView, StyleSheet } from 'react-native';
 import { ListItem, Text } from 'react-native-elements';
 import { DrizzleProps } from '@app/shared/Drizzle';
 import { CardComponent, Header } from '@app/components';
+import { FULL_MOCKS , getMocksByName } from "@app/utils";
 
 
 interface HomeScreenProps extends DrizzleProps {
@@ -13,37 +14,20 @@ interface HomeScreenProps extends DrizzleProps {
 const LIST = Array.from({ length: 10 }, (_, i) => i);
 
 
-const MOCKS = [
-  {
-    name: 'Amazon',
-    description: 'Got reward',
-    image: 'https://mms.businesswire.com/media/20190228005194/en/3799/23/logo_white_.jpg',
-    value: -21,
-    date: 'Nov 6.'
-  },
-  {
-    name: 'Google',
-    description: 'Completed task',
-    image: 'https://storage.googleapis.com/gd-wagtail-prod-assets/images/evolving_google_identity_2x.max-4000x2000.jpegquality-90.jpg',
-    value: +100,
-    date: 'Nov 3.'
-  },
-  {
-    name: 'Apple',
-    description: 'Completed task',
-    image: 'https://www.apple.com/ac/structured-data/images/knowledge_graph_logo.png',
-    value: +50,
-    date: 'Sep 2.'
-  },
-];
-
-
 // @Drizzle
 @observer
 export class HomeScreen extends React.Component<HomeScreenProps> {
 
   public render() {
     const { props } = this;
+
+    let MOCKS = [];
+    for (const {history} of FULL_MOCKS) {
+      for (const i of history) {
+        MOCKS.push(i);
+      }
+    }
+
 
     const { navigation } = props;
 
@@ -58,7 +42,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
                 key={i}
                 leftAvatar={{ source: { uri: item.image } }}
                 title={item.name}
-                subtitle={item.description}
+                subtitle={item.description.length > 40 ? item.description.slice(0, 35) + '...': item.description}
                 rightTitle={item.value > 0 ? `+${item.value}` : item.value.toString()}
                 rightSubtitle={item.date}
                 titleStyle={styles.historyItemTitle}
@@ -66,7 +50,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
                 rightSubtitleStyle={styles.historyItemDesc}
                 subtitleStyle={styles.historyItemDesc}
                 bottomDivider
-                onPress={() => navigation.navigate('PartnerScreen')}
+                onPress={() => navigation.navigate('PartnerScreen', { partner: getMocksByName(item.company) })}
               />
             ))
           }
@@ -87,7 +71,7 @@ const styles = StyleSheet.create({
   },
   historyItemDesc: {
     fontSize: 12,
-    lineHeight: 14,
+    // lineHeight: 14,
     marginTop: 5,
     color: '#828282',
     fontStyle: 'normal',

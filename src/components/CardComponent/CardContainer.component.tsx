@@ -36,9 +36,9 @@ export class CardComponent extends React.PureComponent<TProps> {
 
   public render() {
     const {
-      tokenBalance = 5.6,
+      tokenBalance = 5600,
       lastDigits = 3136,
-      computedBalance  = 5.6,
+      computedBalance  = 5600,
       publicKey = '0x 2133 8334 d837 526e 16d3 7014 8dbf 7234 be45 839c'
     } = this.props;
 

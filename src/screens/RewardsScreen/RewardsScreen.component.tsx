@@ -51,7 +51,7 @@ const MOCKS = [
     value: 1000,
     company: 'Apple',
     expiration: '100 days left',
-    amountLeft: 70,
+    amountLeft: 30,
     totalAmount: 300,
     image: `https://items.s1.citilink.ru/1361005_v01_b.jpg`
   }

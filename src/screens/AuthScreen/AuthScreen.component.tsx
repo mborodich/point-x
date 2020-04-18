@@ -2,8 +2,8 @@ import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
-import { observer } from "mobx-react";
-import { StyleSheet, Dimensions } from 'react-native';
+import { observer } from 'mobx-react';
+import { StyleSheet } from 'react-native';
 
 import AuthWizard from './AuthWizard.component';
 import IntroSlider from './IntroSlider.component';
@@ -12,7 +12,7 @@ import SmsForm from './SmsForm/';
 import NewAccForm from './NewAccForm/';
 import LoginForm from './LoginForm/';
 
-import {defaultGradient, deviceWidth, deviceHeight} from "../../utils/const";
+import {defaultGradient, deviceWidth, deviceHeight} from '@app/utils/const';
 
 interface LoginScreenProps {
   navigation: { navigate: any }
@@ -32,6 +32,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     this.setState({ initialIndex: Boolean(carouselViewed) ? 1 : 0 });
+
     SplashScreen.hide();
   }
 
@@ -63,7 +64,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             header={false}
             flowSwitch={false}
           >
-            <NewAccForm />
+            <NewAccForm navigation={this.props.navigation} />
           </AuthWizard.Step>
           <AuthWizard.Step
             switchText="Registration"

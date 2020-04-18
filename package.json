@@ -9,6 +9,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint --ext=jsx,ts,tsx src",
+    "linkk": "react-native link",
+    "unlinkk": "react-native unlink",
     "rpc": "ganache-cli --port 7545 --networkId 5777 --gasLimit 99999999 --gasPrice 0x01 --mnemonic \"dust turn excite exercise space light now divert idle include bird arrow\"",
     "migrate": "rm -rf contracts-build && truffle migrate"
   },
@@ -47,6 +49,7 @@
     "react-devtools": "^4.6.0",
     "react-native": "0.61.5",
     "react-native-app-intro-slider": "^4.0.0",
+    "react-native-card-flip": "^1.0.6",
     "react-native-elements": "^1.2.7",
     "react-native-gesture-handler": "^1.6.1",
     "react-native-level-fs": "^3.0.1",
@@ -71,9 +74,7 @@
     "url": "^0.10.3",
     "util": "^0.12.2",
     "validatorjs": "^3.18.1",
-    "vm-browserify": "^1.1.2",
-    "web3": "^2.0.0-alpha",
-    "web3-eth-abi": "^2.0.0-alpha.1"
+    "vm-browserify": "^1.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
@@ -83,6 +84,7 @@
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.24.0",
     "babel-jest": "^24.9.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-airbnb-typescript": "^7.2.0",

@@ -1,10 +1,10 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Header, Icon, ListItem, TextProps } from 'react-native-elements';
+import { Header, Icon, TextProps } from 'react-native-elements';
 import { observer, inject } from 'mobx-react';
 
-import { RewardListItem, RewardGridItem } from '../../components';
-import { RewardsStore } from '../../store/';
+import { RewardListItem, RewardGridItem } from '@app/components';
+import { RewardsStore } from '@app/store/';
 
 interface RewardsScreenProps {
   navigation: { navigate: any };
@@ -36,18 +36,27 @@ const HEADER : TextProps = {
   }
 };
 
-const mockFactory = () : TReward => ({
-  title: 'Apple Watch Series 3',
-  value: 170,
-  company: 'Apple',
-  expiration: '175 days left',
-  amountLeft: 50,
-  totalAmount: 175,
-  image: `https://picsum.photos/100/100?random=${Math.random()}`
-});
+const MOCKS = [
+  {
+    title: `Apple Watch Series 3`,
+    value: 170,
+    company: 'Apple',
+    expiration: '175 days left',
+    amountLeft: 50,
+    totalAmount: 175,
+    image: `https://www.apple.com/newsroom/images/product/watch/standard/watch_series_3_incoming_two-wrap_big.gif.large.gif`
+  },
+  {
+    title: 'Iphone X',
+    value: 1000,
+    company: 'Apple',
+    expiration: '100 days left',
+    amountLeft: 70,
+    totalAmount: 300,
+    image: `https://items.s1.citilink.ru/1361005_v01_b.jpg`
+  }
+];
 
-const mockReward : TReward[] =
-  Array.from({ length: 15 }).map(() => mockFactory());
 
 @inject('rewardsStore')
 @observer
@@ -84,7 +93,7 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
           backgroundColor="#F8F8F8"
         />
         <FlatList
-          data={mockReward}
+          data={MOCKS}
           contentContainerStyle={styles.listContainer}
           key={this.props.rewardsStore.columnsNum}
           numColumns={this.props.rewardsStore.columnsNum}
@@ -97,11 +106,11 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
     );
   }
 
-  private _keyExtractor = (_: TReward, index: number) => index.toString();
+  private _keyExtractor = (_ : TReward, index: number) => index.toString();
   private _loadMore = () => {};
   private renderSort = () : JSX.Element => (
     <TouchableOpacity onPress={this.props.rewardsStore.toggleListView}>
-      <Icon name="info" type="material" />
+      <Icon name="list" type="material" />
     </TouchableOpacity>
   );
 }

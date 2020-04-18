@@ -2,9 +2,8 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import Input from '../Input.component';
-import Button from '../Button.component';
-import {LoginStore} from '../../../store/';
+import {Input, Button} from '@app/components/';
+import {LoginStore} from '@app/store/';
 
 type TProps = {
   loginForm: LoginStore;
@@ -17,7 +16,6 @@ const behavior = Platform.OS === "ios" ? "position" : "height";
 @observer
 class LoginForm extends React.PureComponent<TProps> {
   go = () => this.props.navigation.navigate({ name: 'Application' });
-
   public render() {
     const {form, onFieldChange} = this.props.loginForm;
     return (
@@ -36,7 +34,7 @@ class LoginForm extends React.PureComponent<TProps> {
           title="Sign In"
           style={styles.button}
           disabled={!form.meta.isValid}
-          onPress={() => this.go()}
+          onPress={this.go}
         />
       </KeyboardAvoidingView>
     );

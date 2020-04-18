@@ -1,7 +1,7 @@
 import React from 'react';
 import {Text, View, StyleSheet} from "react-native";
 
-const Note = () => {
+export const Note = () => {
   return (
     <View style={styles.noteContainer}>
       <Text style={styles.noteCaption}>
@@ -26,5 +26,3 @@ const styles = StyleSheet.create({
     color: 'rgba(255, 255, 255, 0.5);'
   }
 });
-
-export default Note;

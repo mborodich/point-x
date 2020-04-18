@@ -16,7 +16,7 @@ class LoginStore extends FormGeneric {
       isValid: false,
       error: null
     }
-  }
+  };
 }
 
 export default LoginStore;

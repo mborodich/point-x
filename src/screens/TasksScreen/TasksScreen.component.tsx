@@ -3,8 +3,8 @@ import { observer, Observer } from 'mobx-react';
 import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { PointX } from '../../shared/PointX';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import { PointX } from '@app/shared/PointX';
 import { observable } from 'mobx';
 
 interface dataStoreProps extends DrizzleProps {
@@ -59,7 +59,6 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   private _loadMore = () => {
   };
 
-
   private _renderRow = (data) => {
     if (data && data.item) {
       const task = data.item.value;
@@ -77,15 +76,15 @@ export class TasksScreen extends React.Component<dataStoreProps> {
         number
       ] = task;
 
-      const { navigation, theme: { color, style } } = this.props;
+      const {navigation, theme: {color, style}} = this.props;
       return (
         <Observer>
           {() => (
-            <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', { task })}>
+            <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', {task})}>
               <View style={styles.containerRow}>
                 <Avatar
                   rounded
-                  source={{ uri: image }}
+                  source={{uri: image}}
                   size="medium"
                 />
                 <View style={styles.containerRowMiddle}>
@@ -98,14 +97,14 @@ export class TasksScreen extends React.Component<dataStoreProps> {
                   <Text style={[style.caption2, color.gray3]}>0 days left</Text>
                 </View>
               </View>
-              <View style={styles.bottomDeriver} />
+              <View style={styles.bottomDeriver}/>
             </TouchableOpacity>
           )}
         </Observer>
       )
     }
-  };
-}
+  }
+};
 
 
 const styles = StyleSheet.create({

@@ -1,82 +1,119 @@
 import React from 'react';
-import { FlatList, TouchableOpacity, View } from 'react-native';
-import {
-  Avatar, Badge, Button, Card, ListItem, Text,
-} from 'react-native-elements';
-import { observer } from 'mobx-react';
+import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Header, Icon, ListItem, TextProps } from 'react-native-elements';
+import { observer, inject } from 'mobx-react';
+
+import { RewardListItem, RewardGridItem } from '../../components';
+import { RewardsStore } from '../../store/';
 
 interface RewardsScreenProps {
   navigation: { navigate: any };
+  rewardsStore: RewardsStore;
 }
 
+type RendersType = {
+  grid: (item: any) => JSX.Element;
+  list: (item: any) => JSX.Element;
+};
+
+export type TReward = {
+  title: string;
+  value: number;
+  company: string;
+  expiration: string;
+  amountLeft: number;
+  totalAmount: number;
+  image: string;
+};
+
+const HEADER : TextProps = {
+  // @ts-ignore
+  text: 'Rewards',
+  style: {
+    fontSize: 16,
+    lineHeight: 19,
+    fontWeight: 'normal'
+  }
+};
+
+const mockFactory = () : TReward => ({
+  title: 'Apple Watch Series 3',
+  value: 170,
+  company: 'Apple',
+  expiration: '175 days left',
+  amountLeft: 50,
+  totalAmount: 175,
+  image: `https://picsum.photos/100/100?random=${Math.random()}`
+});
+
+const mockReward : TReward[] =
+  Array.from({ length: 15 }).map(() => mockFactory());
+
+@inject('rewardsStore')
 @observer
-export class RewardsScreen extends React.Component<RewardsScreenProps> {
+export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
+  private _renderRow = ({ item }: {item: TReward}) : JSX.Element => {
+    const renders: RendersType = {
+      'grid': this._renderGridItem,
+      'list': this._renderListItem
+    };
+    return renders[this.props.rewardsStore.listView].call(this, item);
+  };
+
+  private _renderGridItem = (item: TReward) : JSX.Element => {
+    return (
+      <RewardGridItem onPress={this.navigateToDetail} item={item} />
+    );
+  };
+
+  private _renderListItem = (item: TReward) : JSX.Element => {
+    return (
+      <RewardListItem onPress={this.navigateToDetail} item={item} />
+    );
+  };
+
+  private navigateToDetail = () : Promise<void> =>
+    this.props.navigation.navigate('RewardItemScreen');
+
   public render() {
     return (
-      <FlatList
-        data={undefined}
-        renderItem={this._renderRow}
-        keyExtractor={this._keyExtractor}
-        onEndReachedThreshold={0.4}
-        onEndReached={this._loadMore}
-      />
+      <View style={styles.container}>
+        <Header
+          rightComponent={this.renderSort()}
+          centerComponent={HEADER}
+          backgroundColor="#F8F8F8"
+        />
+        <FlatList
+          data={mockReward}
+          contentContainerStyle={styles.listContainer}
+          key={this.props.rewardsStore.columnsNum}
+          numColumns={this.props.rewardsStore.columnsNum}
+          renderItem={this._renderRow}
+          onEndReached={this._loadMore}
+          keyExtractor={this._keyExtractor}
+          onEndReachedThreshold={0.4}
+        />
+      </View>
     );
   }
 
-  private _keyExtractor = (item) => `${item.value}`;
-
-  private _loadMore = () => {
-  };
-
-  private _onRefresh = () => {
-  };
-
-  private _renderRow = ({ item }: { item }) => {
-    const { navigation } = this.props;
-    const Item = observer(() => (
-      <Card>
-        <TouchableOpacity onPress={() => navigation.navigate('RewardItemScreen')}>
-          <View style={{ flex: 1, flexDirection: 'row' }}>
-            <View>
-              <Avatar
-                rounded
-                source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
-                size="large"
-              />
-              <Badge
-                status="success"
-                value={`${item.value}/100`}
-                containerStyle={{ position: 'absolute', top: -4, right: -15 }}
-              />
-            </View>
-            <View style={{ marginLeft: 20 }}>
-              <Text h4>Reward Info</Text>
-              <Text>
-                {item.value}
-                {' '}
-                TOKENS (2 days left)
-              </Text>
-            </View>
-            <Button
-              title="Try it"
-              buttonStyle={[{
-                position: 'absolute', top: -4, right: -100, padding: 3, width: 60,
-              }]}
-            />
-          </View>
-          <Text style={{ paddingVertical: 20 }}>Reward description</Text>
-        </TouchableOpacity>
-        <ListItem
-          leftAvatar={{ source: { uri: `https://picsum.photos/100/100?random=1${Math.random()}` } }}
-          title="Author"
-          subtitle="subtitle"
-          chevron
-          topDivider
-          onPress={() => navigation.navigate('PartnerScreen', { item })}
-        />
-      </Card>
-    ));
-
-    return <Item />;
-  };
+  private _keyExtractor = (_: TReward, index: number) => index.toString();
+  private _loadMore = () => {};
+  private renderSort = () : JSX.Element => (
+    <TouchableOpacity onPress={this.props.rewardsStore.toggleListView}>
+      <Icon name="info" type="material" />
+    </TouchableOpacity>
+  );
 }
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#F8F8F8'
+  },
+  listContainer: {
+    alignItems: 'center',
+    marginTop: 8.5
+  }
+});

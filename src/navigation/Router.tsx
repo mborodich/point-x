@@ -57,20 +57,6 @@ const TasksStack = function () {
   );
 };
 
-const RewardsStack = function () {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen
-        name="RewardsScreen"
-        component={RewardsScreen}
-      />
-      <Stack.Screen
-        name="RewardItemScreen"
-        component={RewardItemScreen}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const Tabs = function () {
   return (
@@ -104,12 +90,12 @@ const Tabs = function () {
       />
       <Tab.Screen
         name="RewardsScreen"
-        component={RewardsStack}
+        component={RewardsScreen}
         options={{
           tabBarLabel: 'Rewards',
           tabBarIcon: () => (
             <Icon name="gift" type="font-awesome" color={TAB_COLOR} />
-          ),
+          )
         }}
       />
       <Tab.Screen
@@ -137,6 +123,10 @@ export function AppScreens() {
       <Stack.Screen
         name="Application"
         component={Tabs}
+      />
+      <Stack.Screen
+        name="RewardItemScreen"
+        component={RewardItemScreen}
       />
     </Stack.Navigator>
   );

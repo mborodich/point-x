@@ -3,13 +3,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Icon } from 'react-native-elements';
 import { View } from 'react-native';
-import { LoginScreen } from "../screens/AuthScreen";
+import { LoginScreen } from '../screens/AuthScreen';
 import { HomeScreen } from '../screens/HomeScreen';
 import { TasksScreen } from '../screens/TasksScreen';
 import { PartnerScreen } from '../screens/PartnerScreen';
 import { RewardsScreen } from '../screens/RewardsScreen';
 import { TaskItemScreen } from '../screens/TaskItemScreen';
 import { RewardItemScreen } from '../screens/RewardItemScreen';
+import { SettingsScreen } from '../screens/SettingsScreen';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -114,7 +115,7 @@ const Tabs = function () {
       />
       <Tab.Screen
         name="ProfileScreen"
-        component={() => <View />}
+        component={() => <SettingsScreen />}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: () => (

@@ -4,8 +4,6 @@ import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { PointX } from '../../shared/PointX';
-import { observable } from 'mobx';
 
 interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -14,38 +12,18 @@ interface dataStoreProps extends DrizzleProps {
 @observer
 @Drizzle
 export class TasksScreen extends React.Component<dataStoreProps> {
-  private tasksList: any[] = [];
-  @observable private pointX;
 
-  constructor(props: Readonly<dataStoreProps>) {
-    super(props);
-  }
-
-  async componentDidMount() {
-    const { props } = this;
-    const { contractsCall, contractsGet } = props;
-    this.pointX = new PointX(contractsCall, contractsGet);
-
-    this.pointX.fetchTasksCount()
-    //this.pointX.fetchTaskById(1);
-
-    Array.from({ length: 3 }, (_, i) => {
-      this.tasksList[i] = contractsCall.getTask.cacheCall(i + 1);
-    });
+  componentDidMount() {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
   }
 
   public render() {
-    const { contractsGet } = this.props;
-    let tasks = [];
-    if (this.tasksList) {
-      tasks = this.tasksList.map((i) => {
-        return contractsGet.getTask[i];
-      })
-    }
-
+    const { pointX } = this.props;
     return (
       <FlatList
-        data={tasks}
+        data={pointX.tasksList}
         renderItem={this._renderRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
@@ -59,23 +37,15 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   private _loadMore = () => {
   };
 
-
-  private _renderRow = (data) => {
-    if (data && data.item) {
-      const task = data.item.value;
+  private _renderRow = (data: { item: any; }) => {
+    if (data) {
       const [
         caption,
         description,
         image,
         value,
         owner,
-        status,
-        itemType,
-        taskData,
-        totalAmount,
-        resultsAmount,
-        number
-      ] = task;
+      ] = data.item;
 
       const { navigation, theme: { color, style } } = this.props;
       return (
@@ -103,6 +73,9 @@ export class TasksScreen extends React.Component<dataStoreProps> {
           )}
         </Observer>
       )
+    }
+    else {
+      return undefined;
     }
   };
 }

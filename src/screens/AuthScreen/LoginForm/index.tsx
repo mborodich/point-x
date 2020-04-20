@@ -4,19 +4,27 @@ import { observer, inject } from "mobx-react";
 
 import Input from '../Input.component';
 import Button from '../Button.component';
-import {LoginStore} from '../../../store/';
+import { LoginStore } from '../../../store/';
+import { Drizzle, DrizzleProps } from '../../../shared/Drizzle';
 
-type TProps = {
+interface TProps extends DrizzleProps {
   loginForm: LoginStore;
-};
+}
 
 const behavior = Platform.OS === "ios" ? "position" : "height";
 
 @inject('loginForm')
 @observer
+@Drizzle
 class LoginForm extends React.PureComponent<TProps> {
+
+  componentDidMount() {
+    const { pointX } = this.props;
+    pointX.prefetchAll();
+  }
+
   public render() {
-    const {form, onFieldChange} = this.props.loginForm;
+    const { form, onFieldChange } = this.props.loginForm;
     return (
       <KeyboardAvoidingView
         behavior={behavior}

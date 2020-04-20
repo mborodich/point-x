@@ -39,6 +39,7 @@
     "jest"
   ],
   "include": [
-    "src"
+    "src",
+    "Drizzle.options.js"
   ]
 }

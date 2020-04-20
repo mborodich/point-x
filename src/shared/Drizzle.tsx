@@ -3,6 +3,7 @@ import { DrizzleContext } from '@drizzle/react-plugin';
 import { Drizzle as Dz, DrizzleState } from 'drizzle';
 import { ActivityIndicator } from "react-native";
 import theme from '../theme';
+import { PointX } from './PointX';
 
 export interface DrizzleProps {
   drizzle: Dz;
@@ -11,6 +12,7 @@ export interface DrizzleProps {
   contractsCall: any;
   contractsGet: any;
   theme: any;
+  pointX: any;
 }
 
 function drizzleDecoratorFactory<TProps extends DrizzleProps>(
@@ -25,6 +27,7 @@ function drizzleDecoratorFactory<TProps extends DrizzleProps>(
             if (!initialized) {
               return <ActivityIndicator size="large" />;
             }
+            const pointX = new PointX(drizzle.contracts.PointX.methods, drizzleState.contracts.PointX);
             return (
               <WrappedComponent
                 drizzle={drizzle}
@@ -33,6 +36,7 @@ function drizzleDecoratorFactory<TProps extends DrizzleProps>(
                 drizzleState={drizzleState}
                 initialized={initialized}
                 theme={theme}
+                pointX={pointX}
                 {...this.props}
               />
             );

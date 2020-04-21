@@ -76,11 +76,16 @@ export class PointX {
   @computed
   public get tasksList() {
     const tasks = this.contractsGet.getTask;
+    const results: any[] = [];
     if (!this.isEmpty(tasks)) {
       const keys = Object.keys(tasks);
-      return keys.map(e => tasks[e].value)
+      keys.map(e => {
+        if (tasks[e].value[0] !== '') {
+          results.push(tasks[e].value);
+        }
+      })
     }
-    return undefined;
+    return results.length > 0 ? results : undefined;
   }
 
   @computed
@@ -92,7 +97,7 @@ export class PointX {
       return tasksCount[key].value;
     }
 
-    return 3; // Here should be default minimal number of tasks, in that case we don't have to wait till it loaded
+    return 10; // Here should be default minimal number of tasks, in that case we don't have to wait till it loaded
   }
 
   private isEmpty(obj: object) {

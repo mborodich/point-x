@@ -35,17 +35,21 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   private _keyExtractor = (_: any, index: any) => `${index}`;
 
   private _loadMore = () => {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
   };
 
   private _renderRow = (data: { item: any; }) => {
     if (data) {
+      const task = data.item;
       const [
         caption,
         description,
         image,
         value,
         owner,
-      ] = data.item;
+      ] = task;
 
       const { navigation, theme: { color, style } } = this.props;
       return (

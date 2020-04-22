@@ -1,13 +1,15 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {Avatar} from 'react-native-elements';
+import {timeToX} from '@app/utils';
 
 type TProps = {
   company: string;
   logo?: string;
-  expiration?: string;
+  expiration?: number;
   onPress?: () => any;
 };
+
 
 export const CompanyLabel = ({ company, expiration, onPress, logo }: TProps) => {
   return (
@@ -17,7 +19,7 @@ export const CompanyLabel = ({ company, expiration, onPress, logo }: TProps) => 
           {company}
         </Text>
         <Text style={styles.expirationText}>
-          {expiration}
+          {expiration && timeToX(expiration)}
         </Text>
       </View>
       <Avatar

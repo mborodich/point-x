@@ -9,6 +9,7 @@ import { PROGRESS_COLORS } from "../../utils/const";
 interface TProps extends Progress.BarPropTypes {
   totalAmount: number;
   amountLeft: number;
+  containerStyle?: object;
 }
 
 export const ProgressBar = (props: TProps) : JSX.Element => {
@@ -29,7 +30,7 @@ export const ProgressBar = (props: TProps) : JSX.Element => {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, props.containerStyle]}>
       <Text style={styles.textStyle}>{amountLeft} of {totalAmount} items left</Text>
       <Progress.Bar
         progress={percent}

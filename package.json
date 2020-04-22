@@ -32,6 +32,7 @@
     "browserify-zlib": "^0.1.4",
     "buffer": "^4.9.2",
     "crypto-js": "^4.0.0",
+    "dayjs": "^1.8.25",
     "dns.js": "^1.0.1",
     "drizzle": "^1.4.0",
     "drizzle-react-components": "^1.4.0",
@@ -41,6 +42,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.1.8",
     "mobx-react-form": "^2.0.8",
+    "mobx-utils": "^5.5.7",
     "node-libs-react-native": "^1.0.3",
     "pointxio-contracts": "github:pointxio/contracts",
     "process": "^0.11.10",
@@ -74,7 +76,8 @@
     "url": "^0.10.3",
     "util": "^0.12.2",
     "validatorjs": "^3.18.1",
-    "vm-browserify": "^1.1.2"
+    "vm-browserify": "^1.1.2",
+    "web3": "^1.2.6"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

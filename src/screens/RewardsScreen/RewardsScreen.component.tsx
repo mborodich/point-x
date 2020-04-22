@@ -1,30 +1,42 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
-import { Header, Icon, TextProps, Text } from 'react-native-elements';
-import { observer, inject } from 'mobx-react';
+import { Header, Icon, TextProps } from 'react-native-elements';
+import { observer, Observer } from 'mobx-react';
 
 import { RewardListItem, RewardGridItem } from '@app/components/';
-import { RewardsStore } from '@app/store/';
-import {FULL_MOCKS} from "@app/utils";
+import {Drizzle, DrizzleProps} from '@app/shared/Drizzle';
+import {action, computed, observable} from "mobx";
 
-interface RewardsScreenProps {
+interface RewardsScreenProps extends DrizzleProps {
   navigation: { navigate: any };
-  rewardsStore: RewardsStore;
+}
+
+type ListView = 'grid' | 'list';
+
+type Reward = {
+  caption: string;
+  description: string;
+  image: string;
+  value: number;
+  owner: string;
+  status: 0 | 1;
+  totalAmount: number;
+  resultsAmount: number;
+  number: number;
+  expirationDate: number;
+}
+
+type Partner = {
+  account: string;
+  name: string;
+  description: string;
+  logo: string;
+  number: number;
 }
 
 type RendersType = {
-  grid: (item: any) => JSX.Element;
-  list: (item: any) => JSX.Element;
-};
-
-export type TReward = {
-  title: string;
-  value: number;
-  company: string;
-  expiration: string;
-  amountLeft: number;
-  totalAmount: number;
-  image: string;
+  grid: (item: Reward, partner: Partner) => JSX.Element;
+  list: (item: Reward, partner: Partner) => JSX.Element;
 };
 
 const HEADER : TextProps = {
@@ -37,40 +49,69 @@ const HEADER : TextProps = {
   }
 };
 
-@inject('rewardsStore')
 @observer
-export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
-  private _renderRow = ({ item }: {item: TReward}) : JSX.Element => {
-    const renders: RendersType = {
-      'grid': this._renderGridItem,
-      'list': this._renderListItem
+@Drizzle
+export class RewardsScreen extends React.Component<RewardsScreenProps> {
+  @observable
+  listView : ListView = 'list';
+
+  @action.bound toggleListView() : void {
+    if (this.listView === 'list') {
+      this.listView = 'grid';
+      return ;
+    }
+    if (this.listView === 'grid') {
+      this.listView = 'list';
+      return ;
     };
-    return renders[this.props.rewardsStore.listView].call(this, item);
+  }
+
+  @computed get columnsNum() {
+    if (this.listView === 'list') return 1;
+    if (this.listView === 'grid') return 2;
+    return ;
+  }
+
+  private _renderRow = ({ item }: {item: Reward}) : JSX.Element | undefined => {
+    const { pointX } = this.props;
+    if (item) {
+      const renders: RendersType = {
+        'grid': this._renderGridItem,
+        'list': this._renderListItem
+      };
+
+      const { owner } = item;
+      const partner = pointX.partnersList.find(i => i.account === owner);
+      return (
+        <Observer>
+          {() => renders[this.listView].call(this, item, partner)}
+        </Observer>
+      );
+    }
+    return undefined;
   };
 
-  private _renderGridItem = (item: TReward) : JSX.Element => {
+  private _renderGridItem = (item: Reward, partner: Partner) : JSX.Element => {
     return (
-      <RewardGridItem navigation={this.props.navigation} item={item} />
+      <RewardGridItem navigation={this.props.navigation} partner={partner} item={item} />
     );
   };
 
-  private _renderListItem = (item: TReward) : JSX.Element => {
+  private _renderListItem = (item: Reward, partner: Partner) : JSX.Element => {
     return (
-      <RewardListItem navigation={this.props.navigation} item={item} />
+      <RewardListItem navigation={this.props.navigation} partner={partner} item={item} />
     );
   };
 
-  private navigateToDetail = () : Promise<void> =>
-    this.props.navigation.navigate('RewardItemScreen');
-
+  async componentDidMount() : Promise<void> {
+    const { pointX } = this.props;
+    pointX.fetchRewardsCount();
+    pointX.fetchPartnersCount();
+    pointX.fetchAllRewards();
+  }
 
   public render() {
-
-    let MOCKS = [];
-    for (const {rewards} of FULL_MOCKS) {
-      if (rewards)
-        MOCKS.push(rewards[0]);
-    }
+    const { pointX } = this.props;
 
     return (
       <View style={styles.container}>
@@ -80,10 +121,10 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
           backgroundColor="#F8F8F8"
         />
         <FlatList
-          data={MOCKS}
+          data={pointX.rewardsList}
           contentContainerStyle={styles.listContainer}
-          key={this.props.rewardsStore.columnsNum}
-          numColumns={this.props.rewardsStore.columnsNum}
+          key={this.columnsNum}
+          numColumns={this.columnsNum}
           renderItem={this._renderRow}
           onEndReached={this._loadMore}
           keyExtractor={this._keyExtractor}
@@ -93,10 +134,14 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
     );
   }
 
-  private _keyExtractor = (_ : TReward, index: number) => index.toString();
-  private _loadMore = () => {};
+  private _keyExtractor = (_ : Reward, index: number) : string => index.toString();
+  private _loadMore = () : void => {
+    const { pointX } = this.props;
+    pointX.fetchRewardsCount();
+    pointX.fetchAllRewards();
+  };
   private renderSort = () : JSX.Element => (
-    <TouchableOpacity onPress={this.props.rewardsStore.toggleListView}>
+    <TouchableOpacity onPress={this.toggleListView}>
       <Icon name="list" type="material" />
     </TouchableOpacity>
   );

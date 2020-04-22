@@ -3,9 +3,7 @@ import { observer, Observer } from 'mobx-react';
 import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
-import { PointX } from '@app/shared/PointX';
-import { observable } from 'mobx';
+import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
 
 interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -14,38 +12,18 @@ interface dataStoreProps extends DrizzleProps {
 @observer
 @Drizzle
 export class TasksScreen extends React.Component<dataStoreProps> {
-  private tasksList: any[] = [];
-  @observable private pointX;
 
-  constructor(props: Readonly<dataStoreProps>) {
-    super(props);
-  }
-
-  async componentDidMount() {
-    const { props } = this;
-    const { contractsCall, contractsGet } = props;
-    this.pointX = new PointX(contractsCall, contractsGet);
-
-    this.pointX.fetchTasksCount();
-    //this.pointX.fetchTaskById(1);
-
-    Array.from({ length: 3 }, (_, i) => {
-      this.tasksList[i] = contractsCall.getTask.cacheCall(i + 1);
-    });
+  componentDidMount() {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
   }
 
   public render() {
-    const { contractsGet } = this.props;
-    let tasks = [];
-    if (this.tasksList) {
-      tasks = this.tasksList.map((i) => {
-        return contractsGet.getTask[i];
-      })
-    }
-
+    const { pointX } = this.props;
     return (
       <FlatList
-        data={tasks}
+        data={pointX.tasksList}
         renderItem={this._renderRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
@@ -57,34 +35,31 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   private _keyExtractor = (_: any, index: any) => `${index}`;
 
   private _loadMore = () => {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
   };
 
-  private _renderRow = (data) => {
+  private _renderRow = (data: { item: any; }) => {
     if (data && data.item) {
-      const task = data.item.value;
+      const task = data.item;
       const [
         caption,
         description,
         image,
         value,
         owner,
-        status,
-        itemType,
-        taskData,
-        totalAmount,
-        resultsAmount,
-        number
       ] = task;
 
-      const {navigation, theme: {color, style}} = this.props;
+      const { navigation, theme: { color, style } } = this.props;
       return (
         <Observer>
           {() => (
-            <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', {task})}>
+            <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', { task })}>
               <View style={styles.containerRow}>
                 <Avatar
                   rounded
-                  source={{uri: image}}
+                  source={{ uri: image }}
                   size="medium"
                 />
                 <View style={styles.containerRowMiddle}>
@@ -97,14 +72,17 @@ export class TasksScreen extends React.Component<dataStoreProps> {
                   <Text style={[style.caption2, color.gray3]}>0 days left</Text>
                 </View>
               </View>
-              <View style={styles.bottomDeriver}/>
+              <View style={styles.bottomDeriver} />
             </TouchableOpacity>
           )}
         </Observer>
       )
     }
-  }
-};
+    else {
+      return undefined;
+    }
+  };
+}
 
 
 const styles = StyleSheet.create({

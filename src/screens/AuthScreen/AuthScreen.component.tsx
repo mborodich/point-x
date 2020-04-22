@@ -29,6 +29,8 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.setState({ initialIndex: 1 });
   };
 
+  onLogin = () => this.props.navigation.navigate('Application');
+
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     this.setState({ initialIndex: Boolean(carouselViewed) ? 1 : 0 });
@@ -72,7 +74,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             note
             flowSwitch
           >
-            <LoginForm navigation={this.props.navigation} />
+            <LoginForm navigation={this.props.navigation} onLogin={this.onLogin} />
           </AuthWizard.Step>
         </AuthWizard>
       </LinearGradient>

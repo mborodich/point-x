@@ -1,5 +1,5 @@
 
-const PointX = require('../../build/contracts/PointX');
+const PointX = require('./build/contracts/PointX');
 
 const options = {
   contracts: [PointX],

@@ -1,6 +1,15 @@
+import dayjs from 'dayjs';
+import relativeTimePlugin from 'dayjs/plugin/relativeTime';
+
+dayjs.extend(relativeTimePlugin);
+
+const timeToX = (v: number | Date | string) => dayjs().to(v);
 
 const calcRest = (rest: number, total: number) : number =>
   Math.round((rest / total) * 100);
+
+const isEmpty = (obj: object) =>
+  Object.keys(obj).length === 0 && obj.constructor === Object;
 
 
 const FULL_MOCKS = [
@@ -178,5 +187,7 @@ const getMocksByName = (name: string) => FULL_MOCKS.find((i) => i.name === name)
 export {
   calcRest,
   FULL_MOCKS,
-  getMocksByName
+  getMocksByName,
+  isEmpty,
+  timeToX
 }

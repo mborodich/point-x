@@ -1,19 +1,40 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
+import {observer} from 'mobx-react';
 import {ListItem} from 'react-native-elements';
 import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
-import {TReward} from '@app/screens/RewardsScreen/RewardsScreen.component';
 import {deviceWidth} from '@app/utils/const';
-import {getMocksByName} from "@app/utils";
+
+type Reward = {
+  caption: string;
+  description: string;
+  image: string;
+  value: number;
+  owner: string;
+  status: 0 | 1;
+  totalAmount: number;
+  resultsAmount: number;
+  number: number;
+  expirationDate: number;
+}
+
+type Partner = {
+  account: string;
+  name: string;
+  description: string;
+  logo: string;
+  number: number;
+}
 
 type TProps = {
-  item: TReward;
+  item: Reward;
+  partner: Partner;
   navigation: { navigate: any };
 };
 
-export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: getMocksByName(item.company) }), [item]);
-  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: getMocksByName(item.company).rewards[0] }), [item]);
+export const RewardListItem = observer(({ item, partner, navigation }: TProps) : JSX.Element => {
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
   const _renderItemsLeft = React.useCallback(() : JSX.Element => {
     return (
@@ -23,7 +44,8 @@ export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
           width={95}
           height={2}
           borderWidth={0}
-          {...item}
+          totalAmount={item.totalAmount}
+          amountLeft={item.resultsAmount}
         />
       </View>
     );
@@ -42,25 +64,30 @@ export const RewardListItem = ({ item, navigation }: TProps) : JSX.Element => {
         size: 56,
         imageProps: { borderRadius: 8 }
       }}
-
-      title={item.title}
+      title={item.caption}
       subtitle={_renderItemsLeft()}
       rightTitle={<RewardPrice {...item}  />}
-      rightSubtitle={<CompanyLabel {...item} logo={getMocksByName(item.company).image} onPress={onCompanyPress} />}
+      rightSubtitle={
+        <CompanyLabel
+          company={partner.name}
+          logo={partner.logo}
+          expiration={item.expirationDate}
+          onPress={onCompanyPress}
+        />
+      }
       titleStyle={styles.listItemTitle}
       rightTitleStyle={styles.listItemPrice}
       onPress={onPress}
       bottomDivider
     />
   );
-};
+});
 
 
 const styles = StyleSheet.create({
   listItemContainer: {
     width: deviceWidth,
     height: 64,
-    // marginTop: 8.5,
     backgroundColor: '#F8F8F8',
     marginHorizontal: 7
   },

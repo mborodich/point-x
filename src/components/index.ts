@@ -12,4 +12,5 @@ export { RewardPrice } from './RewardPrice/RewardPrice.component';
 export { Button } from './ButtonComponent/Button.component';
 export { Input } from './InputComponent/Input.component';
 export { Note } from './NoteComponent/Note.component';
-export { Header } from './HeaderComponent/Header.component';
+export { Header } from './HeaderComponent/Header.component'
+export { SettingsMenuItem } from './SettingsMenuItem/SettingsMenuItem.component';

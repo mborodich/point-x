@@ -57,7 +57,6 @@ export class UserRewardsScreen extends React.PureComponent<UserRewardsScreenProp
   }
 
   private _renderRow = ({ item }: {item: Reward}) : JSX.Element | undefined => {
-    const { pointX } = this.props;
     const renders: RendersType = {
       'grid': this._renderGridItem,
       'list': this._renderListItem
@@ -100,7 +99,6 @@ export class UserRewardsScreen extends React.PureComponent<UserRewardsScreenProp
         />
         <FlatList
           data={pointX.rewardsList}
-          contentContainerStyle={styles.listContainer}
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}
@@ -129,11 +127,6 @@ export class UserRewardsScreen extends React.PureComponent<UserRewardsScreenProp
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#F8F8F8'
-  },
-  listContainer: {
-    alignItems: 'center',
-    marginTop: 8.5
   }
 });

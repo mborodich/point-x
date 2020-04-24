@@ -2,25 +2,26 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView
 } from 'react-native';
 import { observer } from 'mobx-react';
 import { observable } from "mobx";
-import { Avatar, Header, Text, Divider, Icon, Button } from 'react-native-elements';
+import { Avatar, Header, Text, Button } from 'react-native-elements';
 import Modal from 'react-native-modal';
 
-interface SettingsScreenProps {
+import { Drizzle, DrizzleProps } from "@app/shared/Drizzle";
+import { SettingsMenuItem } from '@app/components';
+
+interface SettingsScreenProps extends DrizzleProps {
   navigation: { navigate: any; };
 }
 
-const mockUser = {
-  avatar: `https://picsum.photos/100/100?random=1${Math.random()}`,
-  name: 'coolnickname',
-  number: '0123 456 789'
-};
 
 @observer
+@Drizzle
 export class SettingsScreen extends React.Component<SettingsScreenProps> {
+  @observable signOutModalVisible : boolean = false;
 
   private onMnemonicsClick = () => {
     return this.props.navigation.navigate("Mnemonics");
@@ -34,240 +35,126 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
     return this.props.navigation.navigate("RewardsHistory");
   };
 
-  private _renderMain () : JSX.Element {
-    return (
-      <View style={{ marginTop: 24 }}>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Phone Number
-            </Text>
-            <Text style={styles.subtitle}>
-              +7 982 648 33 005
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              PIN-Code
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-          <View >
-            <Icon type="material" name="chevron-right" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onMnemonicsClick} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 50, width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Mnemonics
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-          <View >
-            <Icon type="material" name="chevron-right" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 45, width: 400, padding: 8 }}>
-          <View>
-            <View style={{ flexDirection : 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-              <Text style={styles.title}>
-                KYC
-              </Text>
-              <Icon name="info-outline" type="material" color="#EC4D3D" size={16} />
-            </View>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-          <View >
-            <Icon type="material" name="chevron-right" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onRewardsClick} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 45, width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Rewards
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-          <View >
-            <Icon type="material" name="chevron-right" />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onHistoryClick} style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 45, width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              History
-            </Text>
-            <View style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340,
-              display: 'none'
-            }} />
-          </View>
-          <View >
-            <Icon type="material" name="chevron-right" />
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-
-  private _renderSubmenu() : JSX.Element {
-    return (
-      <View style={{ backgroundColor: '#f8f8f8', borderTopWidth: 0.5, borderTopColor: '#f3f3f3', height: 500 }}>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 48, width: 400, padding: 8 }}>
-          <View>
-            <Text style={{ ...styles.title, marginTop: 15 }}>
-              FAQ
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',  width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Privacy Policy
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 45, width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Terms of Use
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', height: 45,  width: 400, padding: 8 }}>
-          <View>
-            <Text style={styles.title}>
-              Contact Support
-            </Text>
-            <Divider style={{
-              height: 1,
-              backgroundColor: '#E0E0E0',
-              marginTop: 7,
-              width: 340
-            }} />
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => this.signOutModalVisible = true}
-          style={{ padding: 8 }}
-        >
-            <Text style={{ ...styles.title, color: '#3785F7' }}>Sign Out</Text>
-        </TouchableOpacity>
-
-      </View>
-    );
-  }
-
-  @observable signOutModalVisible : boolean = false;
 
   public render() {
+    const { theme: { colorsMap } } = this.props;
+
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Header
-          centerComponent={{ text: mockUser.name }}
+          centerComponent={{ text: 'Username' }}
           backgroundColor="#fff"
         />
-        <View style={{ alignItems: 'center', justifyContent: 'center', marginTop: 24 }}>
+        <View style={styles.centeredAvatar}>
           <Avatar
             source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
             rounded
-            containerStyle={{ width: 64, height: 64 }}
             size="large"
           />
-          {this._renderMain()}
-          {this._renderSubmenu()}
         </View>
-        <Modal isVisible={this.signOutModalVisible}>
-          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center',  }}>
-            <View style={{ flexDirection: 'column', backgroundColor: '#fff', width: 315, height: 238, borderRadius: 16 }}>
-              <Text style={{ textAlign: 'center', fontWeight: '500', lineHeight: 24, fontSize: 20, color: '#333333', paddingTop: 16 }}>
-                Sign Out?
-              </Text>
+        <SettingsMenuItem title="Phone Number" subtitle="+7 999 139 33 05"/>
+        <SettingsMenuItem title="PIN-Code" withChevron />
+        <SettingsMenuItem onPress={this.onMnemonicsClick} title="Mnemonics" withChevron />
+        <SettingsMenuItem title="KYC" rightIcon={{ size: 16, name: "info-outline", type: "material", color: colorsMap.orange }} withChevron />
+        <SettingsMenuItem onPress={this.onRewardsClick} title="Rewards" withChevron />
+        <SettingsMenuItem onPress={this.onHistoryClick} title="History" withChevron />
+        <View style={{ flex: 1, backgroundColor: colorsMap.bg }}>
+          <SettingsMenuItem title="FAQ" />
+          <SettingsMenuItem title="Privacy Policy" />
+          <SettingsMenuItem title="Terms of Use" />
+          <SettingsMenuItem title="Contact Support" />
+          <TouchableOpacity
+            onPress={() => this.signOutModalVisible = true}
+            style={{ padding: 18 }}
+          >
+            <Text style={{ ...styles.title, color: colorsMap.blue1 }}>Sign Out</Text>
+          </TouchableOpacity>
+        </View>
+        {this._renderSignOutModal()}
+      </ScrollView>
+    )
+  }
 
-              <Text style={{ textAlign: 'center', fontWeight: 'normal', lineHeight: 19, fontSize: 16, color: '#828282', paddingTop: 16 }}>
-                Текст предупреждающий о том, что нужно сохранить мнемонику на сторонние носители иначе при утере, профиль будет недоступен
-              </Text>
+  private _renderSignOutModal = () : JSX.Element => {
+    const { colorsMap } = this.props.theme;
 
-              <View style={{ flexDirection: 'row', flex: 1, alignSelf: 'center', marginTop: 50 }}>
-                <Button
-                  title="Cancel"
-                  containerStyle={{ width: 118, height: 48, }}
-                  buttonStyle={{ backgroundColor: '#fff', width: 119, }}
-                  titleStyle={{ color: '#0D57CA' }}
-                  onPress={() => this.signOutModalVisible = false}
-                />
-                <Button
-                  title="OK"
-                  onPress={() => {
-                    this.signOutModalVisible = false;
-                    return this.props.navigation.navigate("AuthScreen");
-                  }}
-                  containerStyle={{ width: 118, height: 48 }}
-                  buttonStyle={{ backgroundColor: '#fff', width: 119 }}
-                  titleStyle={{ color: '#0D57CA' }}
-                />
-              </View>
+    const onOkClick = () : void => {
+      this.signOutModalVisible = false;
+      return this.props.navigation.navigate("AuthScreen");
+    };
+
+
+    return (
+      <Modal isVisible={this.signOutModalVisible}>
+        <View style={styles.modalWrapper}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Sign Out?</Text>
+            <Text style={styles.warningText}>
+              Текст предупреждающий о том, что нужно сохранить мнемонику на сторонние носители иначе при утере, профиль будет недоступен
+            </Text>
+            <View style={styles.modalActions}>
+              <Button
+                title="Cancel"
+                containerStyle={styles.modalButtonContainer}
+                buttonStyle={styles.modalButton}
+                titleStyle={{ color: colorsMap.blue2 }}
+                onPress={() => this.signOutModalVisible = false}
+              />
+              <Button
+                title="OK"
+                onPress={onOkClick}
+                containerStyle={styles.modalButtonContainer}
+                buttonStyle={styles.modalButton}
+                titleStyle={{ color: colorsMap.blue2 }}
+              />
             </View>
           </View>
-        </Modal>
-      </View>
-    )
+        </View>
+      </Modal>
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff"
+  },
+  modalWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  modalContent: {
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+    width: 315,
+    height: 238,
+    borderRadius: 16
+  },
+  modalTitle: {
+    textAlign: 'center',
+    fontWeight: '500',
+    lineHeight: 24,
+    fontSize: 20,
+    color: '#333333',
+    paddingTop: 16
+  },
+  warningText: {
+    textAlign: 'center',
+    fontWeight: 'normal',
+    lineHeight: 19,
+    fontSize: 16,
+    color: '#828282',
+    paddingTop: 16
+  },
+  modalActions: { flexDirection: 'row', flex: 1, alignSelf: 'center', marginTop: 50 },
+  modalButton: {
+    backgroundColor: '#fff',
+    width: 119
+  },
+  modalButtonContainer: {
+    width: 118,
+    height: 48
   },
   title: {
     fontStyle: 'normal',
@@ -283,5 +170,10 @@ const styles = StyleSheet.create({
     lineHeight: 14,
     fontStyle: 'normal',
     fontWeight: 'normal'
+  },
+  centeredAvatar: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 24
   }
 });

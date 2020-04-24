@@ -103,7 +103,6 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
         />
         <FlatList
           data={pointX.rewardsList}
-          contentContainerStyle={styles.listContainer}
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}
@@ -131,11 +130,6 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: '#F8F8F8'
-  },
-  listContainer: {
-    alignItems: 'center',
-    marginTop: 8.5
   }
 });

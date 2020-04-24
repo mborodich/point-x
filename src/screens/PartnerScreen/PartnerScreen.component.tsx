@@ -1,13 +1,14 @@
 import React from 'react';
 import {observer} from 'mobx-react';
-import {observable, action} from 'mobx';
 import {ScrollView, StyleSheet, View, FlatList} from 'react-native';
 import {Avatar, Header, Text} from 'react-native-elements';
 import {TabView, TabBar} from 'react-native-tab-view';
-import {RewardListItem} from '@app/components';
+import {Drizzle, DrizzleProps} from '@app/shared/Drizzle';
+import {RewardListItem, TabViewWrapper, TaskListItem} from '@app/components';
+import {Task} from "@app/shared/types";
 
 
-interface PartnerScreenProps {
+interface PartnerScreenProps extends DrizzleProps{
   navigation: { navigate: any; goBack: any; };
 }
 
@@ -28,93 +29,93 @@ const routes = [
 ];
 
 @observer
+@Drizzle
 export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
-  @observable currentIdx : number = 0;
-  @action.bound switchTab() : void {
-    if (this.currentIdx === 0) {
-      this.currentIdx = 1;
-      return ;
-    }
-    if (this.currentIdx === 1) {
-      this.currentIdx = 0;
-      return ;
-    }
-  }
+  private getTabScenes = () => {
+    return ({
+      [Tabs.ACTIVE]: this._renderActive(),
+      [Tabs.ARCHIVE]: this._renderArchive()
+    });
+  };
 
-  private _renderTabBar(props: any) : JSX.Element {
-    return (
-      <TabBar
-        {...props}
-        activeColor="#4F4F4F"
-        inactiveColor="#828282"
-        tabStyle={{
-          backgroundColor: '#fff',
-          width: 'auto'
-        }}
-        indicatorContainerStyle={styles.indicatorContainerStyle}
-        pressColor="#fff"
-        contentContainerStyle={styles.tabContainer}
-        renderLabel={({ route, color }) => {
-          return (
-            <Text style={[ {...styles.tabText, color }]}>{route.title}</Text>
-          )
-        }}
-      />
-    );
-  }
+  private _onTaskClick = (task : Task) =>
+    this.props.navigation.navigate('TaskItemScreen', { task });
+
+  private _keyExtractor = (_: any, index: any) => `${index}`;
 
   private _renderActive() : JSX.Element {
-    const partner = this.props.route.params.partner;
-
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Tasks</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
+        <FlatList
+          data={[]}
+          keyExtractor={this._keyExtractor}
+          renderItem={({item}) =>
+            <TaskListItem
+              task={item}
+              theme={this.props.theme}
+              onClick={() => this._onTaskClick(item)}
+            />
+          }
+        />
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={partner.rewards}
-          renderItem={({item}) => <RewardListItem navigation={this.props.navigation} item={item} />}
+          data={[]}
+          keyExtractor={this._keyExtractor}
+          renderItem={({item}) =>
+            <RewardListItem
+              navigation={this.props.navigation}
+              partner={{}}
+              item={item}
+            />
+          }
         />
       </View>
     );
   }
 
   private _renderArchive() : JSX.Element {
-    const partner = this.props.route.params.partner;
-
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Tasks</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
+        <FlatList
+          data={[]}
+          keyExtractor={this._keyExtractor}
+          renderItem={({item}) =>
+            <TaskListItem
+              task={item}
+              theme={this.props.theme}
+              onClick={() => this._onTaskClick(item)}
+            />
+          }
+        />
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={partner.rewards}
-          renderItem={({item}) => <RewardListItem navigation={this.props.navigation}  onPress={() => {}} item={item} />}
+          data={[]}
+          keyExtractor={this._keyExtractor}
+          renderItem={({item}) =>
+            <RewardListItem
+              navigation={this.props.navigation}
+              partner={{}}
+              item={item}
+            />
+          }
         />
       </View>
     );
   }
-
-  private renderScene = ({ route } : any) => {
-    switch (route.key) {
-      case Tabs.ACTIVE:
-        return this._renderActive();
-      case Tabs.ARCHIVE:
-        return this._renderArchive();
-      default:
-        return null;
-    }
-  };
 
   public render() {
     const partner = this.props.route.params.partner;
@@ -138,11 +139,9 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
             {partner.description}
           </Text>
         </View>
-        <TabView
-          navigationState={{ index: this.currentIdx, routes }}
-          onIndexChange={this.switchTab}
-          renderTabBar={this._renderTabBar}
-          renderScene={this.renderScene}
+        <TabViewWrapper
+          routes={routes}
+          scenes={this.getTabScenes()}
         />
       </ScrollView>
     );
@@ -160,29 +159,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 20
   },
-  listHeaderContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 16 },
+  listHeaderContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 16
+  },
   textParagraphContainer: {
     padding: 6,
   },
-  activeContainer: { padding: 0, backgroundColor: '#F8F8F8' },
+  activeContainer: {
+    padding: 0,
+    backgroundColor: '#F8F8F8'
+  },
   textParagraph: {
     fontStyle: 'normal',
     fontWeight: 'normal',
     fontSize: 14,
     lineHeight: 17,
-    color: '#4F4F4F',
-    letterSpacing: -0.4
-  },
-  tabContainer: { backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center', borderBottomWidth: 0 },
-  indicatorContainerStyle: {
-    flex: 1, height: 10,  backgroundColor: 'red'
-  },
-  tabText: {
-    fontStyle: 'normal',
-    fontWeight: 'normal',
-    fontSize: 16,
-    lineHeight: 19,
-    textAlign: 'center',
     color: '#4F4F4F',
     letterSpacing: -0.4
   },

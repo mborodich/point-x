@@ -24,8 +24,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 16,
     color: '#4F4F4F',
-    textTransform: 'capitalize',
-    marginBottom: 10
   },
   pntxLabel: {
     fontSize: 6,
@@ -34,10 +32,9 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textTransform: "uppercase",
     color: '#828282',
-    marginBottom: 7
+    alignSelf: 'flex-end'
   },
   priceContainer: {
     flexDirection: 'row',
-    alignItems: 'center'
   },
 });

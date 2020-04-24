@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     lineHeight: 14
   },
   container: {
-    padding: 15,
+    padding: 20,
     maxWidth: '50%'
   },
   propsContainer: {

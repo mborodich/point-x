@@ -53,12 +53,12 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   containerRowRight: {
-    alignItems: 'flex-end'
+    alignItems: 'flex-end',
   },
   bottomDeriver: {
     borderBottomColor: '#E0E0E0',
     borderBottomWidth: 0.5,
     paddingHorizontal: 16,
-    marginHorizontal: 16,
+    marginHorizontal: 16
   }
 });

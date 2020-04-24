@@ -65,12 +65,12 @@ export class RewardItemScreen extends React.PureComponent<Props> {
         </ImageBackground>
         <View style={{ height: 237 }}>
           <View style={styles.priceContainer}>
-            <RewardPrice
-              containerStyle={{ flexDirection: 'row-reverse' }}
-              value={reward.value}
-              priceStyle={styles.price}
-              labelStyle={styles.priceLabel}
-            />
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ color: '#4F4F4F', fontSize: 16, lineHeight: 19 }}>
+                {reward.value}
+              </Text>
+              <Text style={{ fontSize: 10, lineHeight: 12, textTransform: "uppercase", color: '#828282', alignSelf: 'flex-end' }}> pntx</Text>
+            </View>
             <CompanyLabel
               company={partner.name}
               expiration={reward.expirationDate}
@@ -79,7 +79,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
             />
           </View>
           <View style={styles.descContainer}>
-            <View style={{ height: 30 }}>
+            <View style={{ height: 20 }}>
               <ProgressBar
                 totalAmount={170}
                 amountLeft={50}

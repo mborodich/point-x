@@ -28,7 +28,9 @@ export const textStyles: { [key: string]: TextStyle } = {
     fontSize: 16,
     fontWeight: 'normal',
     lineHeight: 28,
-  }
+  },
+
+
 };
 
 export type TextStyles = keyof typeof textStyles;

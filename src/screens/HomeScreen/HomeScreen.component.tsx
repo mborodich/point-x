@@ -106,7 +106,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
         renderItem={this._renderTaskRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
-        onEndReached={this._fetchMoreTasks}
+        // onEndReached={this._fetchMoreTasks}
       />
     )
   };
@@ -120,17 +120,17 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
         renderItem={this._renderRewardRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
-        onEndReached={this._fetchMoreRewards}
+        // onEndReached={this._fetchMoreRewards}
       />
     );
   };
 
   componentDidMount(): void {
     const { pointX } = this.props;
-    pointX.fetchTasksCount();
-    pointX.fetchAllTasks();
-    pointX.fetchRewardsCount();
-    pointX.fetchAllRewards();
+    // pointX.fetchTasksCount();
+    // pointX.fetchAllTasks();
+    // pointX.fetchRewardsCount();
+    // pointX.fetchAllRewards();
   }
 
   public render() {

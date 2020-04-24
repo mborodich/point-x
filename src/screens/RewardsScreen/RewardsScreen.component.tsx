@@ -86,9 +86,9 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
 
   async componentDidMount() : Promise<void> {
     const { pointX } = this.props;
-    pointX.fetchRewardsCount();
-    pointX.fetchPartnersCount();
-    pointX.fetchAllRewards();
+    // pointX.fetchRewardsCount();
+    // pointX.fetchPartnersCount();
+    // pointX.fetchAllRewards();
   }
 
   public render() {
@@ -107,7 +107,7 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}
-          onEndReached={this._loadMore}
+          // onEndReached={this._loadMore}
           keyExtractor={this._keyExtractor}
           onEndReachedThreshold={0.4}
         />

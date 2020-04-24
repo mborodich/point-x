@@ -22,6 +22,8 @@ interface SettingsScreenProps extends DrizzleProps {
 @Drizzle
 export class SettingsScreen extends React.Component<SettingsScreenProps> {
   @observable signOutModalVisible : boolean = false;
+  private mock : string = `https://picsum.photos/100/100?random=1${Math.random()}`;
+
 
   private onMnemonicsClick = () => {
     return this.props.navigation.navigate("Mnemonics");

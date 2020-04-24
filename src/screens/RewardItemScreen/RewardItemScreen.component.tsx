@@ -27,7 +27,6 @@ const qrCode = require('../../assets/img/qr-code.png');
 @Drizzle
 export class RewardItemScreen extends React.PureComponent<Props> {
   @observable private _isFetching : boolean = false;
-  @observable private _tileIsLoading : boolean = true;
   @observable private qrCode : string | null = null;
   @observable private _partner: Partner = {
     account: '',
@@ -37,7 +36,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
     number: 0
   };
 
-  @action.bound async getReward() : Promise<void> {
+  @action.bound async getReward(): Promise<void> {
     this._isFetching = true;
     setTimeout(() => {
       this._isFetching = false;
@@ -45,7 +44,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
     }, 2000);
   }
 
-  async componentDidMount() : Promise<void> {
+  async componentDidMount(): Promise<void> {
   }
 
   private navigateToDetail = () =>
@@ -60,7 +59,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
       <SafeAreaView style={styles.container}>
         <ImageBackground style={styles.img} source={{ uri: reward.image }}>
           <TouchableOpacity onPress={this.props.navigation.goBack} style={{ width: 48, height: 48, top: 10 }}>
-            <Icon type="material" name="chevron-left"/>
+            <Icon type="material" name="chevron-left" />
           </TouchableOpacity>
         </ImageBackground>
         <View style={{ height: 237 }}>
@@ -93,7 +92,6 @@ export class RewardItemScreen extends React.PureComponent<Props> {
             <Text style={styles.desc}>{reward.description}</Text>
           </View>
         </View>
-
         { this.qrCode ? <View style={styles.qrCodeContainer}>
             <Image
               width={136}
@@ -117,7 +115,7 @@ export class RewardItemScreen extends React.PureComponent<Props> {
     );
   }
 
-  private _renderNote = () : JSX.Element => {
+  private _renderNote = (): JSX.Element => {
     return (
       <Text style={{ ...styles.noteText, width: this.qrCode ? 193 : 350 }}>
         <Text style={{ color: '#3785F7' }}>Note:</Text> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam

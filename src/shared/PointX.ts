@@ -1,5 +1,5 @@
 import { action, computed, observable } from 'mobx';
-import {createTransformer} from 'mobx-utils';
+import { createTransformer } from 'mobx-utils';
 import web3 from 'web3';
 import { isEmpty } from '@app/utils';
 
@@ -42,54 +42,54 @@ export class PointX {
   }
 
   @action.bound
-  public fetchTasksCount() : void {
+  public fetchTasksCount(): void {
     this.contractsCall.getTasksCount.cacheCall();
   }
 
   @action.bound
-  public fetchRewardsCount() : void {
+  public fetchRewardsCount(): void {
     this.contractsCall.getRewardsCount.cacheCall();
   }
 
   @action.bound
-  public fetchUsersCount() : void {
+  public fetchUsersCount(): void {
     this.contractsCall.getUsersCount.cacheCall();
   }
 
   @action.bound
-  public fetchPartnersCount() : void {
+  public fetchPartnersCount(): void {
     this.contractsCall.getPartnersCount.cacheCall();
   }
 
   @action.bound
-  public fetchAdminsCount() : void {
+  public fetchAdminsCount(): void {
     this.contractsCall.getAdminsCount.cacheCall();
   }
 
   @action.bound
-  public fetchTaskById(id: number) : void {
+  public fetchTaskById(id: number): void {
     this.contractsCall.getTask.cacheCall(id);
   }
 
   @action.bound
-  public fetchRewardById(id: number) : void {
+  public fetchRewardById(id: number): void {
     this.contractsCall.getReward.cacheCall(id);
   }
 
   @action.bound
-  public fetchPartnerById(id: number) : void {
+  public fetchPartnerById(id: number): void {
     this.contractsCall.getPartnerByNumber.cacheCall(id);
   }
 
   @action.bound
-  public fetchPartnerByAddress(address: string) : void {
+  public fetchPartnerByAddress(address: string): void {
     if (web3.utils.isAddress(address)) {
       this.contractsCall.getPartnerByAddress.cacheCall(address);
     }
   }
 
   @action.bound
-  public fetchAllTasks() : void {
+  public fetchAllTasks(): void {
     const length = this.tasksCount;
     Array.from({ length }, (_, i) => {
       this.fetchTaskById(i + 1);
@@ -97,16 +97,16 @@ export class PointX {
   }
 
   @action.bound
-  public fetchAllPartners() : void {
+  public fetchAllPartners(): void {
     const length = this.partnersCount;
     Array.from({ length }, (_, i) => {
-      try {this.fetchPartnerById(i + 1);}
-      catch(e) {}
+      try { this.fetchPartnerById(i + 1); }
+      catch (e) { }
     });
   }
 
   @action.bound
-  public fetchAllRewards() : void {
+  public fetchAllRewards(): void {
     const length = this.rewardsCount;
     Array.from({ length }, (_, i) => {
       this.fetchRewardById(i + 1);

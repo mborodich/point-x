@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View, Clipboard, TouchableOpacity } from 'react-native';
 
 import { Header, Icon, Text } from 'react-native-elements';
 import { Input } from '@app/components';
@@ -30,7 +30,7 @@ export const Mnemonics = React.memo(({ navigation }: TProps) : JSX.Element => {
           disabled
           multiline
         />
-        <View style={styles.copyContainer}>
+        <TouchableOpacity onPress={() => Clipboard.setString(mockMnemonics)} style={styles.copyContainer}>
           <Text style={styles.copyText}>Copy</Text>
           <Icon
             type="font-awesome"
@@ -40,7 +40,7 @@ export const Mnemonics = React.memo(({ navigation }: TProps) : JSX.Element => {
             containerStyle={styles.copyIcon}
             style={styles.copyIcon}
           />
-        </View>
+        </TouchableOpacity>
       </View>
     </View>
   );

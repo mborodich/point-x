@@ -25,5 +25,11 @@ export type Task = {
   description: string;
   value: number;
   owner: string;
+  status: number;
+  itemType: string;
+  data: any;
+  totalAmount: number;
+  resultsAmount: number;
+  number: number;
   expirationDate?: string;
 };

@@ -48,17 +48,18 @@ export class TasksScreen extends React.Component<dataStoreProps> {
   private _renderRow = (data: { item: any; }) => {
     if (data && data.item) {
       let task = data.item;
+      console.log('Task task task ->', task);
       const [
         caption,
         description,
         image,
         value,
-        owner,
+        owner
       ] = task;
-      task = { caption, description, image, value, owner };
+      console.log(task);
       return (
         <TaskListItem
-          task={task}
+          task={{ caption, description, image, value, owner }}
           theme={this.props.theme}
           onClick={() => this._onTaskClick(task)}
         />

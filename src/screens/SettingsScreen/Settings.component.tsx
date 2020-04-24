@@ -24,7 +24,6 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
   @observable signOutModalVisible : boolean = false;
   private mock : string = `https://picsum.photos/100/100?random=1${Math.random()}`;
 
-
   private onMnemonicsClick = () => {
     return this.props.navigation.navigate("Mnemonics");
   };
@@ -41,8 +40,6 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
   public render() {
     const { theme: { colorsMap } } = this.props;
 
-    const mock = `https://picsum.photos/100/100?random=1${Math.random()}`;
-
     return (
       <ScrollView style={styles.container}>
         <Header
@@ -51,7 +48,7 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
         />
         <View style={styles.centeredAvatar}>
           <Avatar
-            source={{ uri: mock }}
+            source={{ uri: this.mock }}
             rounded
             size="large"
           />

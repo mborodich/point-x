@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {observer} from 'mobx-react';
-import {Avatar, Text} from 'react-native-elements';
-import {ProgressBar, CompanyLabel} from '@app/components';
-import {Reward, Partner} from "@app/shared/types";
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
+import { Observer } from 'mobx-react';
+import { Avatar, Text } from 'react-native-elements';
+import { ProgressBar, CompanyLabel } from '@app/components';
+import { Reward, Partner } from "@app/shared/types";
 
 type TProps = {
   item: Reward;
@@ -11,11 +11,11 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardListItem = React.memo(observer(({ item, partner, navigation }: TProps) : JSX.Element => {
+export const RewardListItem = React.memo(({ item, partner, navigation }: TProps): JSX.Element => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
-  const _renderItemsLeft = React.useCallback(() : JSX.Element => {
+  const _renderItemsLeft = React.useCallback((): JSX.Element => {
     return (
       <View style={styles.progressBarContainer}>
         <ProgressBar
@@ -31,38 +31,42 @@ export const RewardListItem = React.memo(observer(({ item, partner, navigation }
   }, [item]);
 
   return (
-    <TouchableOpacity onPress={onPress}>
-      <View style={styles.containerRow}>
-        <Avatar
-          source={{ uri: item.image }}
-          overlayContainerStyle={{ backgroundColor: '#F8F8F8'  }}
-          imageProps={{ borderRadius: 8 }}
-          size={56}
-        />
-        <View style={styles.containerRowMiddle}>
-          <Text style={styles.listItemTitle}>{item.caption}</Text>
-          {_renderItemsLeft()}
-        </View>
-        <View style={styles.containerRowRight}>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Text style={{ fontSize: 6, lineHeight: 7, textTransform: "uppercase", color: '#828282', alignSelf: 'flex-end' }}> pntx</Text>
-            <Text style={{ color: '#4F4F4F', fontSize: 14, lineHeight: 16 }}>
-              {item.value}
-            </Text>
+    <Observer>
+      {() => (
+        <TouchableOpacity onPress={onPress}>
+          <View style={styles.containerRow}>
+            <Avatar
+              source={{ uri: item.image }}
+              containerStyle={styles.avatarListItem}
+              overlayContainerStyle={{ backgroundColor: '#F8F8F8' }}
+              imageProps={{ borderRadius: 8 }}
+              size={56}
+            />
+            <View style={styles.containerRowMiddle}>
+              <Text style={styles.listItemTitle}>{item.caption}</Text>
+              {_renderItemsLeft()}
+            </View>
+            <View style={styles.containerRowRight}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <Text style={{ fontSize: 6, lineHeight: 7, textTransform: "uppercase", color: '#828282', alignSelf: 'flex-end' }}> pntx</Text>
+                <Text style={{ color: '#4F4F4F', fontSize: 14, lineHeight: 16 }}>
+                  {item.value}
+                </Text>
+              </View>
+              <CompanyLabel
+                company={partner && partner.name}
+                logo={partner && partner.logo}
+                expiration={item && item.expirationDate}
+                onPress={onCompanyPress}
+              />
+            </View>
           </View>
-          <CompanyLabel
-            company={partner && partner.name}
-            logo={partner && partner.logo}
-            expiration={item && item.expirationDate}
-            onPress={onCompanyPress}
-          />
-        </View>
-      </View>
-      <View style={styles.bottomDivider} />
-    </TouchableOpacity>
+          <View style={styles.bottomDivider} />
+        </TouchableOpacity>
+      )}
+    </Observer>
   );
-
-}));
+});
 
 const styles = StyleSheet.create({
   containerRow: {

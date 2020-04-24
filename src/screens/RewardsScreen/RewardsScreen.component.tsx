@@ -1,12 +1,12 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Header, Icon, TextProps } from 'react-native-elements';
-import { observer } from 'mobx-react';
+import { Observer, observer } from 'mobx-react';
 
 import { RewardListItem, RewardGridItem } from '@app/components/';
-import {Drizzle, DrizzleProps} from '@app/shared/Drizzle';
-import {action, computed, observable} from "mobx";
-import {Reward, Partner} from "@app/shared/types";
+import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { action, computed, observable } from "mobx";
+import { Reward, Partner } from "@app/shared/types";
 
 interface RewardsScreenProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -18,7 +18,7 @@ type RendersType = {
   list: (item: Reward, partner: Partner) => JSX.Element;
 };
 
-const HEADER : TextProps = {
+const HEADER: TextProps = {
   // @ts-ignore
   text: 'Rewards',
   style: {
@@ -30,41 +30,52 @@ const HEADER : TextProps = {
 
 @observer
 @Drizzle
-export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
-  @observable
-  listView : ListView = 'list';
+export class RewardsScreen extends React.Component<RewardsScreenProps> {
+  @observable listView: ListView = 'list';
 
-  @action.bound toggleListView() : void {
+  componentDidMount() {
+    const { pointX } = this.props;
+    pointX.fetchRewardsCount();
+    pointX.fetchPartnersCount();
+    pointX.fetchAllRewards();
+    pointX.fetchAllPartners();
+  }
+
+  @action.bound toggleListView(): void {
     if (this.listView === 'list') {
       this.listView = 'grid';
       console.log('Swtiched', this.listView);
-      return ;
+      return;
     }
     if (this.listView === 'grid') {
       this.listView = 'list';
       console.log('Swtiched', this.listView);
-      return ;
+      return;
     }
   }
 
   @computed get columnsNum() {
     if (this.listView === 'list') return 1;
     if (this.listView === 'grid') return 2;
-    return ;
+    return;
   }
 
-  private _renderRow = ({ item }: {item: Reward}) : JSX.Element | undefined => {
-    const { pointX } = this.props;
+  @observable
+  private _renderRow = ({ item }: { item: Reward }): JSX.Element | undefined => {
     const renders: RendersType = {
       'grid': this._renderGridItem,
       'list': this._renderListItem
     };
 
-    const partner = {};
-    return renders[this.listView].call(this, item, partner);
+    let partner = {};
+    return (
+      <Observer>
+        {() => renders[this.listView].call(this, item, partner)}
+      </Observer>
+    );
   };
 
-  private _renderGridItem = (item: Reward, partner: Partner) : JSX.Element => {
+  private _renderGridItem = (item: Reward, partner: Partner): JSX.Element => {
     return (
       <RewardGridItem
         navigation={this.props.navigation}
@@ -74,7 +85,7 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
     );
   };
 
-  private _renderListItem = (item: Reward, partner: Partner) : JSX.Element => {
+  private _renderListItem = (item: Reward, partner: Partner): JSX.Element => {
     return (
       <RewardListItem
         navigation={this.props.navigation}
@@ -83,13 +94,6 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
       />
     );
   };
-
-  async componentDidMount() : Promise<void> {
-    const { pointX } = this.props;
-    // pointX.fetchRewardsCount();
-    // pointX.fetchPartnersCount();
-    // pointX.fetchAllRewards();
-  }
 
   public render() {
     const { pointX } = this.props;
@@ -103,11 +107,10 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
         />
         <FlatList
           data={pointX.rewardsList}
-          extraData={pointX.rewardsList}
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}
-          // onEndReached={this._loadMore}
+          onEndReached={this._loadMore}
           keyExtractor={this._keyExtractor}
           onEndReachedThreshold={0.4}
         />
@@ -115,13 +118,13 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
     );
   }
 
-  private _keyExtractor = (_ : Reward, index: number) : string => index.toString();
-  private _loadMore = () : void => {
+  private _keyExtractor = (_: Reward, index: number): string => index.toString();
+  private _loadMore = (): void => {
     const { pointX } = this.props;
     pointX.fetchRewardsCount();
     pointX.fetchAllRewards();
   };
-  private renderSort = () : JSX.Element => (
+  private renderSort = (): JSX.Element => (
     <TouchableOpacity onPress={this.toggleListView}>
       <Icon name="list" type="material" />
     </TouchableOpacity>

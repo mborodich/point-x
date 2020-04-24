@@ -61,7 +61,6 @@ module.exports = (deployer) => {
 		await px.addUserAndUnlockTasks(users[1].address)
 		await px.addUserAndUnlockTasks(users[2].address)
 
-
 		for (let i = 0; i < partners.length; i++) {
 			let p = partners[i]
 			await px.addPartner(p.address, p.name, p.description, p.logo)

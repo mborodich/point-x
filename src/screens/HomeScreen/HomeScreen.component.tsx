@@ -1,78 +1,157 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, FlatList, View } from 'react-native';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import {
-  Header, PricingCard, ListItem, Card,
-} from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { CardComponent } from '../../components';
+  CardComponent,
+  Header,
+  TabViewWrapper,
+  TaskListItem,
+  RewardListItem
+} from '@app/components';
 
+import { Task } from "@app/shared/types";
 
 interface HomeScreenProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
-const LIST = Array.from({ length: 5 }, (_, i) => i);
+enum Tabs {
+  TASKS = 'tasks',
+  REWARDS = 'rewards'
+}
 
-@Drizzle
+const routes = [
+  {
+    key: Tabs.TASKS,
+    title: 'Tasks'
+  },
+  {
+    key: Tabs.REWARDS,
+    title: 'Rewards'
+  }
+];
+
 @observer
-export class HomeScreen extends React.Component<HomeScreenProps> {
-  async componentDidMount(): void {
-    const { props } = this;
-    const { contractsCall, contractsGet, drizzle } = props;
+@Drizzle
+export class HomeScreen extends React.PureComponent<HomeScreenProps> {
+  private _onTaskClick = (task : Task) =>
+    this.props.navigation.navigate('TaskItemScreen', { task });
+
+  private getTabScenes = () => {
+    return ({
+      [Tabs.TASKS]: this._renderTasks(),
+      [Tabs.REWARDS]: this._renderRewards()
+    });
+  };
+
+  private _keyExtractor = (_: any, index: any) => `${index}`;
+
+  private _renderTaskRow = (data: { item: any; }) : JSX.Element | undefined => {
+    if (data && data.item) {
+      let task = data.item;
+      const [
+        caption,
+        description,
+        image,
+        value,
+        owner,
+      ] = task;
+      task = { caption, description, image, value, owner };
+      return (
+        <TaskListItem
+          task={task}
+          theme={this.props.theme}
+          onClick={() => this._onTaskClick(task)}
+        />
+      )
+    }
+    return undefined;
+  };
+
+  private _renderRewardRow = (data: { item: any; }) : JSX.Element | undefined => {
+    if (data && data.item) {
+      const reward = data.item;
+      const { pointX } = this.props;
+      return (
+        <RewardListItem
+          item={reward}
+          partner={{}}
+          navigation={this.props.navigation}
+        />
+      )
+    }
+    return undefined;
+  };
+
+  private _fetchMoreTasks = () : void => {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
+  };
+
+
+  private _fetchMoreRewards = () : void => {
+    const { pointX } = this.props;
+    pointX.fetchRewardsCount();
+    pointX.fetchAllRewards();
+  };
+
+  private _renderTasks = () : JSX.Element => {
+    const { pointX } = this.props;
+    return (
+      <FlatList
+        data={pointX.tasksList}
+        renderItem={this._renderTaskRow}
+        keyExtractor={this._keyExtractor}
+        onEndReachedThreshold={0.4}
+        onEndReached={this._fetchMoreTasks}
+      />
+    )
+  };
+
+  private _renderRewards = () : JSX.Element => {
+    const { pointX } = this.props;
+    return (
+      <FlatList
+        data={pointX.rewardsList}
+        renderItem={this._renderRewardRow}
+        keyExtractor={this._keyExtractor}
+        onEndReachedThreshold={0.4}
+        onEndReached={this._fetchMoreRewards}
+      />
+    );
+  };
+
+  componentDidMount(): void {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
+    pointX.fetchRewardsCount();
+    pointX.fetchAllRewards();
   }
 
-
   public render() {
-    const { props } = this;
-
-    const { navigation, contractsGet } = props;
-
     return (
-      <ScrollView>
+      <ScrollView style={styles.rootContainer}>
+        <Header />
         <CardComponent />
-        <PricingCard
-          color="#c0c0c0"
-          title="Contracts count:"
-          price={0}
-          info={['Some details']}
-          button={{ title: 'Check it out', icon: '' }}
-        />
-        <Card
-          title="Tasks"
-        >
-          {
-            LIST.map((_, i) => (
-              <ListItem
-                key={i}
-                leftAvatar={{ source: { uri: `https://picsum.photos/100/100?random=${Math.random()}` } }}
-                title="Task info"
-                subtitle="Description"
-                subtitleStyle={{ color: 'green' }}
-                topDivider
-                onPress={() => navigation.navigate('TasksScreen')}
-              />
-            ))
-          }
-        </Card>
-        <Card
-          title="Rewards"
-        >
-          {
-            LIST.map((_, i) => (
-              <ListItem
-                key={i}
-                leftAvatar={{ source: { uri: `https://picsum.photos/100/100?random=${Math.random()}` } }}
-                title="Reward info"
-                subtitle="Description"
-                subtitleStyle={{ color: 'green' }}
-                topDivider
-                onPress={() => navigation.navigate('RewardsScreen')}
-              />
-            ))
-          }
-        </Card>
+        <View style={styles.tabViewContainer}>
+          <TabViewWrapper
+            routes={routes}
+            scenes={this.getTabScenes()}
+          />
+        </View>
       </ScrollView>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  rootContainer: {
+    backgroundColor: '#ffffff'
+  },
+  tabViewContainer: {
+    marginTop: 20
+  },
+});

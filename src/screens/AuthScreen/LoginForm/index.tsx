@@ -2,29 +2,23 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import Input from '../Input.component';
-import Button from '../Button.component';
-import { LoginStore } from '../../../store/';
-import { Drizzle, DrizzleProps } from '../../../shared/Drizzle';
+import {Input, Button} from '@app/components/';
+import {LoginStore} from '@app/store/';
 
-interface TProps extends DrizzleProps {
+type TProps = {
   loginForm: LoginStore;
-}
+  navigation: { navigate: any };
+};
 
 const behavior = Platform.OS === "ios" ? "position" : "height";
 
 @inject('loginForm')
 @observer
-@Drizzle
 class LoginForm extends React.PureComponent<TProps> {
 
-  componentDidMount() {
-    const { pointX } = this.props;
-    pointX.prefetchAll();
-  }
-
+  go = () => this.props.navigation.navigate({ name: 'Application' });
   public render() {
-    const { form, onFieldChange } = this.props.loginForm;
+    const {form, onFieldChange} = this.props.loginForm;
     return (
       <KeyboardAvoidingView
         behavior={behavior}
@@ -41,6 +35,7 @@ class LoginForm extends React.PureComponent<TProps> {
           title="Sign In"
           style={styles.button}
           disabled={!form.meta.isValid}
+          onPress={this.go}
         />
       </KeyboardAvoidingView>
     );

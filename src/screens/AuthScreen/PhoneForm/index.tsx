@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import Input from '../Input.component';
-import Button from '../Button.component';
-import { PhoneStore } from "../../../store/";
-import {numKeyboardType} from "../../../utils/const";
+import {Input, Button} from "@app/components"
+import {PhoneStore} from "@app/store";
+import {numKeyboardType} from "@app/utils/const";
 
 
 type TProps = {

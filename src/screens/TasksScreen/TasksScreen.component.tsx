@@ -3,7 +3,9 @@ import { observer, Observer } from 'mobx-react';
 import React from 'react';
 import { FlatList, TouchableOpacity, View, StyleSheet } from 'react-native';
 import { Avatar, Text } from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import { TaskListItem } from '@app/components';
+import {Task} from "@app/shared/types";
 
 interface dataStoreProps extends DrizzleProps {
   navigation: { navigate: any };
@@ -40,9 +42,12 @@ export class TasksScreen extends React.Component<dataStoreProps> {
     pointX.fetchAllTasks();
   };
 
+  private _onTaskClick = (task : Task) =>
+    this.props.navigation.navigate('TaskItemScreen', { task });
+
   private _renderRow = (data: { item: any; }) => {
-    if (data) {
-      const task = data.item;
+    if (data && data.item) {
+      let task = data.item;
       const [
         caption,
         description,
@@ -50,32 +55,13 @@ export class TasksScreen extends React.Component<dataStoreProps> {
         value,
         owner,
       ] = task;
-
-      const { navigation, theme: { color, style } } = this.props;
+      task = { caption, description, image, value, owner };
       return (
-        <Observer>
-          {() => (
-            <TouchableOpacity onPress={() => navigation.navigate('TaskItemScreen', { task })}>
-              <View style={styles.containerRow}>
-                <Avatar
-                  rounded
-                  source={{ uri: image }}
-                  size="medium"
-                />
-                <View style={styles.containerRowMiddle}>
-                  <Text style={[style.companyName, color.title]}>{caption}</Text>
-                  <Text style={[style.caption2, color.gray3]}>{description}</Text>
-                </View>
-                <View style={styles.containerRowRight}>
-                  <Text style={[style.companyName, color.title]}>{value}</Text>
-                  <Text style={[style.caption2, color.gray3]}>{owner.substr(0, 7)}</Text>
-                  <Text style={[style.caption2, color.gray3]}>0 days left</Text>
-                </View>
-              </View>
-              <View style={styles.bottomDeriver} />
-            </TouchableOpacity>
-          )}
-        </Observer>
+        <TaskListItem
+          task={task}
+          theme={this.props.theme}
+          onClick={() => this._onTaskClick(task)}
+        />
       )
     }
     else {

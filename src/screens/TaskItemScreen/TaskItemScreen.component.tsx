@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react';
 import React from 'react';
 import { AirbnbRating, Tile, Text } from 'react-native-elements';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { action, observable } from 'mobx';
@@ -135,7 +135,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   private _taskDetails = () => {
-    const [
+    const {
       caption,
       description,
       image,
@@ -147,7 +147,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       totalAmount,
       resultsAmount,
       number
-    ] = this._taskData;
+    } = this._taskData;
     return {
       caption,
       description,

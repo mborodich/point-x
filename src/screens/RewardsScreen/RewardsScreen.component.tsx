@@ -103,6 +103,7 @@ export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
         />
         <FlatList
           data={pointX.rewardsList}
+          extraData={pointX.rewardsList}
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}

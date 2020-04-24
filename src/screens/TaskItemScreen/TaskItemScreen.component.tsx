@@ -161,7 +161,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       resultsAmount,
       number
     }
-  }
+  };
 
   private _renderItems = (type, rows) => {
     if (type === "0") {

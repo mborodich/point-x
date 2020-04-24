@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {observer, Observer} from 'mobx-react';
+import {observer} from 'mobx-react';
 import {Avatar, Text} from 'react-native-elements';
-import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
-import {deviceWidth} from '@app/utils/const';
+import {ProgressBar, CompanyLabel} from '@app/components';
 import {Reward, Partner} from "@app/shared/types";
 
 type TProps = {
@@ -36,7 +35,6 @@ export const RewardListItem = React.memo(observer(({ item, partner, navigation }
       <View style={styles.containerRow}>
         <Avatar
           source={{ uri: item.image }}
-          containerStyle={styles.avatarListItem}
           overlayContainerStyle={{ backgroundColor: '#F8F8F8'  }}
           imageProps={{ borderRadius: 8 }}
           size={56}

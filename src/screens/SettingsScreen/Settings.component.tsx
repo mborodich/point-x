@@ -39,6 +39,8 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
   public render() {
     const { theme: { colorsMap } } = this.props;
 
+    const mock = `https://picsum.photos/100/100?random=1${Math.random()}`;
+
     return (
       <ScrollView style={styles.container}>
         <Header
@@ -47,7 +49,7 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
         />
         <View style={styles.centeredAvatar}>
           <Avatar
-            source={{ uri: `https://picsum.photos/100/100?random=1${Math.random()}` }}
+            source={{ uri: mock }}
             rounded
             size="large"
           />
@@ -147,7 +149,12 @@ const styles = StyleSheet.create({
     color: '#828282',
     paddingTop: 16
   },
-  modalActions: { flexDirection: 'row', flex: 1, alignSelf: 'center', marginTop: 50 },
+  modalActions: {
+    flexDirection: 'row',
+    flex: 1,
+    alignSelf: 'center',
+    marginTop: 50
+  },
   modalButton: {
     backgroundColor: '#fff',
     width: 119

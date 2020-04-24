@@ -102,6 +102,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     return (
       <FlatList
         data={pointX.tasksList}
+        extraData={pointX.tasksList}
         renderItem={this._renderTaskRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
@@ -115,6 +116,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     return (
       <FlatList
         data={pointX.rewardsList}
+        extraData={pointX.rewardsList}
         renderItem={this._renderRewardRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}

@@ -1,14 +1,14 @@
 import React from 'react';
-import {observer} from 'mobx-react';
-import {ScrollView, StyleSheet, View, FlatList} from 'react-native';
-import {Avatar, Header, Text} from 'react-native-elements';
-import {TabView, TabBar} from 'react-native-tab-view';
-import {Drizzle, DrizzleProps} from '@app/shared/Drizzle';
-import {RewardListItem, TabViewWrapper, TaskListItem} from '@app/components';
-import {Task} from "@app/shared/types";
+import { observer } from 'mobx-react';
+import { ScrollView, StyleSheet, View, FlatList } from 'react-native';
+import { Avatar, Header, Text } from 'react-native-elements';
+import { TabView, TabBar } from 'react-native-tab-view';
+import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
+import { RewardListItem, TabViewWrapper, TaskListItem } from '@app/components';
+import { Task } from "@app/shared/types";
 
 
-interface PartnerScreenProps extends DrizzleProps{
+interface PartnerScreenProps extends DrizzleProps {
   navigation: { navigate: any; goBack: any; };
 }
 
@@ -30,7 +30,8 @@ const routes = [
 
 @observer
 @Drizzle
-export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
+export class PartnerScreen extends React.Component<PartnerScreenProps> {
+
   private getTabScenes = () => {
     return ({
       [Tabs.ACTIVE]: this._renderActive(),
@@ -38,12 +39,12 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
     });
   };
 
-  private _onTaskClick = (task : Task) =>
+  private _onTaskClick = (task: Task) =>
     this.props.navigation.navigate('TaskItemScreen', { task });
 
   private _keyExtractor = (_: any, index: any) => `${index}`;
 
-  private _renderActive() : JSX.Element {
+  private _renderActive(): JSX.Element {
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -53,7 +54,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
         <FlatList
           data={[]}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) =>
+          renderItem={({ item }) =>
             <TaskListItem
               task={item}
               theme={this.props.theme}
@@ -68,7 +69,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
         <FlatList
           data={[]}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) =>
+          renderItem={({ item }) =>
             <RewardListItem
               navigation={this.props.navigation}
               partner={{}}
@@ -80,7 +81,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
     );
   }
 
-  private _renderArchive() : JSX.Element {
+  private _renderArchive(): JSX.Element {
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -90,7 +91,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
         <FlatList
           data={[]}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) =>
+          renderItem={({ item }) =>
             <TaskListItem
               task={item}
               theme={this.props.theme}
@@ -105,7 +106,7 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
         <FlatList
           data={[]}
           keyExtractor={this._keyExtractor}
-          renderItem={({item}) =>
+          renderItem={({ item }) =>
             <RewardListItem
               navigation={this.props.navigation}
               partner={{}}
@@ -119,7 +120,8 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
 
   public render() {
     const partner = this.props.route.params.partner;
-
+    const { pointX } = this.props;
+    console.log('pointX.partnersList', pointX.partnersList)
     return (
       <ScrollView style={styles.container}>
         <Header

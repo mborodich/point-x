@@ -16,8 +16,6 @@ import { Mnemonics } from '@app/screens/SettingsScreen/Mnemonics';
 import { HistoryScreen } from "@app/screens/SettingsScreen/History";
 import { UserRewardsScreen } from "@app/screens/SettingsScreen/Rewards";
 
-import {View} from "react-native";
-
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TAB_COLOR = '#00aced';

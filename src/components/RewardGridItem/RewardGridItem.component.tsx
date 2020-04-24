@@ -1,8 +1,8 @@
 import React from 'react';
-import {observer} from 'mobx-react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import { Observer } from 'mobx-react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
-import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
+import { ProgressBar, CompanyLabel, RewardPrice } from '@app/components';
 
 type Reward = {
   caption: string;
@@ -31,38 +31,41 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardGridItem = React.memo(observer(({ item, partner, navigation }: TProps) => {
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', {partner}), [item]);
-  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', {reward: item}), [item]);
-
+export const RewardGridItem = ({ item, partner, navigation }: TProps) => {
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
+  const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={{ uri: item && item.image }} style={styles.imageContainer} />
-      <View>
-        <Text style={styles.titleText}>
-          {item && item.caption}
-        </Text>
-      </View>
-      <View style={styles.propsContainer}>
-        <ProgressBar
-          unfilledColor="#E0E0E0"
-          width={95}
-          height={2}
-          borderWidth={0}
-          totalAmount={item && item.totalAmount}
-          amountLeft={item && item.resultsAmount}
-        />
-        <RewardPrice value={item && item.value} />
-      </View>
-      <CompanyLabel
-        company={partner && partner.name}
-        logo={partner && partner.logo}
-        expiration={item && item.expirationDate}
-        onPress={onCompanyPress}
-      />
-    </TouchableOpacity>
+    <Observer>
+      {() => (
+        <TouchableOpacity style={styles.container} onPress={onPress}>
+          <Image source={{ uri: item && item.image }} style={styles.imageContainer} />
+          <View>
+            <Text style={styles.titleText}>
+              {item && item.caption}
+            </Text>
+          </View>
+          <View style={styles.propsContainer}>
+            <ProgressBar
+              unfilledColor="#E0E0E0"
+              width={95}
+              height={2}
+              borderWidth={0}
+              totalAmount={item && item.totalAmount}
+              amountLeft={item && item.resultsAmount}
+            />
+            <RewardPrice value={item && item.value} />
+          </View>
+          <CompanyLabel
+            company={partner && partner.name}
+            logo={partner && partner.logo}
+            expiration={item && item.expirationDate}
+            onPress={onCompanyPress}
+          />
+        </TouchableOpacity>
+      )}
+    </Observer>
   );
-}));
+};
 
 
 const styles = StyleSheet.create({

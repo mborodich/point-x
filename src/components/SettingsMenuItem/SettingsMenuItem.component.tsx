@@ -1,7 +1,6 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {Icon, Divider, Text, IconProps, DividerProps, ListItem} from 'react-native-elements';
-import {deviceWidth} from '../../utils/const';
+import {Divider, Text, IconProps, ListItem} from 'react-native-elements';
 
 
 type TProps = {

@@ -4,27 +4,7 @@ import {observer} from 'mobx-react';
 import {ListItem} from 'react-native-elements';
 import {ProgressBar, CompanyLabel, RewardPrice} from '@app/components';
 import {deviceWidth} from '@app/utils/const';
-
-type Reward = {
-  caption: string;
-  description: string;
-  image: string;
-  value: number;
-  owner: string;
-  status: 0 | 1;
-  totalAmount: number;
-  resultsAmount: number;
-  number: number;
-  expirationDate: number;
-}
-
-type Partner = {
-  account: string;
-  name: string;
-  description: string;
-  logo: string;
-  number: number;
-}
+import {Reward, Partner} from "@app/shared/types";
 
 type TProps = {
   item: Reward;
@@ -32,7 +12,7 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardListItem = observer(({ item, partner, navigation }: TProps) : JSX.Element => {
+export const RewardListItem = React.memo(observer(({ item, partner, navigation }: TProps) : JSX.Element => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
@@ -44,8 +24,8 @@ export const RewardListItem = observer(({ item, partner, navigation }: TProps) :
           width={95}
           height={2}
           borderWidth={0}
-          totalAmount={item.totalAmount}
-          amountLeft={item.resultsAmount}
+          totalAmount={item && item.totalAmount}
+          amountLeft={item && item.resultsAmount}
         />
       </View>
     );
@@ -69,9 +49,9 @@ export const RewardListItem = observer(({ item, partner, navigation }: TProps) :
       rightTitle={<RewardPrice {...item}  />}
       rightSubtitle={
         <CompanyLabel
-          company={partner.name}
-          logo={partner.logo}
-          expiration={item.expirationDate}
+          company={partner && partner.name}
+          logo={partner && partner.logo}
+          expiration={item && item.expirationDate}
           onPress={onCompanyPress}
         />
       }
@@ -81,8 +61,7 @@ export const RewardListItem = observer(({ item, partner, navigation }: TProps) :
       bottomDivider
     />
   );
-});
-
+}));
 
 const styles = StyleSheet.create({
   listItemContainer: {

@@ -27,27 +27,6 @@ const routes = [
   }
 ];
 
-const MOCKS = [
-  {
-    title: `Apple Watch Series 3`,
-    value: 170,
-    company: 'Apple',
-    expiration: '175 days left',
-    amountLeft: 50,
-    totalAmount: 175,
-    image: `https://www.apple.com/newsroom/images/product/watch/standard/watch_series_3_incoming_two-wrap_big.gif.large.gif`
-  },
-  {
-    title: 'Iphone X',
-    value: 1000,
-    company: 'Apple',
-    expiration: '100 days left',
-    amountLeft: 70,
-    totalAmount: 300,
-    image: `https://items.s1.citilink.ru/1361005_v01_b.jpg`
-  }
-];
-
 @observer
 export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
   @observable currentIdx : number = 0;
@@ -138,7 +117,6 @@ export class PartnerScreen extends React.PureComponent<PartnerScreenProps> {
   };
 
   public render() {
-    const { navigation } = this.props;
     const partner = this.props.route.params.partner;
 
     return (

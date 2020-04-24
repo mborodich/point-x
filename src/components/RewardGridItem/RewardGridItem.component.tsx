@@ -31,16 +31,16 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardGridItem = observer(({ item, partner, navigation }: TProps) => {
+export const RewardGridItem = React.memo(observer(({ item, partner, navigation }: TProps) => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', {partner}), [item]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', {reward: item}), [item]);
 
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Image source={{ uri: item.image }} style={styles.imageContainer} />
+      <Image source={{ uri: item && item.image }} style={styles.imageContainer} />
       <View>
         <Text style={styles.titleText}>
-          {item.caption}
+          {item && item.caption}
         </Text>
       </View>
       <View style={styles.propsContainer}>
@@ -49,20 +49,20 @@ export const RewardGridItem = observer(({ item, partner, navigation }: TProps) =
           width={95}
           height={2}
           borderWidth={0}
-          totalAmount={item.totalAmount}
-          amountLeft={item.resultsAmount}
+          totalAmount={item && item.totalAmount}
+          amountLeft={item && item.resultsAmount}
         />
-        <RewardPrice value={item.value} />
+        <RewardPrice value={item && item.value} />
       </View>
       <CompanyLabel
-        company={partner.name}
-        logo={partner.logo}
-        expiration={item.expirationDate}
+        company={partner && partner.name}
+        logo={partner && partner.logo}
+        expiration={item && item.expirationDate}
         onPress={onCompanyPress}
       />
     </TouchableOpacity>
   );
-});
+}));
 
 
 const styles = StyleSheet.create({

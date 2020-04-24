@@ -38,6 +38,7 @@ export class PointX {
     this.fetchAdminsCount();
     this.fetchAllTasks();
     this.fetchAllRewards();
+    this.fetchAllPartners();
   }
 
   @action.bound
@@ -83,7 +84,6 @@ export class PointX {
   @action.bound
   public fetchPartnerByAddress(address: string) : void {
     if (web3.utils.isAddress(address)) {
-      console.log('Fetching', address);
       this.contractsCall.getPartnerByAddress.cacheCall(address);
     }
   }
@@ -91,29 +91,27 @@ export class PointX {
   @action.bound
   public fetchAllTasks() : void {
     const length = this.tasksCount;
-    console.log('Fetching tasks ->', length);
     Array.from({ length }, (_, i) => {
       this.fetchTaskById(i + 1);
     });
   }
 
   @action.bound
+  public fetchAllPartners() : void {
+    const length = this.partnersCount;
+    Array.from({ length }, (_, i) => {
+      try {this.fetchPartnerById(i + 1);}
+      catch(e) {}
+    });
+  }
+
+  @action.bound
   public fetchAllRewards() : void {
     const length = this.rewardsCount;
-    console.log('Fetching rewards ->', length);
     Array.from({ length }, (_, i) => {
       this.fetchRewardById(i + 1);
     });
   }
-
-  @computed
-  public get partnerByAddress() {
-    const partner = this.contractsGet.getPartnerByAddress;
-    if (!isEmpty(partner)) {
-      const [key] = Object.keys(partner);
-      return partner[key] && partner[key].value;
-    }
-  };
 
   @computed
   public get tasksList() {
@@ -132,13 +130,12 @@ export class PointX {
 
   @computed
   public get partnersList() {
-    const partners = this.contractsGet.getPartnerByAddress;
+    const partners = this.contractsGet.getPartnerByNumber;
     const results: any[] = [];
     if (!isEmpty(partners)) {
       const keys = Object.keys(partners);
       keys.map(e => {
         if (partners[e].value[0] !== '') {
-          console.log('Partner array ->', partners[e].value);
           const [
             name,
             description,
@@ -146,17 +143,18 @@ export class PointX {
             account,
             number
           ] = partners[e].value;
+          console.log('Name )', name);
           results.push({ account, name, description, logo, number });
         }
       });
     }
-    console.log('partners ->', results);
     return results.length > 0 ? results : undefined;
   }
 
   @computed
   public get selectPartnerByOwner() {
     return createTransformer((owner: string) => {
+      console.log(this.partnersList);
       return this.partnersList && this.partnersList.find((i) => i.account === owner)
     })
   }
@@ -180,8 +178,6 @@ export class PointX {
             resultsAmount,
             number
           ] = rewards[e].value;
-
-          this.fetchPartnerByAddress(owner);
 
           results.push({
             caption,
@@ -225,8 +221,8 @@ export class PointX {
     const partnersCount = this.contractsGet.getPartnersCount;
     if (!isEmpty(partnersCount)) {
       const [key] = Object.keys(partnersCount);
+      console.log('Partners count ->', partnersCount[key]);
       return partnersCount[key] && partnersCount[key].value;
     }
-    return 10;
   }
 }

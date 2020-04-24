@@ -15,6 +15,7 @@ const behavior = Platform.OS === "ios" ? "position" : "height";
 @inject('loginForm')
 @observer
 class LoginForm extends React.PureComponent<TProps> {
+
   go = () => this.props.navigation.navigate({ name: 'Application' });
   public render() {
     const {form, onFieldChange} = this.props.loginForm;

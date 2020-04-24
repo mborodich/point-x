@@ -12,6 +12,12 @@ import { TaskItemScreen } from '../screens/TaskItemScreen';
 import { RewardItemScreen } from '../screens/RewardItemScreen';
 import { SettingsScreen } from '../screens/SettingsScreen';
 
+import { Mnemonics } from '@app/screens/SettingsScreen/Mnemonics';
+import { HistoryScreen } from "@app/screens/SettingsScreen/History";
+import { UserRewardsScreen } from "@app/screens/SettingsScreen/Rewards";
+
+import {View} from "react-native";
+
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const TAB_COLOR = '#00aced';
@@ -47,7 +53,7 @@ const Tabs = function () {
   return (
     <Tab.Navigator
       tabBarOptions={{
-        activeTintColor: TAB_COLOR,
+        activeTintColor: TAB_COLOR
       }}
       lazy={false}
       initialRouteName="AuthScreen"
@@ -85,7 +91,7 @@ const Tabs = function () {
       />
       <Tab.Screen
         name="ProfileScreen"
-        component={() => <SettingsScreen />}
+        component={SettingsScreen}
         options={{
           tabBarLabel: 'Settings',
           tabBarIcon: () => (
@@ -116,6 +122,18 @@ export function AppScreens() {
       <Stack.Screen
         name="PartnerScreen"
         component={PartnerScreen}
+      />
+      <Stack.Screen
+        name="Mnemonics"
+        component={Mnemonics}
+      />
+      <Stack.Screen
+        name="History"
+        component={HistoryScreen}
+      />
+      <Stack.Screen
+        name="RewardsHistory"
+        component={UserRewardsScreen}
       />
     </Stack.Navigator>
   );

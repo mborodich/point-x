@@ -12,14 +12,20 @@ type TProps = {
 
 
 export const CompanyLabel = ({ company, expiration, onPress, logo }: TProps) => {
+
+  const memoizedCompany = React.useMemo(() => {
+    return company;
+  }, [company]);
+
   return (
     <TouchableOpacity onPress={onPress} style={styles.companyContainer}>
       <View style={styles.companyTextContainer}>
         <Text style={styles.companyTitle}>
-          {company}
+          {memoizedCompany}
         </Text>
         <Text style={styles.expirationText}>
-          {expiration && timeToX(expiration)}
+          {'0 days left' || expiration && timeToX(expiration)}
+
         </Text>
       </View>
       <Avatar

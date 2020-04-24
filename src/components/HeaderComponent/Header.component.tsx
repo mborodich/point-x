@@ -7,7 +7,7 @@ type TProps = {};
 
 const smallLogo = require('../../assets/img/SmallLogo.png');
 
-const Header = (props: TProps) => {
+const Header = () : JSX.Element => {
   const renderTitle = React.useCallback(() => (
     <View style={styles.headerCaptionContainer}>
       <Image

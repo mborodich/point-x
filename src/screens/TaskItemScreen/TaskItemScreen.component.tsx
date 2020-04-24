@@ -135,7 +135,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   private _taskDetails = () => {
-    const [
+    const {
       caption,
       description,
       image,
@@ -147,7 +147,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       totalAmount,
       resultsAmount,
       number
-    ] = this._taskData;
+    } = this._taskData;
     return {
       caption,
       description,

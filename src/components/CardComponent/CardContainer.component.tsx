@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   rootContainer: {
     flex: 1,
     height: 174,
-    marginHorizontal: 20,
+    width: 326,
+    marginLeft: 45,
     marginTop: 30,
   },
   container: {
@@ -135,7 +136,7 @@ const styles = StyleSheet.create({
   },
   bgImg: {
     top: 7,
-    left: 210,
+    left: 160,
     width: 140,
     height: 168,
   },

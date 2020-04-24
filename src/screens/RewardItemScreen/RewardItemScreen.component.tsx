@@ -1,57 +1,34 @@
 import React from 'react';
-import { ImageBackground, Text, View, StyleSheet, TouchableOpacity, SafeAreaView, Image } from 'react-native';
+import {
+  ImageBackground,
+  Text,
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  SafeAreaView,
+  Image,
+  ActivityIndicator
+} from 'react-native';
 import { Button, Icon } from 'react-native-elements';
 
 import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
 
-import { CompanyLabel, ProgressBar } from '@app/components';
+import { CompanyLabel, ProgressBar, RewardPrice } from '@app/components';
 import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import { Partner } from '@app/shared/types';
 
 interface Props extends DrizzleProps {
   navigation: {navigate: any, goBack: any}
 }
-
-type Reward = {
-  caption: string;
-  description: string;
-  image: string;
-  value: number;
-  owner: string;
-  status: 0 | 1;
-  totalAmount: number;
-  resultsAmount: number;
-  number: number;
-  expirationDate: number;
-}
-
-type Partner = {
-  account: string;
-  name: string;
-  description: string;
-  logo: string;
-  number: number;
-}
-
-
 const qrCode = require('../../assets/img/qr-code.png');
 
 @observer
 @Drizzle
 export class RewardItemScreen extends React.PureComponent<Props> {
   @observable private _isFetching : boolean = false;
+  @observable private _tileIsLoading : boolean = true;
   @observable private qrCode : string | null = null;
-  @observable private _reward: Reward = {
-    caption: '',
-    description: '',
-    image: '',
-    value: '',
-    owner: '',
-    status: 0,
-    totalAmount: 0,
-    resultsAmount: 0,
-    number: 0
-  };
   @observable private _partner: Partner = {
     account: '',
     name: '',
@@ -69,31 +46,6 @@ export class RewardItemScreen extends React.PureComponent<Props> {
   }
 
   async componentDidMount() : Promise<void> {
-    const { route, pointX } = this.props;
-    const [
-      caption,
-      description,
-      image,
-      value,
-      owner,
-      status,
-      totalAmount,
-      resultsAmount,
-      number
-    ] = route.params.reward;
-    pointX.fetchPartnerByAddress(owner);
-    this._partner = pointX.partnerByAddress;
-    Object.assign(this._reward, {
-      caption,
-      description,
-      image,
-      value,
-      owner,
-      status,
-      totalAmount,
-      resultsAmount,
-      number
-    });
   }
 
   private navigateToDetail = () =>
@@ -101,44 +53,53 @@ export class RewardItemScreen extends React.PureComponent<Props> {
 
 
   public render() {
-    const { _reward: reward, _partner: partner } = this;
+    const reward = this.props.route.params.reward;
+    const { _partner: partner } = this;
 
     return (
       <SafeAreaView style={styles.container}>
-        {this._renderTile()}
+        <ImageBackground style={styles.img} source={{ uri: reward.image }}>
+          <TouchableOpacity onPress={this.props.navigation.goBack} style={{ width: 48, height: 48, top: 10 }}>
+            <Icon type="material" name="chevron-left"/>
+          </TouchableOpacity>
+        </ImageBackground>
         <View style={{ height: 237 }}>
           <View style={styles.priceContainer}>
-            <Text style={styles.price}>{reward.value} Tokens</Text>
+            <RewardPrice
+              containerStyle={{ flexDirection: 'row-reverse' }}
+              value={reward.value}
+              priceStyle={styles.price}
+              labelStyle={styles.priceLabel}
+            />
             <CompanyLabel
-              company={partner.logo}
+              company={partner.name}
               expiration={reward.expirationDate}
               logo={partner.logo}
               onPress={this.navigateToDetail}
             />
           </View>
           <View style={styles.descContainer}>
-            <ProgressBar
-              totalAmount={170}
-              amountLeft={50}
-              unfilledColor="#E0E0E0"
-              borderWidth={0}
-              width={95}
-              height={2}
-              containerStyle={{
-                marginLeft: 4,
-                marginTop: 16
-              }}
-            />
+            <View style={{ height: 30 }}>
+              <ProgressBar
+                totalAmount={170}
+                amountLeft={50}
+                unfilledColor="#E0E0E0"
+                borderWidth={0}
+                width={95}
+                height={2}
+              />
+            </View>
+            <Text style={styles.price}>{reward.caption}</Text>
             <Text style={styles.desc}>{reward.description}</Text>
           </View>
         </View>
 
         { this.qrCode ? <View style={styles.qrCodeContainer}>
-          <View style={{ width: 136, height: 136 }}>
             <Image
+              width={136}
+              height={136}
               source={this.qrCode}
             />
-          </View>
           {this._renderNote()}
         </View> : <View style={styles.actionContainer}>
           {this._renderNote()}
@@ -155,15 +116,6 @@ export class RewardItemScreen extends React.PureComponent<Props> {
       </SafeAreaView>
     );
   }
-
-  private _renderTile = () : JSX.Element => (
-    <ImageBackground style={styles.img} source={{ uri: this._reward.image }}>
-      <TouchableOpacity onPress={this.props.navigation.goBack} style={{ width: 48, height: 48, top: 10 }}>
-        <Icon type="material" name="chevron-left"/>
-      </TouchableOpacity>
-    </ImageBackground>
-  );
-
 
   private _renderNote = () : JSX.Element => {
     return (
@@ -189,11 +141,21 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 18,
   },
+  priceLabel: {
+    fontSize: 10,
+    lineHeight: 12
+  },
   descContainer: {
     alignItems: 'flex-start',
+    flexDirection: 'column',
     margin: 16
   },
-  priceContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', margin: 16 },
+  priceContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    margin: 16
+  },
   desc: {
     fontStyle: 'normal',
     fontWeight: 'normal',
@@ -241,5 +203,12 @@ const styles = StyleSheet.create({
   btnLoading: {
     opacity: 0.3,
     backgroundColor: '#FF375F'
+  },
+  placeholderTile: {
+    position: "absolute",
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0
   }
 });

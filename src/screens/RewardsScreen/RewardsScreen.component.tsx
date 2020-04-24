@@ -1,39 +1,18 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Header, Icon, TextProps } from 'react-native-elements';
-import { observer, Observer } from 'mobx-react';
+import { observer } from 'mobx-react';
 
 import { RewardListItem, RewardGridItem } from '@app/components/';
 import {Drizzle, DrizzleProps} from '@app/shared/Drizzle';
 import {action, computed, observable} from "mobx";
+import {Reward, Partner} from "@app/shared/types";
 
 interface RewardsScreenProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
 type ListView = 'grid' | 'list';
-
-type Reward = {
-  caption: string;
-  description: string;
-  image: string;
-  value: number;
-  owner: string;
-  status: 0 | 1;
-  totalAmount: number;
-  resultsAmount: number;
-  number: number;
-  expirationDate: number;
-}
-
-type Partner = {
-  account: string;
-  name: string;
-  description: string;
-  logo: string;
-  number: number;
-}
-
 type RendersType = {
   grid: (item: Reward, partner: Partner) => JSX.Element;
   list: (item: Reward, partner: Partner) => JSX.Element;
@@ -51,19 +30,21 @@ const HEADER : TextProps = {
 
 @observer
 @Drizzle
-export class RewardsScreen extends React.Component<RewardsScreenProps> {
+export class RewardsScreen extends React.PureComponent<RewardsScreenProps> {
   @observable
   listView : ListView = 'list';
 
   @action.bound toggleListView() : void {
     if (this.listView === 'list') {
       this.listView = 'grid';
+      console.log('Swtiched', this.listView);
       return ;
     }
     if (this.listView === 'grid') {
       this.listView = 'list';
+      console.log('Swtiched', this.listView);
       return ;
-    };
+    }
   }
 
   @computed get columnsNum() {
@@ -74,32 +55,32 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
 
   private _renderRow = ({ item }: {item: Reward}) : JSX.Element | undefined => {
     const { pointX } = this.props;
-    if (item) {
-      const renders: RendersType = {
-        'grid': this._renderGridItem,
-        'list': this._renderListItem
-      };
+    const renders: RendersType = {
+      'grid': this._renderGridItem,
+      'list': this._renderListItem
+    };
 
-      const { owner } = item;
-      const partner = pointX.partnersList.find(i => i.account === owner);
-      return (
-        <Observer>
-          {() => renders[this.listView].call(this, item, partner)}
-        </Observer>
-      );
-    }
-    return undefined;
+    const partner = {};
+    return renders[this.listView].call(this, item, partner);
   };
 
   private _renderGridItem = (item: Reward, partner: Partner) : JSX.Element => {
     return (
-      <RewardGridItem navigation={this.props.navigation} partner={partner} item={item} />
+      <RewardGridItem
+        navigation={this.props.navigation}
+        partner={partner}
+        item={item}
+      />
     );
   };
 
   private _renderListItem = (item: Reward, partner: Partner) : JSX.Element => {
     return (
-      <RewardListItem navigation={this.props.navigation} partner={partner} item={item} />
+      <RewardListItem
+        navigation={this.props.navigation}
+        partner={partner}
+        item={item}
+      />
     );
   };
 

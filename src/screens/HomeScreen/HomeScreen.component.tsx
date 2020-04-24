@@ -1,59 +1,147 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
-import { ListItem, Text } from 'react-native-elements';
-import { DrizzleProps } from '@app/shared/Drizzle';
-import { CardComponent, Header } from '@app/components';
-import { FULL_MOCKS , getMocksByName } from "@app/utils";
+import { ScrollView, StyleSheet, FlatList, View } from 'react-native';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import {
+  CardComponent,
+  Header,
+  TabViewWrapper,
+  TaskListItem,
+  RewardListItem
+} from '@app/components';
 
+import { Task } from "@app/shared/types";
 
 interface HomeScreenProps extends DrizzleProps {
   navigation: { navigate: any };
 }
 
-const LIST = Array.from({ length: 10 }, (_, i) => i);
+enum Tabs {
+  TASKS = 'tasks',
+  REWARDS = 'rewards'
+}
 
+const routes = [
+  {
+    key: Tabs.TASKS,
+    title: 'Tasks'
+  },
+  {
+    key: Tabs.REWARDS,
+    title: 'Rewards'
+  }
+];
 
-// @Drizzle
 @observer
-export class HomeScreen extends React.Component<HomeScreenProps> {
+@Drizzle
+export class HomeScreen extends React.PureComponent<HomeScreenProps> {
+  private _onTaskClick = (task : Task) =>
+    this.props.navigation.navigate('TaskItemScreen', { task });
+
+  private getTabScenes = () => {
+    return ({
+      [Tabs.TASKS]: this._renderTasks(),
+      [Tabs.REWARDS]: this._renderRewards()
+    });
+  };
+
+  private _keyExtractor = (_: any, index: any) => `${index}`;
+
+  private _renderTaskRow = (data: { item: any; }) : JSX.Element | undefined => {
+    if (data && data.item) {
+      let task = data.item;
+      const [
+        caption,
+        description,
+        image,
+        value,
+        owner,
+      ] = task;
+      task = { caption, description, image, value, owner };
+      return (
+        <TaskListItem
+          task={task}
+          theme={this.props.theme}
+          onClick={() => this._onTaskClick(task)}
+        />
+      )
+    }
+    return undefined;
+  };
+
+  private _renderRewardRow = (data: { item: any; }) : JSX.Element | undefined => {
+    if (data && data.item) {
+      const reward = data.item;
+      const { pointX } = this.props;
+      return (
+        <RewardListItem
+          item={reward}
+          partner={{}}
+          navigation={this.props.navigation}
+        />
+      )
+    }
+    return undefined;
+  };
+
+  private _fetchMoreTasks = () : void => {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
+  };
+
+
+  private _fetchMoreRewards = () : void => {
+    const { pointX } = this.props;
+    pointX.fetchRewardsCount();
+    pointX.fetchAllRewards();
+  };
+
+  private _renderTasks = () : JSX.Element => {
+    const { pointX } = this.props;
+    return (
+      <FlatList
+        data={pointX.tasksList}
+        renderItem={this._renderTaskRow}
+        keyExtractor={this._keyExtractor}
+        onEndReachedThreshold={0.4}
+        onEndReached={this._fetchMoreTasks}
+      />
+    )
+  };
+
+  private _renderRewards = () : JSX.Element => {
+    const { pointX } = this.props;
+    return (
+      <FlatList
+        data={pointX.rewardsList}
+        renderItem={this._renderRewardRow}
+        keyExtractor={this._keyExtractor}
+        onEndReachedThreshold={0.4}
+        onEndReached={this._fetchMoreRewards}
+      />
+    );
+  };
+
+  componentDidMount(): void {
+    const { pointX } = this.props;
+    pointX.fetchTasksCount();
+    pointX.fetchAllTasks();
+    pointX.fetchRewardsCount();
+    pointX.fetchAllRewards();
+  }
 
   public render() {
-    const { props } = this;
-
-    let MOCKS = [];
-    for (const {history} of FULL_MOCKS) {
-      for (const i of history) {
-        MOCKS.push(i);
-      }
-    }
-
-
-    const { navigation } = props;
-
     return (
       <ScrollView style={styles.rootContainer}>
         <Header />
         <CardComponent />
-        <Text style={styles.historyTitle}>History</Text>
-          {
-            MOCKS.map((item, i) => (
-              <ListItem
-                key={i}
-                leftAvatar={{ source: { uri: item.image } }}
-                title={item.name}
-                subtitle={item.description.length > 40 ? item.description.slice(0, 35) + '...': item.description}
-                rightTitle={item.value > 0 ? `+${item.value}` : item.value.toString()}
-                rightSubtitle={item.date}
-                titleStyle={styles.historyItemTitle}
-                rightTitleStyle={{ ...styles.historyItemTitle, color: item.value > 0 ? '#219653' : '#828282'}}
-                rightSubtitleStyle={styles.historyItemDesc}
-                subtitleStyle={styles.historyItemDesc}
-                bottomDivider
-                onPress={() => navigation.navigate('PartnerScreen', { partner: getMocksByName(item.company) })}
-              />
-            ))
-          }
+        <View style={styles.tabViewContainer}>
+          <TabViewWrapper
+            routes={routes}
+            scenes={this.getTabScenes()}
+          />
+        </View>
       </ScrollView>
     );
   }
@@ -63,28 +151,7 @@ const styles = StyleSheet.create({
   rootContainer: {
     backgroundColor: '#ffffff'
   },
-  historyItemTitle: {
-    fontSize: 14,
-    lineHeight: 17,
-    fontStyle: 'normal',
-    fontWeight: 'normal'
+  tabViewContainer: {
+    marginTop: 20
   },
-  historyItemDesc: {
-    fontSize: 12,
-    // lineHeight: 14,
-    marginTop: 5,
-    color: '#828282',
-    fontStyle: 'normal',
-    fontWeight: 'normal'
-  },
-  historyTitle: {
-    fontSize: 20,
-    lineHeight: 24,
-    color: '#4F4F4F',
-    textAlign: 'left',
-    fontWeight: 'normal',
-    fontStyle: 'normal',
-    paddingLeft: 16,
-    paddingTop: 24
-  }
 });

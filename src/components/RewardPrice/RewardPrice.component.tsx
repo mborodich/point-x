@@ -3,13 +3,16 @@ import {View, Text, StyleSheet} from 'react-native';
 
 type TProps = {
   value: number;
+  containerStyle?: object;
+  labelStyle?: object;
+  priceStyle?: object;
 }
 
 export const RewardPrice = (props: TProps) => {
   return (
-    <View style={styles.priceContainer}>
-      <Text style={styles.pntxLabel}>pntx</Text>
-      <Text style={styles.itemPrice}>{props.value}</Text>
+    <View style={[styles.priceContainer, props.containerStyle]}>
+      <Text style={[styles.pntxLabel, props.labelStyle]}> pntx</Text>
+      <Text style={[styles.itemPrice, props.priceStyle]}>{props.value}</Text>
     </View>
   )
 };
@@ -31,7 +34,7 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     textTransform: "uppercase",
     color: '#828282',
-    marginBottom: 5
+    marginBottom: 7
   },
   priceContainer: {
     flexDirection: 'row',

@@ -7,33 +7,33 @@ import "./Core.sol";
 library Getters {
 
     function getTask(Core.Store storage core, uint i) public view returns (Core.Task memory task) {
-		return Core.Task({
-			caption: core.items.kinds[Core.TASK()].items[i].caption,
-			description: core.items.kinds[Core.TASK()].items[i].description,
-			image: core.items.kinds[Core.TASK()].items[i].image,
-			value: core.items.kinds[Core.TASK()].items[i].value,
-			owner: core.items.kinds[Core.TASK()].items[i].owner,
-			status: core.items.kinds[Core.TASK()].items[i].status,
-			itemType: core.items.kinds[Core.TASK()].items[i].itemType,
-			data: core.items.kinds[Core.TASK()].items[i].data,
-			totalAmount: core.items.kinds[Core.TASK()].items[i].totalAmount,
-			resultsAmount: core.items.kinds[Core.TASK()].items[i].resultsAmount,
-			number: i
-		});
+      return Core.Task({
+        caption: core.items.kinds[Core.TASK()].items[i].caption,
+        description: core.items.kinds[Core.TASK()].items[i].description,
+        image: core.items.kinds[Core.TASK()].items[i].image,
+        value: core.items.kinds[Core.TASK()].items[i].value,
+        owner: core.items.kinds[Core.TASK()].items[i].owner,
+        status: core.items.kinds[Core.TASK()].items[i].status,
+        itemType: core.items.kinds[Core.TASK()].items[i].itemType,
+        data: core.items.kinds[Core.TASK()].items[i].data,
+        totalAmount: core.items.kinds[Core.TASK()].items[i].totalAmount,
+        resultsAmount: core.items.kinds[Core.TASK()].items[i].resultsAmount,
+        number: i
+      });
     }
 
     function getReward(Core.Store storage core, uint i) public view returns (Core.Reward memory reward) {
-		return Core.Reward({
-			caption: core.items.kinds[Core.REWARD()].items[i].caption,
-			description: core.items.kinds[Core.REWARD()].items[i].description,
-			image: core.items.kinds[Core.REWARD()].items[i].image,
-			value: core.items.kinds[Core.REWARD()].items[i].value,
-			owner: core.items.kinds[Core.REWARD()].items[i].owner,
-			status: core.items.kinds[Core.REWARD()].items[i].status,
-			totalAmount: core.items.kinds[Core.REWARD()].items[i].totalAmount,
-			resultsAmount: core.items.kinds[Core.REWARD()].items[i].resultsAmount,
-			number: i
-		});
+      return Core.Reward({
+        caption: core.items.kinds[Core.REWARD()].items[i].caption,
+        description: core.items.kinds[Core.REWARD()].items[i].description,
+        image: core.items.kinds[Core.REWARD()].items[i].image,
+        value: core.items.kinds[Core.REWARD()].items[i].value,
+        owner: core.items.kinds[Core.REWARD()].items[i].owner,
+        status: core.items.kinds[Core.REWARD()].items[i].status,
+        totalAmount: core.items.kinds[Core.REWARD()].items[i].totalAmount,
+        resultsAmount: core.items.kinds[Core.REWARD()].items[i].resultsAmount,
+        number: i
+      });
     }
 
 	function getPartnerByAdress(Core.Store storage core, address account) public view returns(Core.Partner memory partner) {

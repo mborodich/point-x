@@ -1,9 +1,24 @@
 import dayjs from 'dayjs';
+// @ts-ignore
+import * as bip39 from 'react-native-bip39';
+import bip32 from 'bip32';
 import relativeTimePlugin from 'dayjs/plugin/relativeTime';
+
+import {Bip32Decoded} from '@app/shared/types';
 
 dayjs.extend(relativeTimePlugin);
 
 const timeToX = (v: number | Date | string) => dayjs().to(v);
+
+
+const mnemonicToCredentials = async (v: string) : Promise<Bip32Decoded> => {
+  if (bip39.validateMnemonic(v)) {
+    const val : Buffer = await bip39.mnemonicToSeed(v).toString('hex');
+    return { publicKey: val, privateKey: val, mnemonics: v };
+  } else throw new Error(`Invalid mnemonic.`);
+};
+
+
 
 const calcRest = (rest: number, total: number) : number =>
   Math.round((rest / total) * 100);
@@ -188,6 +203,7 @@ export {
   calcRest,
   FULL_MOCKS,
   getMocksByName,
+  mnemonicToCredentials,
   isEmpty,
   timeToX
 }

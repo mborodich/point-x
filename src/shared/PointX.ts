@@ -143,7 +143,6 @@ export class PointX {
             account,
             number
           ] = partners[e].value;
-          console.log('Name )', name);
           results.push({ account, name, description, logo, number });
         }
       });
@@ -221,7 +220,6 @@ export class PointX {
     const partnersCount = this.contractsGet.getPartnersCount;
     if (!isEmpty(partnersCount)) {
       const [key] = Object.keys(partnersCount);
-      console.log('Partners count ->', partnersCount[key]);
       return partnersCount[key] && partnersCount[key].value;
     }
   }

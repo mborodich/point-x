@@ -6,6 +6,7 @@ import SmsStore from './forms/SmsStore';
 
 // stores
 import RewardsStore from './stores/RewardsStore';
+import UserStore from './stores/UserStore';
 
 export interface IStores {
   loginStore: LoginStore;
@@ -13,6 +14,7 @@ export interface IStores {
   phoneStore: PhoneStore;
   smsStore: SmsStore;
   rewardsStore: RewardsStore;
+  userStore: UserStore;
 }
 
 export {
@@ -20,7 +22,8 @@ export {
   NewAccStore,
   PhoneStore,
   SmsStore,
-  RewardsStore
+  RewardsStore,
+  UserStore
 };
 
 export default {
@@ -28,5 +31,6 @@ export default {
   newAccForm: new NewAccStore(),
   phoneForm: new PhoneStore(),
   smsForm: new SmsStore(),
-  rewardsStore: new RewardsStore()
+  rewardsStore: new RewardsStore(),
+  userStore: new UserStore()
 };

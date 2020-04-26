@@ -19,6 +19,12 @@ export type Partner = {
   number: number;
 }
 
+export type Bip32Decoded = {
+  publicKey: string;
+  privateKey: string;
+  mnemonics: string;
+}
+
 export type Task = {
   caption: string;
   image: string;

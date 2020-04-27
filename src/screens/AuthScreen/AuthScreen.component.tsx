@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 import { observer } from 'mobx-react';
-import { observable, action } from 'mobx';
+import { observable, } from 'mobx';
 import { StyleSheet } from 'react-native';
-import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
+import { DrizzleProps } from '@app/shared/Drizzle';
 
 import AuthWizard from './AuthWizard.component';
 import IntroSlider from './IntroSlider.component';
@@ -14,7 +14,7 @@ import SmsForm from './SmsForm/';
 import NewAccForm from './NewAccForm/';
 import LoginForm from './LoginForm/';
 
-import {defaultGradient, deviceWidth, deviceHeight} from '@app/utils/const';
+import { defaultGradient, deviceWidth, deviceHeight } from '@app/utils/const';
 
 interface LoginScreenProps extends DrizzleProps {
   navigation: { navigate: any }
@@ -22,9 +22,9 @@ interface LoginScreenProps extends DrizzleProps {
 
 @observer
 export class LoginScreen extends React.Component<LoginScreenProps> {
-  @observable initialIndex : number = 0;
+  @observable initialIndex: number = 0;
 
-  onCarouselDone = async () : Promise<void> => {
+  onCarouselDone = async (): Promise<void> => {
     await AsyncStorage.setItem('@carouselViewed', true.toString());
     this.initialIndex = 1;
   };
@@ -33,6 +33,10 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
 
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
+    const login = await AsyncStorage.getItem('@login');
+    if (login) {
+      this.props.navigation.navigate('Application');
+    }
     this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
     SplashScreen.hide();
   }

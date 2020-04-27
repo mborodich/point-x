@@ -47,13 +47,17 @@ export class RewardItemScreen extends React.PureComponent<Props> {
   async componentDidMount(): Promise<void> {
   }
 
-  private navigateToDetail = () =>
-    this.props.navigation.navigate('PartnerScreen', { partner: this._partner });
+  private navigateToDetail = () => {
+    const reward = this.props.route.params.reward;
+    const { partner } = reward;
+    this.props.navigation.navigate('PartnerScreen', { partner });
+  }
+
 
 
   public render() {
     const reward = this.props.route.params.reward;
-    const { _partner: partner } = this;
+    const { partner } = reward;
 
     return (
       <SafeAreaView style={styles.container}>

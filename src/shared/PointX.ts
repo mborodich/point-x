@@ -1,5 +1,4 @@
 import { action, computed, observable } from 'mobx';
-import { createTransformer } from 'mobx-utils';
 import web3 from 'web3';
 import { isEmpty } from '@app/utils';
 
@@ -150,12 +149,9 @@ export class PointX {
     return results.length > 0 ? results : undefined;
   }
 
-  @computed
-  public get selectPartnerByOwner() {
-    return createTransformer((owner: string) => {
-      console.log(this.partnersList);
-      return this.partnersList && this.partnersList.find((i) => i.account === owner)
-    })
+  @action.bound
+  public selectPartnerByOwner(owner: string) {
+    return this.partnersList && this.partnersList.find((i) => i.account === owner)
   }
 
   @computed
@@ -187,7 +183,8 @@ export class PointX {
             status,
             totalAmount,
             resultsAmount,
-            number
+            number,
+            partner: this.partnersList && this.selectPartnerByOwner(owner),
           });
         }
       })
@@ -222,5 +219,6 @@ export class PointX {
       const [key] = Object.keys(partnersCount);
       return partnersCount[key] && partnersCount[key].value;
     }
+    return 3;
   }
 }

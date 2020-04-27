@@ -9,6 +9,7 @@ import {
   TaskListItem,
   RewardListItem
 } from '@app/components';
+import { computed } from 'mobx';
 
 import { Task } from "@app/shared/types";
 
@@ -32,13 +33,19 @@ const routes = [
   }
 ];
 
-@observer
 @Drizzle
-export class HomeScreen extends React.PureComponent<HomeScreenProps> {
-  private _onTaskClick = (task : Task) =>
+@observer
+export class HomeScreen extends React.Component<HomeScreenProps> {
+  private _onTaskClick = (task: Task) =>
     this.props.navigation.navigate('TaskItemScreen', { task });
 
-  private getTabScenes = () => {
+  componentDidMount(): void {
+    const { pointX } = this.props;
+    pointX.prefetchAll();
+  }
+
+  @computed
+  private get getTabScenes() {
     return ({
       [Tabs.TASKS]: this._renderTasks(),
       [Tabs.REWARDS]: this._renderRewards()
@@ -47,7 +54,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
 
   private _keyExtractor = (_: any, index: any) => `${index}`;
 
-  private _renderTaskRow = (data: { item: any; }) : JSX.Element | undefined => {
+  private _renderTaskRow = (data: { item: any; }): JSX.Element | undefined => {
     if (data && data.item) {
       let task = data.item;
       const [
@@ -69,14 +76,12 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     return undefined;
   };
 
-  private _renderRewardRow = (data: { item: any; }) : JSX.Element | undefined => {
+  private _renderRewardRow = (data: { item: any; }): JSX.Element | undefined => {
     if (data && data.item) {
       const reward = data.item;
-      const { pointX } = this.props;
       return (
         <RewardListItem
           item={reward}
-          partner={{}}
           navigation={this.props.navigation}
         />
       )
@@ -84,20 +89,20 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     return undefined;
   };
 
-  private _fetchMoreTasks = () : void => {
+  private _fetchMoreTasks = (): void => {
     const { pointX } = this.props;
     pointX.fetchTasksCount();
     pointX.fetchAllTasks();
   };
 
 
-  private _fetchMoreRewards = () : void => {
+  private _fetchMoreRewards = (): void => {
     const { pointX } = this.props;
     pointX.fetchRewardsCount();
     pointX.fetchAllRewards();
   };
 
-  private _renderTasks = () : JSX.Element => {
+  private _renderTasks = (): JSX.Element => {
     const { pointX } = this.props;
     return (
       <FlatList
@@ -111,7 +116,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     )
   };
 
-  private _renderRewards = () : JSX.Element => {
+  private _renderRewards = (): JSX.Element => {
     const { pointX } = this.props;
     return (
       <FlatList
@@ -125,14 +130,6 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
     );
   };
 
-  componentDidMount(): void {
-    const { pointX } = this.props;
-    // pointX.fetchTasksCount();
-    // pointX.fetchAllTasks();
-    // pointX.fetchRewardsCount();
-    // pointX.fetchAllRewards();
-  }
-
   public render() {
     return (
       <ScrollView style={styles.rootContainer}>
@@ -141,7 +138,7 @@ export class HomeScreen extends React.PureComponent<HomeScreenProps> {
         <View style={styles.tabViewContainer}>
           <TabViewWrapper
             routes={routes}
-            scenes={this.getTabScenes()}
+            scenes={this.getTabScenes}
           />
         </View>
       </ScrollView>

@@ -1,4 +1,5 @@
 import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   View,
   StyleSheet,
@@ -36,6 +37,10 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
     return this.props.navigation.navigate("RewardsHistory");
   };
 
+  private onLogoutClick = () => {
+    AsyncStorage.removeItem('@login');
+    return this.props.navigation.navigate("AuthScreen");
+  };
 
   public render() {
     const { theme: { colorsMap } } = this.props;
@@ -53,7 +58,7 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
             size="large"
           />
         </View>
-        <SettingsMenuItem title="Phone Number" subtitle="+7 999 139 33 05"/>
+        <SettingsMenuItem title="Phone Number" subtitle="+7 999 139 33 05" />
         <SettingsMenuItem title="PIN-Code" withChevron />
         <SettingsMenuItem onPress={this.onMnemonicsClick} title="Mnemonics" withChevron />
         <SettingsMenuItem title="KYC" rightIcon={{ size: 16, name: "info-outline", type: "material", color: colorsMap.orange }} withChevron />
@@ -65,7 +70,7 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
           <SettingsMenuItem title="Terms of Use" />
           <SettingsMenuItem title="Contact Support" />
           <TouchableOpacity
-            onPress={() => this.signOutModalVisible = true}
+            onPress={this.onLogoutClick}
             style={{ padding: 18 }}
           >
             <Text style={{ ...styles.title, color: colorsMap.blue1 }}>Sign Out</Text>
@@ -76,10 +81,10 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
     )
   }
 
-  private _renderSignOutModal = () : JSX.Element => {
+  private _renderSignOutModal = (): JSX.Element => {
     const { colorsMap } = this.props.theme;
 
-    const onOkClick = () : void => {
+    const onOkClick = (): void => {
       this.signOutModalVisible = false;
       return this.props.navigation.navigate("AuthScreen");
     };

@@ -26,9 +26,8 @@ class LoginForm extends React.PureComponent<TProps> {
     }
   };
 
-
   public render() {
-    const {form, onFieldChange} = this.props.loginForm;
+    const { form, onFieldChange } = this.props.loginForm;
     return (
       <KeyboardAvoidingView
         behavior={behavior}

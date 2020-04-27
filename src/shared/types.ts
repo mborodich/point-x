@@ -9,6 +9,7 @@ export type Reward = {
   resultsAmount: number;
   number: number;
   expirationDate: number;
+  partner: Partner;
 }
 
 export type Partner = {

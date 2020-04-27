@@ -8,12 +8,11 @@ import { Reward, Partner } from "@app/shared/types";
 
 type TProps = {
   item: Reward;
-  partner: Partner;
   navigation: { navigate: any };
 };
 
-export const RewardListItem = ({ item, partner, navigation }: TProps): JSX.Element => {
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
+export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: item.partner }), [item.partner]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
   const _renderItemsLeft = React.useCallback((): JSX.Element => {
@@ -55,8 +54,8 @@ export const RewardListItem = ({ item, partner, navigation }: TProps): JSX.Eleme
                 </Text>
               </View>
               <CompanyLabel
-                company={partner && partner.name}
-                logo={partner && partner.logo}
+                company={item.partner && item.partner.name}
+                logo={item.partner && item.partner.logo}
                 expiration={item && item.expirationDate}
                 onPress={onCompanyPress}
               />

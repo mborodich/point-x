@@ -119,9 +119,7 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
   }
 
   public render() {
-    const partner = this.props.route.params.partner;
-    const { pointX } = this.props;
-    console.log('pointX.partnersList', pointX.partnersList)
+    const partner = this.props.route.params.partner || {};
     return (
       <ScrollView style={styles.container}>
         <Header
@@ -131,7 +129,7 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
         />
         <View style={styles.avatarContainer}>
           <Avatar
-            source={{ uri: partner.image }}
+            source={{ uri: partner.logo }}
             size="large"
             rounded
           />

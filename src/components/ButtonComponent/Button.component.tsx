@@ -1,13 +1,13 @@
 import React from 'react';
-import {Button, ButtonProps} from 'react-native-elements';
+import {Button as Button_, ButtonProps} from 'react-native-elements';
 import {StyleSheet} from 'react-native';
 
 
 interface TProps extends ButtonProps {}
 
-const Button_ = (props: TProps) => {
+export const Button = (props: TProps) => {
   return (
-    <Button
+    <Button_
       buttonStyle={{
         ...styles.rootButtonStyle,
         ...props.buttonStyle as object
@@ -47,4 +47,3 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Button_;

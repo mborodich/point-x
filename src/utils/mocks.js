@@ -57,7 +57,7 @@ class Mocks {
 				totalAmount: 100
 			},
 			{
-				caption: 'Nike sneakers React Element 55',
+				caption: 'Nike sneakers React Element',
 				description: `trendy React Element 55 sneakers from Nike. Futuristic look with decorative elements inspired by the design of the Nike Internationalist series. 6-hole lacing with loops for a personalized fit. Soft, light textile upper material offers high wearing comfort. Discreet logo print on the tongue outside. Decorative heel seam`,
 				price: 250,
 				imageLink: 'https://cdn.def-shop.com/original/nike-sneaker-weiss-697919.jpg',
@@ -67,7 +67,7 @@ class Mocks {
 				caption: 'Two concert tickets',
 				description: 'YouTube has expanded concert ticket integration on artist videos to the U.K. and Ireland via partnerships with Ticketmaster, See Tickets and Eventbrite. Beginning this week, fans will start seeing ticket listings on some official music videos, which if clicked will lead to partner sites.',
 				price: 10,
-				imageLink: 'https://www.billboard.com/files/media/concert-crowd-audience-stock-2019-u-billboard-1548.jpg',
+				imageLink: 'https://thumbs.dreamstime.com/b/hand-holding-two-tickets-cinema-vector-illustration-128247078.jpg',
 				totalAmount: 20
 			},
 		]

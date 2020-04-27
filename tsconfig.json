@@ -7,6 +7,10 @@
       "es6",
       "dom"
     ],
+    "baseUrl": "./src",
+    "paths": {
+      "@app/*": ["./*"]
+    },
     "sourceMap": true,
     "allowJs": true,
     "jsx": "preserve",
@@ -39,6 +43,7 @@
     "jest"
   ],
   "include": [
-    "src"
+    "src",
+    "Drizzle.options.js"
   ]
 }

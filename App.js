@@ -4,7 +4,7 @@ import { DrizzleContext } from '@drizzle/react-plugin';
 import { Provider } from "mobx-react";
 
 import { AppScreens } from './src/navigation';
-import drizzleOptions from './src/store/Drizzle.options';
+import drizzleOptions from './Drizzle.options';
 import { Drizzle, generateStore } from '@drizzle/store';
 import stores from './src/store';
 

@@ -1,10 +1,10 @@
 import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet, KeyboardAvoidingView, Platform } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import Input from '../Input.component';
-import Button from '../Button.component';
-import {LoginStore} from '../../../store/';
+import { Input, Button } from '@app/components/';
+import { LoginStore } from '@app/store/';
 
 type TProps = {
   loginForm: LoginStore;
@@ -16,10 +16,15 @@ const behavior = Platform.OS === "ios" ? "position" : "height";
 @inject('loginForm')
 @observer
 class LoginForm extends React.PureComponent<TProps> {
-  go = () => this.props.navigation.navigate({ name: 'Application' });
+
+  go = () => {
+    const { form } = this.props.loginForm;
+    AsyncStorage.setItem('@login', form.fields.mnemonics.value);
+    this.props.navigation.navigate({ name: 'Application' });
+  };
 
   public render() {
-    const {form, onFieldChange} = this.props.loginForm;
+    const { form, onFieldChange } = this.props.loginForm;
     return (
       <KeyboardAvoidingView
         behavior={behavior}
@@ -36,7 +41,7 @@ class LoginForm extends React.PureComponent<TProps> {
           title="Sign In"
           style={styles.button}
           disabled={!form.meta.isValid}
-          onPress={() => this.go()}
+          onPress={this.go}
         />
       </KeyboardAvoidingView>
     );

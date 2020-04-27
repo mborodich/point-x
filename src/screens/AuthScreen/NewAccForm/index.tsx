@@ -2,14 +2,13 @@ import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
 import { observer, inject } from "mobx-react";
 
-import {numKeyboardType} from "../../../utils/const";
-import {NewAccStore} from '../../../store/'
-
-import Input from '../Input.component';
-import Button from '../Button.component';
+import {numKeyboardType} from "@app/utils/const";
+import {NewAccStore} from '@app/store/'
+import {Input, Button} from '@app/components/';
 
 type TProps = {
   newAccForm: NewAccStore;
+  navigation: { navigate: any; };
 };
 
 const behavior = Platform.OS === "ios" ? "padding" : "height";
@@ -17,6 +16,8 @@ const behavior = Platform.OS === "ios" ? "padding" : "height";
 @inject('newAccForm')
 @observer
 class NewAccForm extends React.PureComponent<TProps> {
+  go = () => this.props.navigation.navigate({ name : 'Application' });
+
   public render() {
     const { form, onFieldChange } = this.props.newAccForm;
 
@@ -46,6 +47,7 @@ class NewAccForm extends React.PureComponent<TProps> {
           title="Next"
           style={styles.marginTop_}
           disabled={!form.meta.isValid}
+          onPress={this.go}
         />
       </KeyboardAvoidingView>
   );

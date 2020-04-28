@@ -53,12 +53,11 @@ export class TasksScreen extends React.Component<dataStoreProps> {
         description,
         image,
         value,
-        owner,
+        owner
       ] = task;
-      task = { caption, description, image, value, owner };
       return (
         <TaskListItem
-          task={task}
+          task={{ caption, description, image, value, owner }}
           theme={this.props.theme}
           onClick={() => this._onTaskClick(task)}
         />

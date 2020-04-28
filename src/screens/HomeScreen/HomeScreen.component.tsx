@@ -107,10 +107,11 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
     return (
       <FlatList
         data={pointX.tasksList}
+        extraData={pointX.tasksList}
         renderItem={this._renderTaskRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
-        onEndReached={this._fetchMoreTasks}
+        // onEndReached={this._fetchMoreTasks}
       />
     )
   };
@@ -120,10 +121,11 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
     return (
       <FlatList
         data={pointX.rewardsList}
+        extraData={pointX.rewardsList}
         renderItem={this._renderRewardRow}
         keyExtractor={this._keyExtractor}
         onEndReachedThreshold={0.4}
-        onEndReached={this._fetchMoreRewards}
+        // onEndReached={this._fetchMoreRewards}
       />
     );
   };

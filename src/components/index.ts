@@ -15,6 +15,7 @@ export { Button } from './ButtonComponent/Button.component';
 export { Input } from './InputComponent/Input.component';
 export { Note } from './NoteComponent/Note.component';
 export { Header } from './HeaderComponent/Header.component'
+export { MnemonicArea } from './MnemonicArea/MnemonicArea.component';
 export { TabViewWrapper } from './TabView/TabView.component';
 
 export { HistoryItem } from './HistoryItem/HistoryItem.component';

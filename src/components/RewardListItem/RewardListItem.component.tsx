@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, TouchableOpacity } from 'react-native';
-import { observer, Observer } from 'mobx-react';
+import { Observer } from 'mobx-react';
 import { Avatar, Text } from 'react-native-elements';
-import { ProgressBar, CompanyLabel, RewardPrice } from '@app/components';
-import { deviceWidth } from '@app/utils/const';
+import { ProgressBar, CompanyLabel } from '@app/components';
 import { Reward, Partner } from "@app/shared/types";
 
 type TProps = {

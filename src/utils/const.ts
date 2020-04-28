@@ -1,7 +1,7 @@
 import {Dimensions, Platform} from 'react-native';
 
 const numKeyboardType = Platform.OS === "android" ? "numeric" : "number-pad";
-const defaultGradient = [ "#383838", "#131313" ];
+const defaultGradient = [ "#07B2FF", "#0D57CA" ];
 const {width: deviceWidth, height: deviceHeight} = Dimensions.get('window');
 
 

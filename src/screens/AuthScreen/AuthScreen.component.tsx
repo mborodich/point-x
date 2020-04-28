@@ -1,11 +1,12 @@
 import React from 'react';
+import * as bip39 from 'react-native-bip39';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
 import SplashScreen from 'react-native-splash-screen';
 import { observer } from 'mobx-react';
 import { observable, } from 'mobx';
 import { StyleSheet } from 'react-native';
-import { DrizzleProps } from '@app/shared/Drizzle';
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 
 import AuthWizard from './AuthWizard.component';
 import IntroSlider from './IntroSlider.component';
@@ -13,6 +14,7 @@ import PhoneForm from './PhoneForm/';
 import SmsForm from './SmsForm/';
 import NewAccForm from './NewAccForm/';
 import LoginForm from './LoginForm/';
+import Mnemonics from './Mnemonics/';
 
 import { defaultGradient, deviceWidth, deviceHeight } from '@app/utils/const';
 
@@ -21,6 +23,7 @@ interface LoginScreenProps extends DrizzleProps {
 }
 
 @observer
+@Drizzle
 export class LoginScreen extends React.Component<LoginScreenProps> {
   @observable initialIndex: number = 0;
 
@@ -29,13 +32,32 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.initialIndex = 1;
   };
 
-  onLogin = () => this.props.navigation.navigate('Application');
+  toApp = () => this.props.navigation.navigate('Application');
+
+  onLoginSubmit = async (v: string) : Promise<void> => {
+    try {
+      await this.props.pointX.handleMnemonic(v);
+      this.toApp();
+    } catch (error) {
+      throw error; // todo: error handle
+    }
+  };
+
+  onNewUserSubmit = async (name: string) : Promise<void> => {
+    try {
+      await this.props.pointX.createNewUserWithMnemonic(name);
+      this.toApp();
+    } catch (error) {
+      throw error; // todo: error handle
+    }
+  };
 
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     const login = await AsyncStorage.getItem('@login');
-    if (login) {
+    if (login && bip39.validateMnemonic(login)) {
       this.props.navigation.navigate('Application');
+      return ;
     }
     this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
     SplashScreen.hide();
@@ -69,7 +91,17 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             header={false}
             flowSwitch={false}
           >
-            <NewAccForm navigation={this.props.navigation} />
+            <NewAccForm
+              onNewUserSubmit={this.onNewUserSubmit}
+            />
+          </AuthWizard.Step>
+          <AuthWizard.Step
+            header={false}
+            flowSwitch={false}
+          >
+            <Mnemonics
+              onOkClick={this.toApp}
+            />
           </AuthWizard.Step>
           <AuthWizard.Step
             switchText="Registration"
@@ -77,7 +109,9 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
             note
             flowSwitch
           >
-            <LoginForm navigation={this.props.navigation} onLogin={this.onLogin} />
+            <LoginForm
+              onSubmit={this.onLoginSubmit}
+            />
           </AuthWizard.Step>
         </AuthWizard>
       </LinearGradient>

@@ -12,6 +12,14 @@ export type Reward = {
   partner: Partner;
 }
 
+export type HistoryItem = {
+  name: string;
+  description: string;
+  value: number;
+  date: string;
+  image: string;
+}
+
 export type Partner = {
   account: string;
   name: string;
@@ -20,11 +28,23 @@ export type Partner = {
   number: number;
 }
 
+export type Bip32Decoded = {
+  publicKey: string;
+  privateKey: string;
+  mnemonics: string;
+}
+
 export type Task = {
   caption: string;
   image: string;
   description: string;
   value: number;
   owner: string;
+  status: number;
+  itemType: string;
+  data: any;
+  totalAmount: number;
+  resultsAmount: number;
+  number: number;
   expirationDate?: string;
 };

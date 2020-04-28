@@ -19,16 +19,15 @@ import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import { Partner } from '@app/shared/types';
 
 interface Props extends DrizzleProps {
-  navigation: { navigate: any, goBack: any }
+  navigation: {navigate: any, goBack: any}
 }
 const qrCode = require('../../assets/img/qr-code.png');
 
 @observer
 @Drizzle
 export class RewardItemScreen extends React.PureComponent<Props> {
-  @observable private _isFetching: boolean = false;
-  @observable private _tileIsLoading: boolean = true;
-  @observable private qrCode: string | null = null;
+  @observable private _isFetching : boolean = false;
+  @observable private qrCode : string | null = null;
   @observable private _partner: Partner = {
     account: '',
     name: '',
@@ -97,26 +96,25 @@ export class RewardItemScreen extends React.PureComponent<Props> {
             <Text style={styles.desc}>{reward.description}</Text>
           </View>
         </View>
-
-        {this.qrCode ? <View style={styles.qrCodeContainer}>
-          <Image
-            width={136}
-            height={136}
-            source={this.qrCode}
-          />
+        { this.qrCode ? <View style={styles.qrCodeContainer}>
+            <Image
+              width={136}
+              height={136}
+              source={this.qrCode}
+            />
           {this._renderNote()}
         </View> : <View style={styles.actionContainer}>
-            {this._renderNote()}
-            <Button
-              loading={this._isFetching}
-              onPress={this.getReward}
-              buttonStyle={styles.btn}
-              titleStyle={styles.btnTitle}
-              disabledStyle={styles.btnLoading}
-              containerStyle={styles.btnContainer}
-              title="Next"
-            />
-          </View>}
+          {this._renderNote()}
+          <Button
+            loading={this._isFetching}
+            onPress={this.getReward}
+            buttonStyle={styles.btn}
+            titleStyle={styles.btnTitle}
+            disabledStyle={styles.btnLoading}
+            containerStyle={styles.btnContainer}
+            title="Next"
+          />
+        </View> }
       </SafeAreaView>
     );
   }

@@ -1,11 +1,11 @@
 import React from 'react';
 import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { Header, Icon, TextProps } from 'react-native-elements';
+import { action, computed, observable } from 'mobx';
 import { Observer, observer } from 'mobx-react';
 
 import { RewardListItem, RewardGridItem } from '@app/components/';
-import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { action, computed, observable } from "mobx";
+import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import { Reward, Partner } from "@app/shared/types";
 
 interface RewardsScreenProps extends DrizzleProps {
@@ -44,12 +44,10 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
   @action.bound toggleListView(): void {
     if (this.listView === 'list') {
       this.listView = 'grid';
-      console.log('Swtiched', this.listView);
       return;
     }
     if (this.listView === 'grid') {
       this.listView = 'list';
-      console.log('Swtiched', this.listView);
       return;
     }
   }

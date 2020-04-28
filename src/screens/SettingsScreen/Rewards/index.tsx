@@ -40,12 +40,10 @@ export class UserRewardsScreen extends React.PureComponent<UserRewardsScreenProp
   @action.bound toggleListView() : void {
     if (this.listView === 'list') {
       this.listView = 'grid';
-      console.log('Swtiched', this.listView);
       return ;
     }
     if (this.listView === 'grid') {
       this.listView = 'list';
-      console.log('Swtiched', this.listView);
       return ;
     }
   }
@@ -99,10 +97,11 @@ export class UserRewardsScreen extends React.PureComponent<UserRewardsScreenProp
         />
         <FlatList
           data={pointX.rewardsList}
+          extraData={pointX.rewardsList}
           key={this.columnsNum}
           numColumns={this.columnsNum}
           renderItem={this._renderRow}
-          onEndReached={this._loadMore}
+          // onEndReached={this._loadMore}
           keyExtractor={this._keyExtractor}
           onEndReachedThreshold={0.4}
         />

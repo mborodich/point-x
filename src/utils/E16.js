@@ -159,10 +159,8 @@ let encodePack = bytes => {
 
 let decoder = buff => {
 	let b16;
-	console.log('typeof buff', typeof buff)
 	if (typeof buff == 'string') b16 = buff.slice(6)
 	if (typeof buff == 'buffer') b16 = buff.toString('hex')
-	console.log('b16', b16)
 	let arr = []
 	while (b16.length) {
 		let num = parseInt(b16.slice(-1), 16)

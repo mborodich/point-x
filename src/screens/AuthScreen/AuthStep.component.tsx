@@ -92,14 +92,14 @@ const styles = StyleSheet.create({
     marginTop: 16
   },
   noteCaption: {
-    color: '#2F80ED',
+    color: '#F2F2F2',
   },
   noteContent: {
     marginTop: 15,
-    color: 'rgba(255, 255, 255, 0.5);'
+    color: '#F2F2F2',
   },
   flowSwitcher: {
-    color: '#2F80ED',
+    color: '#F2F2F2',
     textAlign: 'center',
     fontSize: 17,
     fontStyle: 'normal',

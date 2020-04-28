@@ -14,7 +14,7 @@ export const Input = (props: TProps) => {
         ...containerStyle as object
       }}
       inputStyle={{
-        color: '#BDBDBD',
+        color: '#FFFFFF',
         ...inputStyle as object
       }}
       placeholderTextColor="#BDBDBD"

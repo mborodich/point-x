@@ -5,8 +5,8 @@ import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
 import * as Progress from 'react-native-progress';
 import { action, observable } from 'mobx';
-import CircularProgress from '../../components/CircularProgress/CircularProgress.component'
-import E16 from '../../utils/E16';
+import CircularProgress from '@app/components/CircularProgress/CircularProgress.component'
+import E16 from '@app/utils/E16';
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
 
@@ -22,7 +22,7 @@ function randomInt(min: number, max: number) {
 @Drizzle
 @observer
 export class TaskItemScreen extends React.Component<DrizzleProps> {
-  static navigationOptions = { tabBarVisible: false }
+  static navigationOptions = { tabBarVisible: false };
   private _taskType: TaskTypeEnum = randomInt(1, 3) === 1 ? TaskTypeEnum.List : TaskTypeEnum.Star;
   private _totalSteps: number = this._taskType === TaskTypeEnum.List ? 4 : 1;
   @observable private _activeItem: number = 0;
@@ -135,7 +135,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
 
   private _taskDetails = () => {
-    const {
+    const [
       caption,
       description,
       image,
@@ -147,7 +147,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       totalAmount,
       resultsAmount,
       number
-    } = this._taskData;
+    ] = this._taskData;
     return {
       caption,
       description,
@@ -209,12 +209,17 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   @action.bound
   private _selectAnswer() {
     if (this._activeItem) {
-      this._selected.push(this._activeItem)
+      this._selected.push(this._activeItem);
       this._activeItem = 0;
       if (this._totalSteps === this._activeStep + 1) {
         this._isComplete = true;
       }
       this._activeStep++;
+    }
+
+    if (this._activeStep === this._totalSteps) {
+      const { number : id } = this._taskDetails();
+      this.props.pointX.completeTask(id, this._selected);
     }
   }
 

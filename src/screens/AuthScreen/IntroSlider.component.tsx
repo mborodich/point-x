@@ -1,18 +1,18 @@
 import React from 'react';
-import { StyleSheet, View, Image } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 
 type TSlide = {
-  key: number;
-  image: string;
+  caption: string;
+  desc: string;
 };
 
 const slides : TSlide[] = [
-  {key: 1, image: require('../../assets/img/intro-1.png')},   // todo: replace with right picture from mockup
-  {key: 2, image: require('../../assets/img/intro-2.png')},
-  {key: 3, image: require('../../assets/img/intro-3.png')},
-  {key: 4, image: require('../../assets/img/intro-4.png')},
-  {key: 5, image: require('../../assets/img/intro-5.png')}
+  {caption: '', desc: ''},
+  {caption: '', desc: ''},
+  {caption: '', desc: ''},
+  {caption: '', desc: ''},
+  {caption: '', desc: ''}
 ];
 
 type TProps = {
@@ -20,11 +20,12 @@ type TProps = {
 };
 
 const IntroSlider = ({onDone} : TProps) => {
-  const _keyExtractor = (item: TSlide) => `${item.key}`;
-  const _renderItem = ({item}: {item: TSlide}) => {
+  const _keyExtractor = (item: TSlide, idx) : string => idx.toString();
+  const _renderItem = ({item}: {item: TSlide}) : JSX.Element => {
     return (
       <View>
-        <Image source={item.image} />
+        <Text>{item.caption}</Text>
+        <Text>{item.desc}</Text>
       </View>
     );
   };

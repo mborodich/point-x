@@ -10,9 +10,12 @@ import {
   Image
 } from 'react-native-elements';
 import CardFlip from 'react-native-card-flip';
+import LinearGradient from 'react-native-linear-gradient';
+import {defaultGradient} from "@app/utils/const";
 
-const qrCode = require('@app/assets/img/qr-code.png');
-const opacityLogo = require('@app/assets/img/OpacityLogo.png');
+const qrCode = require('@app/assets/img/white-qr-code.png');
+const cardBg = require('@app/assets/img/CardBg.png');
+const smallLogo = require('@app/assets/img/WhiteSmallLogo.png');
 const copyIcon = require('@app/assets/img/copy.png');
 
 type TProps = {
@@ -45,32 +48,39 @@ export class CardComponent extends React.PureComponent<TProps> {
     return (
       <CardFlip style={styles.rootContainer} ref={(card) => this.card = card} >
         <TouchableOpacity style={styles.container} onPress={() => this.card.flip()}>
-          <ImageBackground style={styles.bgContainer} source={opacityLogo} imageStyle={styles.bgImg}>
-            <Image style={styles.qrcode} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
-            <Text style={styles.title}>{tokenBalance} <Text style={{ fontSize: 24 }}>PNTX</Text></Text>
-            <Text style={styles.subtitle}>{computedBalance} <Text style={{ fontSize: 12 }}>EURO</Text></Text>
-            <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-evenly' }}>
-              {this.renderDots()}
-              <Text style={{...styles.digits, fontSize: 12}}>{lastDigits}</Text>
-            </View>
-          </ImageBackground>
+          <LinearGradient style={styles.container} colors={defaultGradient}>
+            <ImageBackground style={styles.bgContainer} source={cardBg} imageStyle={styles.bgImg}>
+              <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                <Image style={styles.qrcode} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
+                <Image style={styles.smallLogo} containerStyle={{ top: 10 }} source={smallLogo} />
+              </View>
+              <View style={{ marginLeft: 41 }}>
+                <Text style={styles.title}>{tokenBalance} <Text style={{ fontSize: 24 }}>PNTX</Text></Text>
+                <Text style={styles.subtitle}>{computedBalance} <Text style={{ fontSize: 12 }}>EURO</Text></Text>
+              </View>
+              <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-evenly' }}>
+                {this.renderDots()}
+                <Text style={{...styles.digits, fontSize: 12}}>{lastDigits}</Text>
+              </View>
+            </ImageBackground>
+          </LinearGradient>
         </TouchableOpacity>
         <TouchableOpacity style={styles.container} onPress={() => this.card.flip()}>
-          <ImageBackground style={styles.bgContainer} source={opacityLogo} imageStyle={styles.bgImg}>
-            <Image style={styles.qrCodeBack} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
-            <View style={styles.actionsContainer}>
-              <View style={styles.copyContainer}>
-                <Text style={styles.publicKeyCaptionText}>Public Key</Text>
-                <Image
-                  source={copyIcon}
-                  style={styles.copyIcon}
-                />
+          <LinearGradient style={styles.container} colors={defaultGradient}>
+              <Image style={styles.qrCodeBack} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
+              <View style={styles.actionsContainer}>
+                <View style={styles.copyContainer}>
+                  <Text style={styles.publicKeyCaptionText}>Public Key</Text>
+                  <Image
+                    source={copyIcon}
+                    style={styles.copyIcon}
+                  />
+                </View>
+                <View style={styles.keyContainer}>
+                  <Text style={styles.publicKeyContent}>{publicKey}</Text>
+                </View>
               </View>
-              <View style={styles.keyContainer}>
-                <Text style={styles.publicKeyContent}>{publicKey}</Text>
-              </View>
-            </View>
-          </ImageBackground>
+          </LinearGradient>
         </TouchableOpacity>
       </CardFlip>
     );
@@ -88,13 +98,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     borderRadius: 16,
-    backgroundColor: '#222',
     backfaceVisibility: 'hidden',
   },
   qrcode: {
     width: 32,
     height: 32,
     marginLeft: 10
+  },
+  smallLogo: {
+    width: 32,
+    height: 32,
+    marginRight: 10
   },
   qrCodeBack: {
     width: 88,
@@ -113,7 +127,7 @@ const styles = StyleSheet.create({
     paddingRight: 8
   },
   publicKeyContent: {
-    fontSize: 12,
+    fontSize: 10,
     lineHeight: 14,
     color: '#ffffff',
     fontStyle: 'normal',
@@ -135,14 +149,15 @@ const styles = StyleSheet.create({
     flex: 1
   },
   bgImg: {
-    top: 7,
-    left: 160,
-    width: 140,
-    height: 168,
+    // top: 7,
+    // left: 160,
+    top: 30,
+    width: 326,
+    height: 144,
   },
   keyContainer: {
-    backgroundColor: '#333',
-    maxWidth: 350,
+    backgroundColor: '#2D51C2',
+    maxWidth: 300,
     marginLeft: 10,
     marginBottom: 16,
     maxHeight: 16,
@@ -158,7 +173,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     marginLeft: 10,
-    color: '#999',
+    color: '#fff',
     fontSize: 18,
     fontWeight: 'normal'
   },
@@ -167,7 +182,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'normal',
     lineHeight: 28,
-    color: '#BDBDBD',
+    color: '#F2F2F2',
     textAlign: 'center',
     alignSelf: 'center'
   }

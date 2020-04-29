@@ -1,10 +1,12 @@
 import { action, computed, observable } from 'mobx';
 import web3 from 'web3';
 import E16 from '@app/utils/E16';
-import { isEmpty } from '@app/utils';
-import {HistoryItem, Partner, Reward} from "@app/shared/types";
+import { isEmpty, request } from '@app/utils';
+import {HistoryItem, Partner, Reward, User} from '@app/shared/types';
 import AsyncStorage from '@react-native-community/async-storage'; // todo: remove this for mnemonic because is not safe.
 import * as bip39 from 'react-native-bip39';
+// @ts-ignore
+import hdKey from 'ethereumjs-wallet/hdkey';
 
 export interface IContractData {
   args: {};
@@ -14,7 +16,7 @@ export interface IContractData {
 }
 
 export type PointXStore = {
-  address: string;
+  user: User;
 };
 
 export interface IPointX {
@@ -22,11 +24,12 @@ export interface IPointX {
 }
 
 export class PointX {
-  @observable public store = {
+  @observable public store : PointXStore = {
     user: {
       address: '',
-      publicKey: ''
-    },
+      pubKey: '',
+      privKey: ''
+    }
   };
   private contractsCall: any;
   private contractsGet: any;
@@ -52,7 +55,14 @@ export class PointX {
   async handleMnemonic(v: string) : Promise<void> {
     if (bip39.validateMnemonic(v)) {
       await AsyncStorage.setItem('@login', v);
-      // todo: calc address and public/priv key
+      const seed = await bip39.mnemonicToSeed(v);
+      const hdwallet = hdKey.fromMasterSeed(seed);
+      const path = "m/44'/60'/0'/0/0";
+      const wallet = hdwallet.derivePath(path).getWallet();
+      const address = `0x${wallet.getAddress().toString('hex')}`;
+      const privKey = wallet.getPrivateKeyString();
+      const pubKey = wallet.getPublicKeyString();
+      Object.assign(this.store.user, { address, privKey, pubKey });
     } else {
       throw new Error(`Invalid mnemonic`);
     }
@@ -61,7 +71,9 @@ export class PointX {
   @action.bound
   async createNewUserWithMnemonic(name: string) : Promise<void> {
     const mnemonics = await bip39.generateMnemonic();
-    await AsyncStorage.setItem('@login', mnemonics);
+    await this.handleMnemonic(mnemonics);
+    const { address } = this.store.user;
+    await request({ endpoint: '/confirmNewUser', payload: { address, name } });
     this.contractsCall.addUserAndUnlockTasks.cacheSend(name);
   }
 
@@ -138,12 +150,12 @@ export class PointX {
 
   @action.bound
   public completeReward(id: number) : void {
-    this.contractsCall.completeReward.cacheSend(id);
+    this.contractsCall.completeReward.cacheSend(id, {from: this.store.user.address});
   }
 
   @action.bound
   public completeTask(id: number, answersArr: string[] | number[]) : void {
-    this.contractsCall.completeTask.cacheSend(id, E16.encodeArr(answersArr));
+    this.contractsCall.completeTask.cacheSend(id, E16.encodeArr(answersArr), {from: this.store.user.address});
   }
 
   @action.bound

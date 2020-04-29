@@ -45,6 +45,9 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
   private _keyExtractor = (_: any, index: any) => `${index}`;
 
   private _renderActive(): JSX.Element {
+
+    const {route: {params: {partner}}, pointX } = this.props;
+
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -52,7 +55,7 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={[]}
+          data={pointX.selectTasksByPartner(partner.address)}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) =>
             <TaskListItem
@@ -67,12 +70,11 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={[]}
+          data={pointX.selectRewardsByPartner(partner.address)}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) =>
             <RewardListItem
               navigation={this.props.navigation}
-              partner={{}}
               item={item}
             />
           }
@@ -82,6 +84,9 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
   }
 
   private _renderArchive(): JSX.Element {
+
+    const {route: {params: {partner}}, pointX } = this.props;
+
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
@@ -89,7 +94,7 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={[]}
+          data={pointX.selectTasksByPartner(partner.address)}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) =>
             <TaskListItem
@@ -104,12 +109,11 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
           <Text style={styles.seeAll}>See All</Text>
         </View>
         <FlatList
-          data={[]}
+          data={pointX.selectRewardsByPartner(partner.address)}
           keyExtractor={this._keyExtractor}
           renderItem={({ item }) =>
             <RewardListItem
               navigation={this.props.navigation}
-              partner={{}}
               item={item}
             />
           }

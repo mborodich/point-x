@@ -1,4 +1,5 @@
 import React from 'react';
+// @ts-ignore
 import * as bip39 from 'react-native-bip39';
 import AsyncStorage from '@react-native-community/async-storage';
 import LinearGradient from 'react-native-linear-gradient';
@@ -32,7 +33,8 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
     this.initialIndex = 1;
   };
 
-  toApp = () => this.props.navigation.navigate('Application');
+  toApp = () : void =>
+    this.props.navigation.navigate('Application');
 
   onLoginSubmit = async (v: string) : Promise<void> => {
     try {
@@ -55,9 +57,10 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     const login = await AsyncStorage.getItem('@login');
+    console.info('current login ->', login);
     if (login && bip39.validateMnemonic(login)) {
-      this.props.navigation.navigate('Application');
-      return ;
+      // this.props.navigation.navigate('Application');
+      // return ;
     }
     this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
     SplashScreen.hide();
@@ -95,14 +98,14 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
               onNewUserSubmit={this.onNewUserSubmit}
             />
           </AuthWizard.Step>
-          <AuthWizard.Step
-            header={false}
-            flowSwitch={false}
-          >
-            <Mnemonics
-              onOkClick={this.toApp}
-            />
-          </AuthWizard.Step>
+          {/*<AuthWizard.Step*/}
+          {/*  header={false}*/}
+          {/*  flowSwitch={false}*/}
+          {/*>*/}
+          {/*  <Mnemonics*/}
+          {/*    onOkClick={this.toApp}*/}
+          {/*  />*/}
+          {/*</AuthWizard.Step>*/}
           <AuthWizard.Step
             switchText="Registration"
             switchIdx={1}

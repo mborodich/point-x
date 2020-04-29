@@ -20,6 +20,12 @@ export type HistoryItem = {
   image: string;
 }
 
+export type User = {
+  address: string;
+  privKey: string;
+  pubKey: string;
+};
+
 export type Partner = {
   account: string;
   name: string;

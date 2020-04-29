@@ -38,6 +38,7 @@
     "dns.js": "^1.0.1",
     "drizzle": "^1.4.0",
     "drizzle-react-components": "^1.4.0",
+    "ethereumjs-wallet": "^0.6.3",
     "ethers": "^4.0.46",
     "events": "^1.1.1",
     "https-browserify": "0.0.1",

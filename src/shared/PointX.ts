@@ -62,6 +62,9 @@ export class PointX {
       const address = `0x${wallet.getAddress().toString('hex')}`;
       const privKey = wallet.getPrivateKeyString();
       const pubKey = wallet.getPublicKeyString();
+
+      console.log(address, privKey, pubKey);
+
       Object.assign(this.store.user, { address, privKey, pubKey });
     } else {
       throw new Error(`Invalid mnemonic`);

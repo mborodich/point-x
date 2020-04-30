@@ -36,6 +36,7 @@
     "crypto-js": "^4.0.0",
     "dayjs": "^1.8.25",
     "dns.js": "^1.0.1",
+    "dotenv": "^8.2.0",
     "drizzle": "^1.4.0",
     "drizzle-react-components": "^1.4.0",
     "ethereumjs-wallet": "^0.6.3",

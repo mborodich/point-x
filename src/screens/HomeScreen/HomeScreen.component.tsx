@@ -110,7 +110,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
         extraData={pointX.tasksList}
         renderItem={this._renderTaskRow}
         keyExtractor={this._keyExtractor}
-        onEndReachedThreshold={0.4}
+        // onEndReachedThreshold={0.4}
         // onEndReached={this._fetchMoreTasks}
       />
     )
@@ -124,7 +124,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
         extraData={pointX.rewardsList}
         renderItem={this._renderRewardRow}
         keyExtractor={this._keyExtractor}
-        onEndReachedThreshold={0.4}
+        // onEndReachedThreshold={0.4}
         // onEndReached={this._fetchMoreRewards}
       />
     );

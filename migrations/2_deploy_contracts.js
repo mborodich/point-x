@@ -49,51 +49,51 @@ module.exports = (deployer) => {
 
 		await tx.renounceMinter()
 
-		// ------------ DEV MIGRATION, REMOVE IT BEFORE A PROD PUB
-		let users = mocks.users()
-		let partners = mocks.partners()
-		let tasks = mocks.tasks()
-		let rewards = mocks.rewards()
-
-		await px.increaseContractEthBalance({value: 10**18})
-
-		await px.addUserAndUnlockTasks(users[0].address)
-		await px.addUserAndUnlockTasks(users[1].address)
-		await px.addUserAndUnlockTasks(users[2].address)
-
-		for (let i = 0; i < partners.length; i++) {
-			let p = partners[i]
-			await px.addPartner(p.address, p.name, p.description, p.logo)
-			await px.addTokenBalance(p.address, 1000000)
-			await tx.approve(PointX.address, 1000000, {from: p.address})
-
-			let taskPack = Buffer.concat([
-				Buffer.from([3, 3]),
-				E16.encodePack(E16.encodeArr(tasks[i].questions))
-			])
-
-			await px.addTask(
-				tasks[i].caption,
-				tasks[i].description,
-				tasks[i].imageLink,
-				tasks[i].taskType,
-				taskPack,
-				tasks[i].reward,
-				tasks[i].totalAmount,
-				{ from: p.address }
-			)
-			await px.acceptTask(i + 1)
-
-			await px.addReward(
-				rewards[i].caption,
-				rewards[i].description,
-				rewards[i].imageLink,
-				rewards[i].price,
-				rewards[i].totalAmount,
-				{ from: p.address }
-			)
-			await px.acceptReward(i + 1)
-		}
+		// // ------------ DEV MIGRATION, REMOVE IT BEFORE A PROD PUB
+		// let users = mocks.users()
+		// let partners = mocks.partners()
+		// let tasks = mocks.tasks()
+		// let rewards = mocks.rewards()
+    //
+		// await px.increaseContractEthBalance({value: 10**18})
+    //
+		// await px.addUserAndUnlockTasks(users[0].address)
+		// await px.addUserAndUnlockTasks(users[1].address)
+		// await px.addUserAndUnlockTasks(users[2].address)
+    //
+		// for (let i = 0; i < partners.length; i++) {
+		// 	let p = partners[i]
+		// 	await px.addPartner(p.address, p.name, p.description, p.logo)
+		// 	await px.addTokenBalance(p.address, 1000000)
+		// 	await tx.approve(PointX.address, 1000000, {from: p.address})
+    //
+		// 	let taskPack = Buffer.concat([
+		// 		Buffer.from([3, 3]),
+		// 		E16.encodePack(E16.encodeArr(tasks[i].questions))
+		// 	])
+    //
+		// 	await px.addTask(
+		// 		tasks[i].caption,
+		// 		tasks[i].description,
+		// 		tasks[i].imageLink,
+		// 		tasks[i].taskType,
+		// 		taskPack,
+		// 		tasks[i].reward,
+		// 		tasks[i].totalAmount,
+		// 		{ from: p.address }
+		// 	)
+		// 	await px.acceptTask(i + 1)
+    //
+		// 	await px.addReward(
+		// 		rewards[i].caption,
+		// 		rewards[i].description,
+		// 		rewards[i].imageLink,
+		// 		rewards[i].price,
+		// 		rewards[i].totalAmount,
+		// 		{ from: p.address }
+		// 	)
+		// 	await px.acceptReward(i + 1)
+		// }
 	})
-}
+};
 

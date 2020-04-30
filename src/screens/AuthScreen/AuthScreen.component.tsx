@@ -57,11 +57,11 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     const login = await AsyncStorage.getItem('@login');
-    console.info('current login ->', login);
-    if (login && bip39.validateMnemonic(login)) {
-      // this.props.navigation.navigate('Application');
-      // return ;
-    }
+    await this.props.pointX.handleMnemonic(login);
+    // if (login && bip39.validateMnemonic(login)) {
+    //   this.props.navigation.navigate('Application');
+    //   return ;
+    // }
     this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
     SplashScreen.hide();
   }

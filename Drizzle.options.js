@@ -10,6 +10,7 @@ const {
 
 
 const options = {
+  syncAlways: true,
   contracts: [
     PointX
   ],

@@ -8,12 +8,12 @@ type TProps = {
   containerStyle?: object;
 };
 
-export const MnemonicArea = React.memo((props: TProps) : JSX.Element => {
+export const MnemonicArea = (props: TProps) : JSX.Element => {
   return (
     <View style={{ ...styles.rootContainer, ...props.containerStyle }}>
       <Input
         value={props.mnemonic}
-        inputStyle={{ marginBottom: 15 }}
+        inputStyle={{ marginBottom: 15, color: '#fff' }}
         disabledInputStyle={{ color: '#4F4F4F', opacity: 1 }}
         disabled
         multiline
@@ -34,7 +34,7 @@ export const MnemonicArea = React.memo((props: TProps) : JSX.Element => {
       </TouchableOpacity>
     </View>
   );
-});
+};
 
 
 const styles = StyleSheet.create({

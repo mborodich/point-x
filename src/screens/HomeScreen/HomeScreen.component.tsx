@@ -134,7 +134,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
     return (
       <ScrollView style={styles.rootContainer}>
         <Header />
-        <CardComponent />
+        <CardComponent tokenBalance={this.props.pointX.userBalance}/>
         <View style={styles.tabViewContainer}>
           <TabViewWrapper
             routes={routes}

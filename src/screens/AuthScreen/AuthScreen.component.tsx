@@ -15,7 +15,7 @@ import PhoneForm from './PhoneForm/';
 import SmsForm from './SmsForm/';
 import NewAccForm from './NewAccForm/';
 import LoginForm from './LoginForm/';
-import Mnemonics from './Mnemonics/';
+import { Mnemonics } from './Mnemonics_/index';
 
 import { defaultGradient, deviceWidth, deviceHeight } from '@app/utils/const';
 
@@ -56,13 +56,13 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
 
   async componentDidMount(): Promise<void> {
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
-    const login = await AsyncStorage.getItem('@login');
-    await this.props.pointX.handleMnemonic(login);
     // if (login && bip39.validateMnemonic(login)) {
     //   this.props.navigation.navigate('Application');
     //   return ;
     // }
-    this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
+    // this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
+    const login = await AsyncStorage.getItem('@login');
+    await this.props.pointX.handleMnemonic(login);
     SplashScreen.hide();
   }
 
@@ -98,14 +98,6 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
               onNewUserSubmit={this.onNewUserSubmit}
             />
           </AuthWizard.Step>
-          {/*<AuthWizard.Step*/}
-          {/*  header={false}*/}
-          {/*  flowSwitch={false}*/}
-          {/*>*/}
-          {/*  <Mnemonics*/}
-          {/*    onOkClick={this.toApp}*/}
-          {/*  />*/}
-          {/*</AuthWizard.Step>*/}
           <AuthWizard.Step
             switchText="Registration"
             switchIdx={1}
@@ -127,8 +119,8 @@ const styles = StyleSheet.create({
   rootContainer: {
     width: deviceWidth,
     height: deviceHeight,
-    paddingVertical: 10,
-    paddingHorizontal: 32,
+    // paddingVertical: 10,
+    // paddingHorizontal: 32,
   },
   stepContainer: {
     position: 'relative',

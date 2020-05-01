@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, KeyboardAvoidingView, Platform, Text } from 'react-native';
-import { observer, inject } from "mobx-react";
+import { observable, action } from 'mobx';
+import { observer, inject } from 'mobx-react';
 
 import {numKeyboardType} from '@app/utils/const';
 import {NewAccStore} from '@app/store/'
@@ -18,11 +19,14 @@ const behavior = Platform.OS === "ios" ? "padding" : "height";
 @inject('newAccForm')
 @observer
 class NewAccForm extends React.PureComponent<TProps> {
+  @observable isCreating: boolean = false;
+
   submitWrapper = async () : Promise<void> => {
     try {
+      this.isCreating = true;
       const { form } = this.props.newAccForm;
       await this.props.onNewUserSubmit(form.fields.nickname.value);
-      this.props.nextStep();
+      this.isCreating = false;
     } catch (error) {
       // todo: display error in input i
     }
@@ -56,6 +60,7 @@ class NewAccForm extends React.PureComponent<TProps> {
         <Button
           title="Next"
           style={styles.marginTop_}
+          loading={this.isCreating}
           disabled={!form.meta.isValid}
           onPress={this.submitWrapper}
         />
@@ -67,7 +72,9 @@ class NewAccForm extends React.PureComponent<TProps> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 200
+    top: 200,
+    paddingVertical: 10,
+    paddingHorizontal: 32,
   },
   captionText: {
     fontSize: 24,

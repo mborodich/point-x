@@ -65,7 +65,9 @@ const AuthStep = (props: TProps) => {
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%'
+    height: '100%',
+    paddingVertical: 10,
+    paddingHorizontal: 32,
   },
   captionText: {
     fontStyle: 'normal',
@@ -82,6 +84,8 @@ const styles = StyleSheet.create({
   },
   logoContainer: {
     position: 'relative',
+    paddingVertical: 10,
+    paddingHorizontal: 32,
     top: '8%',
   },
   logo: {
@@ -89,7 +93,9 @@ const styles = StyleSheet.create({
     height: 80
   },
   noteContainer: {
-    marginTop: 16
+    marginTop: 16,
+    paddingVertical: 10,
+    paddingHorizontal: 32,
   },
   noteCaption: {
     color: '#F2F2F2',
@@ -104,7 +110,6 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontStyle: 'normal',
     fontWeight: 'normal',
-    marginBottom: 15
   },
   switcherContainer: {
     marginTop: 32,

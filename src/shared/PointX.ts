@@ -49,6 +49,8 @@ export class PointX {
     this.fetchAllTasks();
     this.fetchAllRewards();
     this.fetchAllPartners();
+    if (this.store.user)
+      this.fetchTokenBalance(this.store.user.address);
   }
 
   @action.bound
@@ -62,10 +64,9 @@ export class PointX {
       const address = `0x${wallet.getAddress().toString('hex')}`;
       const privKey = wallet.getPrivateKeyString();
       const pubKey = wallet.getPublicKeyString();
-
-      console.log(address, privKey, pubKey);
-
       Object.assign(this.store.user, { address, privKey, pubKey });
+
+      console.log(this.store.user);
     } else {
       throw new Error(`Invalid mnemonic`);
     }
@@ -76,8 +77,7 @@ export class PointX {
     const mnemonics = await bip39.generateMnemonic();
     await this.handleMnemonic(mnemonics);
     const { address } = this.store.user;
-    await request({ endpoint: '/confirmNewUser', payload: { address, name } });
-    this.contractsCall.addUserAndUnlockTasks.cacheSend(name);
+    await request({ endpoint: '/confirmNewUser', opts: {method: 'POST'}, payload: { address, name } });
   }
 
   @action.bound

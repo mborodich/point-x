@@ -56,7 +56,7 @@ export class CardComponent extends React.PureComponent<TProps> {
               </View>
               <View style={{ marginLeft: 41 }}>
                 <Text style={styles.title}>{tokenBalance} <Text style={{ fontSize: 24 }}>PNTX</Text></Text>
-                <Text style={styles.subtitle}>{computedBalance} <Text style={{ fontSize: 12 }}>EURO</Text></Text>
+                <Text style={styles.subtitle}>{tokenBalance} <Text style={{ fontSize: 12 }}>EURO</Text></Text>
               </View>
               <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'space-evenly' }}>
                 {this.renderDots()}

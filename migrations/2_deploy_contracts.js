@@ -36,8 +36,8 @@ module.exports = (deployer) => {
 		await deployer.link(ItemsLib, Core)
 
 		let core = await deployer.deploy(Core);
-		await deployer.link(Core, PointX)
-		await deployer.link(Core, Getters)
+		await deployer.link(Core, PointX);
+		await deployer.link(Core, Getters);
 
 		let getters = await deployer.deploy(Getters);
 		await deployer.link(Getters, PointX)

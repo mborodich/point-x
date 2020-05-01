@@ -1,7 +1,7 @@
 import React from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
 import { StyleSheet, View } from 'react-native';
-import { LinearGradient } from 'react-native-linear-gradient';
+import LinearGradient from 'react-native-linear-gradient';
 import { Header } from 'react-native-elements';
 import { defaultGradient } from '@app/utils/const';
 
@@ -24,20 +24,17 @@ const HEADER = {
 };
 
 @observer
-export default class Mnemonics extends React.PureComponent<TProps> {
+export class Mnemonics extends React.Component<TProps> {
   @observable mnemonic!: string;
 
   async componentDidMount() {
     const mnemonic = await AsyncStorage.getItem('@login');
-    this.mnemonic = mnemonic || '';
+    this.mnemonic = 'hello hello hello hello hello hello';
   }
 
   public render() {
     return (
       <LinearGradient colors={defaultGradient} style={styles.container}>
-        <Header
-          centerComponent={HEADER}
-        />
         <View style={styles.content}>
           <MnemonicArea
             mnemonic={this.mnemonic}

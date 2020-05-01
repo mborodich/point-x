@@ -80,7 +80,9 @@ class SmsForm extends React.PureComponent<TProps> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    paddingVertical: 10,
+    paddingHorizontal: 32,
   },
   codeSentText: {
     fontSize: 16,

@@ -55,7 +55,9 @@ class PhoneForm extends React.PureComponent<TProps> {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
+    paddingVertical: 10,
+    paddingHorizontal: 32,
   },
   contentContainer: {
     marginBottom: 25

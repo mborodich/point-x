@@ -13,7 +13,8 @@ const isEmpty = (obj: object) =>
   Object.keys(obj).length === 0 && obj.constructor === Object;
 
 const request = async ({ endpoint, opts, payload }: {endpoint: string; payload?:any; opts?: object;}) : Promise<any> => {
-  const serverUrl = process.env.SERVER_URL;
+  console.log(endpoint, opts, payload);
+  const serverUrl = process.env.SERVER_URL || 'http://localhost:8000';
   const response = await fetch(`${serverUrl}${endpoint}`, {
     method: 'GET',
     headers: {

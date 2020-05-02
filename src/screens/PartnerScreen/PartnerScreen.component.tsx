@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, View, FlatList } from 'react-native';
 import { Avatar, Header, Text } from 'react-native-elements';
 import { TabView, TabBar } from 'react-native-tab-view';
 import { Drizzle, DrizzleProps } from '../../shared/Drizzle';
-import { RewardListItem, TabViewWrapper, TaskListItem } from '@app/components';
+import { RewardListItem, TabViewWrapper, TaskListItem, RewardsList, TasksList } from '@app/components';
 import { Task } from "@app/shared/types";
 
 
@@ -31,7 +31,6 @@ const routes = [
 @observer
 @Drizzle
 export class PartnerScreen extends React.Component<PartnerScreenProps> {
-
   private getTabScenes = () => {
     return ({
       [Tabs.ACTIVE]: this._renderActive(),
@@ -42,11 +41,11 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
   private _onTaskClick = (task: Task) =>
     this.props.navigation.navigate('TaskItemScreen', { task });
 
-  private _keyExtractor = (_: any, index: any) => `${index}`;
-
   private _renderActive(): JSX.Element {
-
     const {route: {params: {partner}}, pointX } = this.props;
+
+    const tasks = pointX.selectTasksByPartner(partner.account);
+    const rewards = pointX.selectRewardsByPartner(partner.account);
 
     return (
       <View style={styles.activeContainer}>
@@ -54,30 +53,22 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
           <Text style={styles.listTitle}>Tasks</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        <FlatList
-          data={pointX.selectTasksByPartner(partner.address)}
-          keyExtractor={this._keyExtractor}
-          renderItem={({ item }) =>
-            <TaskListItem
-              task={item}
-              theme={this.props.theme}
-              onClick={() => this._onTaskClick(item)}
-            />
-          }
+        <TasksList
+          onTaskClick={this._onTaskClick}
+          count={pointX.tasksCount}
+          theme={this.props.theme}
+          tasks={tasks}
         />
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        <FlatList
-          data={pointX.selectRewardsByPartner(partner.address)}
-          keyExtractor={this._keyExtractor}
-          renderItem={({ item }) =>
-            <RewardListItem
-              navigation={this.props.navigation}
-              item={item}
-            />
-          }
+        <RewardsList
+          navigation={this.props.navigation}
+          count={pointX.rewardsCount}
+          theme={this.props.theme}
+          rewards={rewards}
+          columnsNum={1}
         />
       </View>
     );
@@ -87,43 +78,39 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
 
     const {route: {params: {partner}}, pointX } = this.props;
 
+    const tasks = pointX.selectTasksByPartner(partner.account);
+    const rewards = pointX.selectRewardsByPartner(partner.account);
+
     return (
       <View style={styles.activeContainer}>
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Tasks</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        <FlatList
-          data={pointX.selectTasksByPartner(partner.address)}
-          keyExtractor={this._keyExtractor}
-          renderItem={({ item }) =>
-            <TaskListItem
-              task={item}
-              theme={this.props.theme}
-              onClick={() => this._onTaskClick(item)}
-            />
-          }
+        <TasksList
+          onTaskClick={this._onTaskClick}
+          count={pointX.tasksCount}
+          theme={this.props.theme}
+          tasks={tasks}
         />
         <View style={styles.listHeaderContainer}>
           <Text style={styles.listTitle}>Rewards</Text>
           <Text style={styles.seeAll}>See All</Text>
         </View>
-        <FlatList
-          data={pointX.selectRewardsByPartner(partner.address)}
-          keyExtractor={this._keyExtractor}
-          renderItem={({ item }) =>
-            <RewardListItem
-              navigation={this.props.navigation}
-              item={item}
-            />
-          }
+        <RewardsList
+          navigation={this.props.navigation}
+          count={pointX.rewardsCount}
+          theme={this.props.theme}
+          rewards={rewards}
+          columnsNum={1}
         />
       </View>
     );
   }
 
   public render() {
-    const partner = this.props.route.params.partner || {};
+    const partner = this.props.route.params.partner;
+
     return (
       <ScrollView style={styles.container}>
         <Header

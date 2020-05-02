@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, FlatList } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Header, TextProps } from 'react-native-elements';
 import { observer } from 'mobx-react';
 import { Drizzle, DrizzleProps } from "@app/shared/Drizzle";
 import { HistoryItem as THistoryItem } from '@app/shared/types';
-import { HistoryItem } from '@app/components';
+import { HistoryItem, HistoryList } from '@app/components';
 
 interface HistoryScreenProps extends DrizzleProps {
   navigation: { navigate: any; goBack: any; };
@@ -32,15 +32,10 @@ export class HistoryScreen extends React.PureComponent<HistoryScreenProps> {
           centerComponent={HEADER}
           backgroundColor="#F8F8F8"
         />
-        {
-          this.props.pointX.userHistory.map((item : THistoryItem, idx: number) => (
-            <HistoryItem
-              item={item}
-              key={idx}
-              onClick={() => {}}
-            />
-          ))
-        }
+        <HistoryList
+          history={this.props.pointX && this.props.pointX.userHistory}
+          count={this.props.pointX && this.props.pointX.historyCount} onClick={() => {}}
+        />
       </View>
     )
   }

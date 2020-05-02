@@ -20,3 +20,6 @@ export { TabViewWrapper } from './TabView/TabView.component';
 
 export { HistoryItem } from './HistoryItem/HistoryItem.component';
 export { SettingsMenuItem } from './SettingsMenuItem/SettingsMenuItem.component';
+export { TasksList } from './TasksList/TasksList.component';
+export { RewardsList } from './RewardsList/RewardsList.component';
+export { HistoryList } from './HistoryList/HistoryList.component';

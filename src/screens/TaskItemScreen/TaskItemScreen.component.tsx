@@ -207,7 +207,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   }
 
   @action.bound
-  private _selectAnswer() {
+  async _selectAnswer() {
     if (this._activeItem) {
       this._selected.push(this._activeItem);
       this._activeItem = 0;
@@ -219,7 +219,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
     if (this._activeStep === this._totalSteps) {
       const { number : id } = this._taskDetails();
-      this.props.pointX.completeTask(id, this._selected);
+      await this.props.pointX.completeTask(id, this._selected);
     }
   }
 

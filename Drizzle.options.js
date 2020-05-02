@@ -19,8 +19,6 @@ const options = {
     blocks: 10000,
   },
   web3: {
-    // customProvider:
-    //   new HDWalletProvider("dust turn excite exercise space light now divert idle include bird arrow", "https://rinkeby.infura.io/v3/" + infuraToken),
     fallback: {
       type: 'ws',
       url: 'wss://rinkeby.infura.io/ws/v3/29bb7426ec9b45279ba484700144d617',

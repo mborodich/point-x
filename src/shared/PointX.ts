@@ -1,5 +1,5 @@
 import { action, computed, observable } from 'mobx';
-import web3 from 'web3';
+import Web3 from 'web3';
 import E16 from '@app/utils/E16';
 import { isEmpty, request } from '@app/utils';
 import {HistoryItem, Partner, Reward, User} from '@app/shared/types';
@@ -7,6 +7,9 @@ import AsyncStorage from '@react-native-community/async-storage'; // todo: remov
 import * as bip39 from 'react-native-bip39';
 // @ts-ignore
 import hdKey from 'ethereumjs-wallet/hdkey';
+
+
+const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/29bb7426ec9b45279ba484700144d617'));
 
 export interface IContractData {
   args: {};
@@ -49,8 +52,6 @@ export class PointX {
     this.fetchAllTasks();
     this.fetchAllRewards();
     this.fetchAllPartners();
-    if (this.store.user)
-      this.fetchTokenBalance(this.store.user.address);
   }
 
   @action.bound
@@ -64,12 +65,21 @@ export class PointX {
       const address = `0x${wallet.getAddress().toString('hex')}`;
       const privKey = wallet.getPrivateKeyString();
       const pubKey = wallet.getPublicKeyString();
-      Object.assign(this.store.user, { address, privKey, pubKey });
 
-      console.log(this.store.user);
+      this.setUser(address, privKey, pubKey);
+      this.fetchTokenBalance(this.store.user.address);
+      this.fetchUserHistory();
     } else {
       throw new Error(`Invalid mnemonic`);
     }
+  }
+
+  @action.bound
+  setUser(address: string, privKey: string, pubKey: string) : void {
+    console.log('Set', address, privKey, pubKey);
+    this.store.user.address = address;
+    this.store.user.privKey = privKey;
+    this.store.user.pubKey = pubKey;
   }
 
   @action.bound
@@ -134,21 +144,26 @@ export class PointX {
 
   @action.bound
   public fetchTaskResultByUserAddress(taskId: number, userAddress: string) : void {
+    console.log(userAddress);
     this.contractsCall.getTaskResultByAddress.cacheCall(taskId, userAddress);
   }
 
   @action.bound
   public fetchUserHistory() : void {
-    const taskLength = this.tasksCount;
-    const rewardsLength = this.rewardsCount;
-    Array.from({ length: taskLength }, (_, i) => {
-      try { this.fetchTaskResultByUserAddress(i + 1, this.store.user.address) }
-      catch (error) {}
-    });
-    Array.from({ length: rewardsLength }, (_, i) => {
-      try { this.fetchRewardResultByUserAddress(i + 1, this.store.user.address) }
-      catch (error) {}
-    });
+    if (this.store.user.address && this.store.user.address !== '') {
+      const taskLength = this.tasksCount;
+      const rewardsLength = this.rewardsCount;
+      Array.from({ length: taskLength }, (_, i) => {
+        try { this.fetchTaskResultByUserAddress(i + 1, this.store.user.address) }
+        catch (error) {
+
+        }
+      });
+      Array.from({ length: rewardsLength }, (_, i) => {
+        try { this.fetchRewardResultByUserAddress(i + 1, this.store.user.address) }
+        catch (error) {}
+      });
+    }
   }
 
   @action.bound
@@ -157,15 +172,30 @@ export class PointX {
   }
 
   @action.bound
-  public completeTask(id: number, answersArr: string[] | number[]) : void {
-    this.contractsCall.completeTask.cacheSend(id, E16.encodeArr(answersArr), {from: this.store.user.address});
+  async completeTask(id: number, answersArr: string[] | number[]) : void {
+    // console.log('complete ->', this.store, this.store.user.address);
+    // this.contractsCall.completeTask.cacheSend(id, '0x1', {from: '0x99b6d09a4626c89a817d1866733f4de3931bf96a'});
+
+    const data = this.contractsCall.completeTask(id, '0x1').encodeABI();
+
+
+    const tx = {
+      gas: 8000000,
+      nonce: await web3.eth.getTransactionCount('0x99b6d09a4626c89a817d1866733f4de3931bf96a'),
+      from: '0x99b6d09a4626c89a817d1866733f4de3931bf96a',
+      to: '0xaca5Ace317c540Af61Ab0873142ed4f4E4470a10',
+      data
+    };
+
+    const signed = await web3.eth.accounts.signTransaction(tx, '0x2dabb032e6b3117a09256b9b3560c7231a5fc0df4c4d37b827c222a7b5114a56');
+    const tx_ = await web3.eth.sendSignedTransaction(signed.rawTransaction);
+    console.log(tx_);
   }
 
   @action.bound
   public fetchPartnerByAddress(address: string): void {
-    if (web3.utils.isAddress(address)) {
-      this.contractsCall.getPartnerByAddress.cacheCall(address);
-    }
+    this.contractsCall.getPartnerByAddress.cacheCall(address);
+
   }
 
   @action.bound
@@ -233,7 +263,7 @@ export class PointX {
   @action.bound
   public selectPartnerByOwner(owner: string) : Partner[] {
     return this.partnersList &&
-      this.partnersList.filter((i : Partner) => i.account === owner) || [];
+      this.partnersList.find((i : Partner) => i.account === owner) || [];
   }
 
   @action.bound
@@ -245,7 +275,7 @@ export class PointX {
   @action.bound
   public selectTasksByPartner(partnerAddress: string) {
     return this.tasksList &&
-      this.tasksList.find((i: any[]) => {
+      this.tasksList.filter((i: any[]) => {
         return i[4] === partnerAddress; // i[4] - task owner;
       });
   }
@@ -262,12 +292,17 @@ export class PointX {
       this.rewardsList.find((i: Reward) => i.number === id) // i[10] - task id
   }
 
+  @computed
+  public get historyCount() {
+    return (this.userHistory && this.userHistory.length) || 0;
+  }
+
   @computed // todo: make cleaner and perfomance optimize
   public get userHistory() {
     const rewardResults = this.contractsGet.fetchRewardResultByUserAddress;
     const taskResults = this.contractsGet.fetchTaskResultByUserAddress;
     const historyResults : HistoryItem[] = [];
-    if (!isEmpty(rewardResults)) {
+    if (rewardResults && !isEmpty(rewardResults)) {
       const keys = Object.keys(rewardResults);
       keys.map(e => {
         if (rewardResults[e].value && rewardResults[e].value[0] !== '' ) {
@@ -284,7 +319,7 @@ export class PointX {
           }
         }
       });
-    } else if (!isEmpty(taskResults)) {
+    } else if (taskResults && !isEmpty(taskResults)) {
       const keys = Object.keys(taskResults);
       keys.map(e => {
         if (taskResults[e].value && taskResults[e].value[0] !== '' ) {

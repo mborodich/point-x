@@ -10,7 +10,7 @@ const calcRest = (rest: number, total: number) : number =>
   Math.round((rest / total) * 100);
 
 const isEmpty = (obj: object) =>
-  Object.keys(obj).length === 0 && obj.constructor === Object;
+  obj && Object.keys(obj).length === 0 && obj.constructor === Object;
 
 const request = async ({ endpoint, opts, payload }: {endpoint: string; payload?:any; opts?: object;}) : Promise<any> => {
   console.log(endpoint, opts, payload);

@@ -25,7 +25,7 @@ export const TaskListItem = React.memo(({ task, theme, onClick } : TProps) : JSX
             />
             <View style={styles.containerRowMiddle}>
               <Text style={[style.companyName, color.title]}>{task.caption}</Text>
-              <Text style={[style.caption2, color.gray3]}>{task.description.substr(0, 65)}...</Text>
+              <Text style={[style.caption2, color.gray3]}>{task.description && task.description.substr(0, 65)}...</Text>
             </View>
             <View style={styles.containerRowRight}>
               <Text style={[style.companyName, color.title]}>{task.value}</Text>

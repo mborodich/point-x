@@ -28,6 +28,10 @@ interface LoginScreenProps extends DrizzleProps {
 export class LoginScreen extends React.Component<LoginScreenProps> {
   @observable initialIndex: number = 0;
 
+  state = {
+    initialIndex: 0
+  };
+
   onCarouselDone = async (): Promise<void> => {
     await AsyncStorage.setItem('@carouselViewed', true.toString());
     this.initialIndex = 1;
@@ -55,14 +59,19 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   };
 
   async componentDidMount(): Promise<void> {
+    this.props.pointX.prefetchAll();
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
-    // if (login && bip39.validateMnemonic(login)) {
-    //   this.props.navigation.navigate('Application');
-    //   return ;
-    // }
-    // this.initialIndex = Boolean(carouselViewed) ? 1 : 0;
+    const viewed = Boolean(carouselViewed) ? 1 : 0;
+    if (viewed) {
+      this.setState({
+        initialIndex: 1
+      })
+    }
     const login = await AsyncStorage.getItem('@login');
-    await this.props.pointX.handleMnemonic(login);
+    if (login) {
+      await this.props.pointX.handleMnemonic(login);
+      this.props.navigation.navigate('Application');
+    }
     SplashScreen.hide();
   }
 
@@ -72,7 +81,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
         colors={defaultGradient}
         style={styles.rootContainer}
       >
-        <AuthWizard initialIndex={this.initialIndex}>
+        <AuthWizard initialIndex={this.state.initialIndex}>
           <AuthWizard.Step>
             <IntroSlider onDone={this.onCarouselDone} />
           </AuthWizard.Step>

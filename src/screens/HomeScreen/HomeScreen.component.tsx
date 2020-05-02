@@ -1,13 +1,13 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { ScrollView, StyleSheet, FlatList, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import {
   CardComponent,
   Header,
   TabViewWrapper,
-  TaskListItem,
-  RewardListItem
+  TasksList,
+  RewardsList
 } from '@app/components';
 import { computed } from 'mobx';
 
@@ -52,80 +52,29 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
     });
   };
 
-  private _keyExtractor = (_: any, index: any) => `${index}`;
-
-  private _renderTaskRow = (data: { item: any; }): JSX.Element | undefined => {
-    if (data && data.item) {
-      let task = data.item;
-      const [
-        caption,
-        description,
-        image,
-        value,
-        owner,
-      ] = task;
-      task = { caption, description, image, value, owner };
-      return (
-        <TaskListItem
-          task={task}
-          theme={this.props.theme}
-          onClick={() => this._onTaskClick(task)}
-        />
-      )
-    }
-    return undefined;
-  };
-
-  private _renderRewardRow = (data: { item: any; }): JSX.Element | undefined => {
-    if (data && data.item) {
-      const reward = data.item;
-      return (
-        <RewardListItem
-          item={reward}
-          navigation={this.props.navigation}
-        />
-      )
-    }
-    return undefined;
-  };
-
-  private _fetchMoreTasks = (): void => {
-    const { pointX } = this.props;
-    pointX.fetchTasksCount();
-    pointX.fetchAllTasks();
-  };
-
-
-  private _fetchMoreRewards = (): void => {
-    const { pointX } = this.props;
-    pointX.fetchRewardsCount();
-    pointX.fetchAllRewards();
-  };
-
   private _renderTasks = (): JSX.Element => {
     const { pointX } = this.props;
+
     return (
-      <FlatList
-        data={pointX.tasksList}
-        extraData={pointX.tasksList}
-        renderItem={this._renderTaskRow}
-        keyExtractor={this._keyExtractor}
-        // onEndReachedThreshold={0.4}
-        // onEndReached={this._fetchMoreTasks}
+      <TasksList
+        theme={this.props.theme}
+        onTaskClick={this._onTaskClick}
+        tasks={pointX.tasksList}
+        count={pointX.tasksCount}
       />
-    )
+    );
   };
 
   private _renderRewards = (): JSX.Element => {
     const { pointX } = this.props;
+
     return (
-      <FlatList
-        data={pointX.rewardsList}
-        extraData={pointX.rewardsList}
-        renderItem={this._renderRewardRow}
-        keyExtractor={this._keyExtractor}
-        // onEndReachedThreshold={0.4}
-        // onEndReached={this._fetchMoreRewards}
+      <RewardsList
+        navigation={this.props.navigation}
+        theme={this.props.theme}
+        rewards={pointX.rewardsList}
+        count={pointX.rewardsCount}
+        columnsNum={1}
       />
     );
   };

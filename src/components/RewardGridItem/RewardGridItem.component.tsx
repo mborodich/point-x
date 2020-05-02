@@ -3,36 +3,15 @@ import { Observer } from 'mobx-react';
 import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
 
 import { ProgressBar, CompanyLabel, RewardPrice } from '@app/components';
-
-type Reward = {
-  caption: string;
-  description: string;
-  image: string;
-  value: number;
-  owner: string;
-  status: 0 | 1;
-  totalAmount: number;
-  resultsAmount: number;
-  number: number;
-  expirationDate: number;
-}
-
-type Partner = {
-  account: string;
-  name: string;
-  description: string;
-  logo: string;
-  number: number;
-}
+import { Reward, Partner } from '@app/shared/types';
 
 type TProps = {
   item: Reward;
-  partner: Partner;
   navigation: { navigate: any };
 };
 
-export const RewardGridItem = ({ item, partner, navigation }: TProps) => {
-  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner }), [item]);
+export const RewardGridItem = ({ item, navigation }: TProps) => {
+  const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: item.partner }), [item]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
   return (
     <Observer>
@@ -56,8 +35,8 @@ export const RewardGridItem = ({ item, partner, navigation }: TProps) => {
             <RewardPrice value={item && item.value} />
           </View>
           <CompanyLabel
-            company={partner && partner.name}
-            logo={partner && partner.logo}
+            company={item.partner && item.partner.name}
+            logo={item.partner && item.partner.logo}
             expiration={item && item.expirationDate}
             onPress={onCompanyPress}
           />

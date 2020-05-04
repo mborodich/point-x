@@ -65,7 +65,8 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
         </View>
         <RewardsList
           navigation={this.props.navigation}
-          count={pointX.rewardsCount}
+          rewardsCount={pointX.rewardsCount}
+          partnersCount={pointX.partnersCount}
           theme={this.props.theme}
           rewards={rewards}
           columnsNum={1}
@@ -99,7 +100,8 @@ export class PartnerScreen extends React.Component<PartnerScreenProps> {
         </View>
         <RewardsList
           navigation={this.props.navigation}
-          count={pointX.rewardsCount}
+          rewardsCount={pointX.rewardsCount}
+          partnersCount={pointX.partnersCount}
           theme={this.props.theme}
           rewards={rewards}
           columnsNum={1}

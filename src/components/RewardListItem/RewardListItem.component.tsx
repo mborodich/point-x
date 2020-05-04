@@ -10,7 +10,7 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
+export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Element => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: item.partner }), [item.partner]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
@@ -22,8 +22,8 @@ export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
           width={95}
           height={2}
           borderWidth={0}
-          totalAmount={item && item.totalAmount}
-          amountLeft={item && item.resultsAmount}
+          totalAmount={item.totalAmount}
+          amountLeft={item.resultsAmount}
         />
       </View>
     );
@@ -36,7 +36,6 @@ export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
           <View style={styles.containerRow}>
             <Avatar
               source={{ uri: item.image }}
-              containerStyle={styles.avatarListItem}
               overlayContainerStyle={{ backgroundColor: '#F8F8F8' }}
               imageProps={{ borderRadius: 8 }}
               size={56}
@@ -65,7 +64,7 @@ export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
       )}
     </Observer>
   );
-};
+});
 
 const styles = StyleSheet.create({
   containerRow: {

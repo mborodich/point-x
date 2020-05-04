@@ -6860,10 +6860,16 @@
       "links": {},
       "address": "0xB2Da5D0b24dE83A3D7C30Af81Aa93a50de0B1f1a",
       "transactionHash": "0xb015e6b597c13d207d4b8d471e826fbaa50d599f7f72db3e0a36de590a63c164"
+    },
+    "5777": {
+      "events": {},
+      "links": {},
+      "address": "0x5590ba4C85958357Ef723A2FaFcd65083b4d986a",
+      "transactionHash": "0x1e18cccaa17c12a7fe75fd558ba56626b8a4176c194274ca626bcd7de06a4f88"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-05-02T04:40:59.467Z",
+  "updatedAt": "2020-05-04T18:25:11.334Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

@@ -41,7 +41,12 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
 
   componentDidMount(): void {
     const { pointX } = this.props;
-    pointX.prefetchAll();
+    // pointX.fetchTasksCount();
+    // pointX.fetchAllTasks();
+    // pointX.fetchRewardsCount();
+    // pointX.fetchAllRewards();
+    // pointX.fetchAllPartners();
+    // pointX.fetchPartnersCount();
   }
 
   @computed
@@ -73,7 +78,8 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
         navigation={this.props.navigation}
         theme={this.props.theme}
         rewards={pointX.rewardsList}
-        count={pointX.rewardsCount}
+        rewardsCount={pointX.rewardsCount}
+        partnersCount={pointX.partnersCount}
         columnsNum={1}
       />
     );

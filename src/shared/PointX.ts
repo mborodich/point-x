@@ -1,13 +1,10 @@
 import { action, computed, observable } from 'mobx';
 import Web3 from 'web3';
-import E16 from '@app/utils/E16';
-import { isEmpty, request } from '@app/utils';
+import {isEmpty, request, getCredentialsFromMnemonic} from '@app/utils';
 import {HistoryItem, Partner, Reward, User} from '@app/shared/types';
 import AsyncStorage from '@react-native-community/async-storage'; // todo: remove this for mnemonic because is not safe.
-import * as bip39 from 'react-native-bip39';
 // @ts-ignore
-import hdKey from 'ethereumjs-wallet/hdkey';
-
+import * as bip39 from 'react-native-bip39';
 
 const web3 = new Web3(new Web3.providers.WebsocketProvider('wss://rinkeby.infura.io/ws/v3/29bb7426ec9b45279ba484700144d617'));
 
@@ -21,10 +18,6 @@ export interface IContractData {
 export type PointXStore = {
   user: User;
 };
-
-export interface IPointX {
-  contractResponse: IContractData;
-}
 
 export class PointX {
   @observable public store : PointXStore = {
@@ -55,39 +48,43 @@ export class PointX {
   }
 
   @action.bound
-  async handleMnemonic(v: string) : Promise<void> {
+  async getUserCredentials() {
+    const mnemonics = await AsyncStorage.getItem('@login');
+    if (mnemonics && bip39.validateMnemonic(mnemonics)) {
+      const { address, privKey, pubKey } = await getCredentialsFromMnemonic(mnemonics);
+      return {
+        address,
+        privKey,
+        pubKey
+      }
+    }
+    return undefined;
+  }
+
+  @action.bound
+  async handleMnemonic(v: string) : Promise<any> {
     if (bip39.validateMnemonic(v)) {
       await AsyncStorage.setItem('@login', v);
-      const seed = await bip39.mnemonicToSeed(v);
-      const hdwallet = hdKey.fromMasterSeed(seed);
-      const path = "m/44'/60'/0'/0/0";
-      const wallet = hdwallet.derivePath(path).getWallet();
-      const address = `0x${wallet.getAddress().toString('hex')}`;
-      const privKey = wallet.getPrivateKeyString();
-      const pubKey = wallet.getPublicKeyString();
-
-      this.setUser(address, privKey, pubKey);
-      this.fetchTokenBalance(this.store.user.address);
-      this.fetchUserHistory();
+      const { address, privKey, pubKey } = await getCredentialsFromMnemonic(v);
+      return {
+        address,
+        privKey,
+        pubKey
+      }
     } else {
       throw new Error(`Invalid mnemonic`);
     }
   }
 
   @action.bound
-  setUser(address: string, privKey: string, pubKey: string) : void {
-    console.log('Set', address, privKey, pubKey);
-    this.store.user.address = address;
-    this.store.user.privKey = privKey;
-    this.store.user.pubKey = pubKey;
-  }
-
-  @action.bound
   async createNewUserWithMnemonic(name: string) : Promise<void> {
     const mnemonics = await bip39.generateMnemonic();
-    await this.handleMnemonic(mnemonics);
-    const { address } = this.store.user;
-    await request({ endpoint: '/confirmNewUser', opts: {method: 'POST'}, payload: { address, name } });
+    const { address } = await this.handleMnemonic(mnemonics);
+    await request({
+      endpoint: '/confirmNewUser',
+      opts: {method: 'POST'},
+      payload: { address, name }
+    });
   }
 
   @action.bound
@@ -117,21 +114,25 @@ export class PointX {
 
   @action.bound
   public fetchTaskById(id: number): void {
+    console.log('fetchTaskById', id);
     this.contractsCall.getTask.cacheCall(id);
   }
 
   @action.bound
   public fetchRewardById(id: number): void {
+    console.log('fetchRewardById', id);
     this.contractsCall.getReward.cacheCall(id);
   }
 
   @action.bound
   public fetchPartnerById(id: number): void {
+    console.log('fetchPartnerById', id);
     this.contractsCall.getPartnerByNumber.cacheCall(id);
   }
 
   @action.bound
   public fetchTokenBalance(address: string) : void {
+    console.log('fetchTokenBalance', address);
     if (web3.utils.isAddress(address)) {
       this.contractsCall.getTokenBalance.cacheCall(address);
     }
@@ -139,12 +140,14 @@ export class PointX {
 
   @action.bound
   public fetchRewardResultByUserAddress(rewardId: number, userAddress: string) : void {
+    console.log('fetchRewardResultByUserAddress', rewardId, userAddress);
+
     this.contractsCall.getRewardResultByAddress.cacheCall(rewardId, userAddress);
   }
 
   @action.bound
   public fetchTaskResultByUserAddress(taskId: number, userAddress: string) : void {
-    console.log(userAddress);
+    console.log('fetchTaskResultByUserAddress', taskId, userAddress);
     this.contractsCall.getTaskResultByAddress.cacheCall(taskId, userAddress);
   }
 
@@ -167,35 +170,31 @@ export class PointX {
   }
 
   @action.bound
-  public completeReward(id: number) : void {
-    this.contractsCall.completeReward.cacheSend(id, {from: this.store.user.address});
+  async completeReward(id: number) : Promise<void> {
+    const { address, privKey } = await this.getUserCredentials();
+    const res = await request({
+      endpoint: '/completeReward',
+      opts: { method: 'POST' },
+      payload: { id, address, privKey }
+    });
+    console.log('Result is over here, look over ->', res);
   }
 
   @action.bound
-  async completeTask(id: number, answersArr: string[] | number[]) : void {
-    // console.log('complete ->', this.store, this.store.user.address);
-    // this.contractsCall.completeTask.cacheSend(id, '0x1', {from: '0x99b6d09a4626c89a817d1866733f4de3931bf96a'});
-
-    const data = this.contractsCall.completeTask(id, '0x1').encodeABI();
-
-
-    const tx = {
-      gas: 8000000,
-      nonce: await web3.eth.getTransactionCount('0x99b6d09a4626c89a817d1866733f4de3931bf96a'),
-      from: '0x99b6d09a4626c89a817d1866733f4de3931bf96a',
-      to: '0xaca5Ace317c540Af61Ab0873142ed4f4E4470a10',
-      data
-    };
-
-    const signed = await web3.eth.accounts.signTransaction(tx, '0x2dabb032e6b3117a09256b9b3560c7231a5fc0df4c4d37b827c222a7b5114a56');
-    const tx_ = await web3.eth.sendSignedTransaction(signed.rawTransaction);
-    console.log(tx_);
+  async completeTask(id: number, answers: string[] | number[]) : Promise<void> {
+    const { address, privKey } = await this.getUserCredentials();
+    const res = await request({
+      endpoint: '/completeTask',
+      opts: { method: 'POST' },
+      payload: { id, answers, address, privKey }
+    });
+    console.log('Result is over here, look over ->', res);
   }
 
   @action.bound
   public fetchPartnerByAddress(address: string): void {
+    console.log('fetchPartnerByAddress', address);
     this.contractsCall.getPartnerByAddress.cacheCall(address);
-
   }
 
   @action.bound
@@ -245,7 +244,7 @@ export class PointX {
     if (!isEmpty(partners)) {
       const keys = Object.keys(partners);
       keys.map(e => {
-        if (partners[e].value[0] !== '') {
+        if (partners[e] && partners[e].value && partners[e].value[0] !== '') {
           const [
             name,
             description,
@@ -358,6 +357,8 @@ export class PointX {
             number
           ] = rewards[e].value;
 
+          const partner = this.selectPartnerByOwner(owner);
+
           results.push({
             caption,
             description,
@@ -368,7 +369,7 @@ export class PointX {
             totalAmount,
             resultsAmount,
             number,
-            partner: this.partnersList && this.selectPartnerByOwner(owner),
+            partner
           });
         }
       })
@@ -413,6 +414,6 @@ export class PointX {
       const [key] = Object.keys(partnersCount);
       return parseInt(partnersCount[key] && partnersCount[key].value);
     }
-    return 3;
+    return 10;
   }
 }

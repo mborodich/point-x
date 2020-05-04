@@ -15,7 +15,8 @@ module.exports = {
         return new HDWalletProvider("dust turn excite exercise space light now divert idle include bird arrow", "https://rinkeby.infura.io/v3/" + process.env.INFURA_TOKEN);
       },
       from: '0x77cbfd20156d5a3da59af105853b3279abf84fb8',
-      network_id: 4
+      network_id: 4,
+      gas: 999999999
     }
   },
 };

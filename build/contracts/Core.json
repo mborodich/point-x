@@ -33299,10 +33299,428 @@
       },
       "address": "0x18C8b2c4Bbf701CC25076969A22220822a72d01E",
       "transactionHash": "0xa5e142be68de54dc641daf0aeb2b6809e1fe566b840894e757c740d487414785"
+    },
+    "5777": {
+      "events": {
+        "0xfa0b914ee8a390a3031505d988368f8ba1592f1a2fefb20447858ec91d0cd892": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "AcceptReward",
+          "type": "event"
+        },
+        "0x2ca8d8b2ebfa0f7ff682ecba96d545fb37dfc0165fd1017b71b1bba6a492ab1a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "AcceptTask",
+          "type": "event"
+        },
+        "0x99ad91c72e4fcc0a37d0481b982aec5c0c78491d30d39e65338bec15fa9cc4b7": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "AddAdmin",
+          "type": "event"
+        },
+        "0x627b6e79efa507d7a350bdc0b7739582863a8b349b18ebe3854e0b81defb76f6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "string",
+                  "name": "name",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "description",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "logo",
+                  "type": "string"
+                },
+                {
+                  "internalType": "address",
+                  "name": "account",
+                  "type": "address"
+                }
+              ],
+              "indexed": false,
+              "internalType": "struct Core.NewPartner",
+              "name": "partner",
+              "type": "tuple"
+            }
+          ],
+          "name": "AddPartner",
+          "type": "event"
+        },
+        "0xa2b2d504cf91d423834b650ca526e4def7b6ba4041a2921bdb2d4a540c80aef9": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "string",
+                  "name": "caption",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "description",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "image",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalAmount",
+                  "type": "uint256"
+                }
+              ],
+              "indexed": false,
+              "internalType": "struct Core.NewReward",
+              "name": "reward",
+              "type": "tuple"
+            }
+          ],
+          "name": "AddReward",
+          "type": "event"
+        },
+        "0x4350fc20c814f752605781376499c06b316363a19b4db42feaae50520e87532f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "string",
+                  "name": "caption",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "description",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "image",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint8",
+                  "name": "itemType",
+                  "type": "uint8"
+                },
+                {
+                  "internalType": "bytes",
+                  "name": "data",
+                  "type": "bytes"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "value",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalAmount",
+                  "type": "uint256"
+                }
+              ],
+              "indexed": false,
+              "internalType": "struct Core.NewTask",
+              "name": "task",
+              "type": "tuple"
+            }
+          ],
+          "name": "AddTask",
+          "type": "event"
+        },
+        "0xe8a11072dbade6f6a8c7f24824c31000d4d22e3600cb98c97b9555a053d4bd8a": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "partnerAddress",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "amount",
+              "type": "uint256"
+            }
+          ],
+          "name": "AddTokenBalance",
+          "type": "event"
+        },
+        "0x3991f82e9de7452553a54f55bfb32267468069a5c08dd6eb29f7ab9e99b697d6": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "AddUser",
+          "type": "event"
+        },
+        "0x79331edcabcaf52ab829c565c36feac85a28afc9977acf87ea3628950c03568d": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "CompleteReward",
+          "type": "event"
+        },
+        "0x8db4b00ff8d67a0fc0faa3f7710b55a9098bfd22683a3fe794c78b94c401b0d8": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "id",
+              "type": "uint256"
+            }
+          ],
+          "name": "CompleteTask",
+          "type": "event"
+        },
+        "0xd841bf291dcc5c024023865714840caa77fb1fd79f65cffa14384d214cf7622f": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            }
+          ],
+          "name": "IncreaseContractEthBalance",
+          "type": "event"
+        },
+        "0x31af1653617c70c1b02b3b109639c6d177e5724587fb4d46b7f2489c89f91f87": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address payable",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "IncreaseUserEthBalance",
+          "type": "event"
+        },
+        "0x148da362aaafc6bbf0e0b77d62428bcd324bcf9785839aa07881d6c78d295df1": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "RemoveAdmin",
+          "type": "event"
+        },
+        "0x2fbf043b3496ffa4fee9402ff8bd239c1d7870465d0d095438df831b81e0defb": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "tokenAddress",
+              "type": "address"
+            }
+          ],
+          "name": "SetToken",
+          "type": "event"
+        },
+        "0x1b94261406b3b1713d79e79bf86093c8843a90ce8a8c467a094565ae87774f30": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address payable",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "UnlockRewardsForUser",
+          "type": "event"
+        },
+        "0x5d5e2134d36e8b2bf0494aaa75eef95487a0a634b4a9435ea9da8255f73da290": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address payable",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "UnlockTasksForUser",
+          "type": "event"
+        },
+        "0x66ac4a4a53e79c72196c09d92a0f982acbf04303fb693fa140d393b714f1dba5": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "caller",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "acc",
+              "type": "address"
+            }
+          ],
+          "name": "UpgradeAdmin",
+          "type": "event"
+        }
+      },
+      "links": {
+        "RolesLib": "0xac3B8D5C9929ec8c72b35C1F144b41184A273863"
+      },
+      "address": "0xb8A596cE2E7Be626aB79ef0dcb1cc34581115258",
+      "transactionHash": "0x2ccceb7fad6827341672240d66d8aaae4ea0d23a39ba8faa511ca6d8a226eaff"
     }
   },
   "schemaVersion": "3.0.23",
-  "updatedAt": "2020-05-02T04:40:59.487Z",
+  "updatedAt": "2020-05-04T18:25:11.367Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {}

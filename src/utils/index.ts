@@ -1,10 +1,30 @@
 import dayjs from 'dayjs';
+// @ts-ignore
+import bip39 from 'react-native-bip39';
 import relativeTimePlugin from 'dayjs/plugin/relativeTime';
+import hdKey from "ethereumjs-wallet/hdkey";
 
 dayjs.extend(relativeTimePlugin);
 
 const timeToX = (v: number | Date | string) => dayjs().to(v);
 
+
+const getCredentialsFromMnemonic = async (mnemonics: string) : Promise<any> => {
+  if (bip39.validateMnemonic(mnemonics)) {
+    const seed = await bip39.mnemonicToSeed(mnemonics);
+    const hdwallet = hdKey.fromMasterSeed(seed);
+    const path = "m/44'/60'/0'/0/0";
+    const wallet = hdwallet.derivePath(path).getWallet();
+    const address = `0x${wallet.getAddress().toString('hex')}`;
+    const privKey = wallet.getPrivateKeyString();
+    const pubKey = wallet.getPublicKeyString();
+    return {
+      address,
+      privKey,
+      pubKey
+    }
+  } else return undefined;
+};
 
 const calcRest = (rest: number, total: number) : number =>
   Math.round((rest / total) * 100);
@@ -34,5 +54,6 @@ export {
   calcRest,
   isEmpty,
   timeToX,
-  request
+  request,
+  getCredentialsFromMnemonic
 }

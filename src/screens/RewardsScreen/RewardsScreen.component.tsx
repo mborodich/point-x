@@ -64,7 +64,8 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
           navigation={this.props.navigation}
           rewards={pointX.rewardsList}
           columnsNum={this.columnsNum}
-          count={pointX.rewardsCount}
+          rewardsCount={pointX.rewardsCount}
+          partnersCount={pointX.partnersCount}
           theme={this.props.theme}
         />
       </View>

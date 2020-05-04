@@ -2,7 +2,7 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { AirbnbRating, Tile, Text } from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
-import { TouchableOpacity, ScrollView, View, StyleSheet } from 'react-native';
+import {TouchableOpacity, ScrollView, View, StyleSheet, ActivityIndicator} from 'react-native';
 import * as Progress from 'react-native-progress';
 import { action, observable } from 'mobx';
 import CircularProgress from '@app/components/CircularProgress/CircularProgress.component'
@@ -28,6 +28,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
   @observable private _activeItem: number = 0;
   @observable private _activeStep: number = 0;
   @observable private _selected: number[] = [];
+  @observable private _isFetching: boolean = false;
   @observable private _isComplete: boolean = false;
   @observable private _taskData: any[] = [];
 
@@ -105,7 +106,7 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
             <TouchableOpacity onPress={this._selectAnswer}>
               <View style={[styles.button, color.accentBg, { ...!this._activeItem ? { opacity: 0.2 } : undefined }]}>
                 <Text style={[style.companyName, color.white]}>
-                  {this._totalSteps === this._activeStep ? 'Publish' : 'Next'}
+                  {this._isFetching ? <ActivityIndicator size='small' /> : this._totalSteps === this._activeStep ? 'Publish' : 'Next'}
                 </Text>
               </View>
             </TouchableOpacity>
@@ -218,8 +219,10 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
     }
 
     if (this._activeStep === this._totalSteps) {
+      this._isFetching = true;
       const { number : id } = this._taskDetails();
       await this.props.pointX.completeTask(id, this._selected);
+      this._isFetching = false;
     }
   }
 

@@ -38,21 +38,16 @@ export class RewardItemScreen extends React.PureComponent<Props> {
 
   @action.bound async getReward(): Promise<void> {
     this._isFetching = true;
-    setTimeout(() => {
-      this._isFetching = false;
-      this.qrCode = qrCode;
-    }, 2000);
-  }
-
-  async componentDidMount(): Promise<void> {
+    const { pointX, route } = this.props;
+    await pointX.completeReward(route.params.reward.number);
+    this._isFetching = false;
   }
 
   private navigateToDetail = () => {
     const reward = this.props.route.params.reward;
     const { partner } = reward;
     this.props.navigation.navigate('PartnerScreen', { partner });
-  }
-
+  };
 
 
   public render() {

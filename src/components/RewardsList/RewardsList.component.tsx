@@ -7,7 +7,8 @@ type TProps = {
   navigation: any;
   rewards: any[];
   columnsNum: number;
-  count: number;
+  rewardsCount: number;
+  partnersCount: number;
   theme: any;
 };
 
@@ -15,14 +16,14 @@ type TProps = {
 export const RewardsList = React.memo((props: TProps) => {
   const rewards = React.useMemo(() => {
     return props.rewards;
-  }, [props.count, props.rewards && props.rewards.length]);
+  }, [props.rewardsCount, props.partnersCount, props.rewards && props.rewards.length]);
 
-  const _keyExtractor = React.useCallback((_: any, index: any) => `${index}`, [props.count]);
+  const _keyExtractor = React.useCallback((_: any, index: any) => `${index}`, [props.rewardsCount, props.partnersCount]);
 
   const _renderRow = React.useCallback((data: {item: any;}) => {
       const Component = props.columnsNum === 1 ? RewardListItem : RewardGridItem;
       return <Component item={data.item} navigation={props.navigation} />
-  }, [props.columnsNum, props.count]);
+  }, [props.columnsNum, props.rewardsCount, props.partnersCount]);
 
   return (
     <FlatList

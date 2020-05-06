@@ -8,13 +8,15 @@ type TProps = {
   theme: any;
   count: number;
   onTaskClick: (task: any) => void;
+  onPartnerClick: (partner: any) => void;
+  navigation: any;
 };
 
 
 export const TasksList = React.memo((props: TProps) => {
-  const tasks = React.useMemo(() => {
-    return props.tasks;
-  }, [props.count, props.tasks && props.tasks.length]);
+  // const tasks = React.useMemo(() => {
+  //   return props.tasks;
+  // }, [props.count, props.tasks && props.tasks.length]);
 
   const _keyExtractor = React.useCallback((_: any, index: any) => `${index}`, [props.count]);
 
@@ -30,9 +32,11 @@ export const TasksList = React.memo((props: TProps) => {
       ] = task;
       return (
         <TaskListItem
-          task={{ caption, description, image, value, owner }}
+          task={{ caption, description, image, value, owner, partner: task && task[11] }}
           theme={props.theme}
           onClick={() => props.onTaskClick(task)}
+          onPartnerClick={props.onPartnerClick}
+          navigation={props.navigation}
         />
       )
     }
@@ -41,8 +45,8 @@ export const TasksList = React.memo((props: TProps) => {
 
   return (
     <FlatList
-      data={tasks}
-      extraData={tasks}
+      data={props.tasks}
+      extraData={props.tasks}
       keyExtractor={_keyExtractor}
       renderItem={_renderRow}
     />

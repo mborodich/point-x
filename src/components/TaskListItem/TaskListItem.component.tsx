@@ -9,9 +9,10 @@ type TProps = {
   task: Task;
   theme: { color: any; style: any; };
   onClick: () => void;
+  onPartnerClick: any;
 };
 
-export const TaskListItem = React.memo(({ task, theme, onClick } : TProps) : JSX.Element => {
+export const TaskListItem = React.memo(({ task, theme, onClick, onPartnerClick } : TProps) : JSX.Element => {
   const { style, color } = theme;
   return (
     <Observer>
@@ -29,7 +30,9 @@ export const TaskListItem = React.memo(({ task, theme, onClick } : TProps) : JSX
             </View>
             <View style={styles.containerRowRight}>
               <Text style={[style.companyName, color.title]}>{task.value}</Text>
-              <Text style={[style.caption2, color.gray3]}>{task.owner.substr(0, 7)}</Text>
+              <TouchableOpacity onPress={() => onPartnerClick(task && task.partner)}>
+                <Text style={[style.caption2, color.gray1]}>{task && task.partner && task.partner.name}</Text>
+              </TouchableOpacity>
               <Text style={[style.caption2, color.gray3]}>{task.expirationDate || '0 days left'}</Text>
             </View>
           </View>

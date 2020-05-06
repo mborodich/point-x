@@ -34,7 +34,8 @@ export class HistoryScreen extends React.PureComponent<HistoryScreenProps> {
         />
         <HistoryList
           history={this.props.pointX && this.props.pointX.userHistory}
-          count={this.props.pointX && this.props.pointX.historyCount} onClick={() => {}}
+          count={this.props.pointX && this.props.pointX.historyCount}
+          onClick={() => {}}
         />
       </View>
     )

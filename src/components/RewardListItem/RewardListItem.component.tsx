@@ -29,6 +29,10 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
     );
   }, [item]);
 
+  const partner = React.useMemo(() => {
+    return item && item.partner;
+  }, [item.partner]);
+
   return (
     <Observer>
       {() => (
@@ -52,8 +56,8 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
                 </Text>
               </View>
               <CompanyLabel
-                company={item.partner && item.partner.name}
-                logo={item.partner && item.partner.logo}
+                company={partner && partner.name}
+                logo={partner && partner.logo}
                 expiration={item && item.expirationDate}
                 onPress={onCompanyPress}
               />
@@ -69,7 +73,7 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
 const styles = StyleSheet.create({
   containerRow: {
     flexDirection: 'row',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#fff',
     padding: 16
   },
   containerRowMiddle: {

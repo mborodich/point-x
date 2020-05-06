@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import React from 'react';
-import { AirbnbRating, Tile, Text } from 'react-native-elements';
+import {AirbnbRating, Tile, Text, Header, Avatar, Header as Header_} from 'react-native-elements';
 import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import {TouchableOpacity, ScrollView, View, StyleSheet, ActivityIndicator} from 'react-native';
 import * as Progress from 'react-native-progress';
@@ -48,12 +48,14 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       itemType,
       totalAmount,
       resultsAmount,
+      partner
     } = this._taskDetails();
 
     const { title, rows } = this._decodeTaskDetails();
 
     return (
       <ScrollView>
+        {this._renderHeader(partner)}
         <View style={{ marginBottom: 60 }}>
           <View style={styles.container}>
             <Text style={[style.title, color.title]}>
@@ -147,8 +149,10 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       taskData,
       totalAmount,
       resultsAmount,
-      number
+      number,
+      partner
     ] = this._taskData;
+
     return {
       caption,
       description,
@@ -160,9 +164,10 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       taskData,
       totalAmount,
       resultsAmount,
-      number
-    }
-  }
+      number,
+      partner
+    };
+  };
 
   private _renderItems = (type, rows) => {
     if (type === "0") {
@@ -172,6 +177,34 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
     } else if (type === "1" || type === "2") {
       return this.taskRate()
     }
+  };
+
+  private _onPartnerPress = () => {
+    const { partner } = this._taskDetails();
+    this.props.navigation.navigate('PartnerScreen', { partner });
+  };
+
+  private _renderHeader = (partner) => {
+    // const { partner } = this._taskDetails();
+    return (
+      <Header
+        backgroundColor="#ffffff"
+        leftComponent={{ icon: 'chevron-left', type: 'material', onPress: this.props.navigation.goBack }}
+        centerComponent={
+          <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center'}} onPress={this._onPartnerPress}>
+            <Avatar
+              containerStyle={{ marginRight: 8 }}
+              source={{ uri: partner && partner.logo }}
+              rounded
+              size={32}
+            />
+            <Text style={{ fontSize: 16, fontWeight: 'normal', lineHeight: 19, color: '#333333' }}>
+              {partner && partner.name}
+            </Text>
+          </TouchableOpacity>
+        }
+      />
+    );
   };
 
   private taskRate() {
@@ -209,6 +242,13 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
   @action.bound
   async _selectAnswer() {
+    if (this._activeStep === this._totalSteps) {
+      this._isFetching = true;
+      const { number : id } = this._taskDetails();
+      await this.props.pointX.completeTask(id, this._selected);
+      this._isFetching = false;
+    }
+
     if (this._activeItem) {
       this._selected.push(this._activeItem);
       this._activeItem = 0;
@@ -216,13 +256,6 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
         this._isComplete = true;
       }
       this._activeStep++;
-    }
-
-    if (this._activeStep === this._totalSteps) {
-      this._isFetching = true;
-      const { number : id } = this._taskDetails();
-      await this.props.pointX.completeTask(id, this._selected);
-      this._isFetching = false;
     }
   }
 

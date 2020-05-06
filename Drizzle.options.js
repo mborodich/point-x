@@ -10,6 +10,7 @@ const {
 
 
 const options = {
+  syncAlways: true,
   contracts: [
     PointX
   ],
@@ -20,8 +21,8 @@ const options = {
   web3: {
     fallback: {
       type: 'ws',
-      // url: 'wss://rinkeby.infura.io/ws/v3/29bb7426ec9b45279ba484700144d617',
-      url: 'ws://127.0.0.1:7545'
+      url: 'wss://rinkeby.infura.io/ws/v3/29bb7426ec9b45279ba484700144d617',
+      // url: 'ws://127.0.0.1:7545'
     },
   },
 };

@@ -39,14 +39,9 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
   private _onTaskClick = (task: Task) =>
     this.props.navigation.navigate('TaskItemScreen', { task });
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const { pointX } = this.props;
-    // pointX.fetchTasksCount();
-    // pointX.fetchAllTasks();
-    // pointX.fetchRewardsCount();
-    // pointX.fetchAllRewards();
-    // pointX.fetchAllPartners();
-    // pointX.fetchPartnersCount();
+    await pointX.fetchTokenBalance();
   }
 
   @computed

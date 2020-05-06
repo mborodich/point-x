@@ -23,7 +23,7 @@ const TAB_COLOR = '#00aced';
 
 const TasksStack = function () {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator headerMode="none">
       <Stack.Screen
         name="TasksScreen"
         component={TasksScreen}

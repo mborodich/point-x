@@ -25,6 +25,11 @@ export class SettingsScreen extends React.Component<SettingsScreenProps> {
   @observable signOutModalVisible : boolean = false;
   private mock : string = `https://picsum.photos/100/100?random=1${Math.random()}`;
 
+  async componentDidMount(): Promise<void> {
+    const { pointX } = this.props;
+    await pointX.fetchUserHistory();
+  }
+
   private onMnemonicsClick = () => {
     return this.props.navigation.navigate("Mnemonics");
   };

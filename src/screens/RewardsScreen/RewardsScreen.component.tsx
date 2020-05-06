@@ -58,7 +58,7 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
         <Header
           rightComponent={this.renderSort()}
           centerComponent={HEADER}
-          backgroundColor="#F8F8F8"
+          backgroundColor="#fff"
         />
         <RewardsList
           navigation={this.props.navigation}
@@ -88,6 +88,6 @@ export class RewardsScreen extends React.Component<RewardsScreenProps> {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#F8F8F8'
+    backgroundColor: '#fff'
   }
 });

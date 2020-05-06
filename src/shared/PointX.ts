@@ -66,6 +66,8 @@ export class PointX {
     if (bip39.validateMnemonic(v)) {
       await AsyncStorage.setItem('@login', v);
       const { address, privKey, pubKey } = await getCredentialsFromMnemonic(v);
+
+      console.log('Address ->', address);
       return {
         address,
         privKey,
@@ -114,25 +116,22 @@ export class PointX {
 
   @action.bound
   public fetchTaskById(id: number): void {
-    console.log('fetchTaskById', id);
     this.contractsCall.getTask.cacheCall(id);
   }
 
   @action.bound
   public fetchRewardById(id: number): void {
-    console.log('fetchRewardById', id);
     this.contractsCall.getReward.cacheCall(id);
   }
 
   @action.bound
   public fetchPartnerById(id: number): void {
-    console.log('fetchPartnerById', id);
     this.contractsCall.getPartnerByNumber.cacheCall(id);
   }
 
   @action.bound
-  public fetchTokenBalance(address: string) : void {
-    console.log('fetchTokenBalance', address);
+  async fetchTokenBalance() : Promise<void> {
+    const { address } = await this.getUserCredentials();
     if (web3.utils.isAddress(address)) {
       this.contractsCall.getTokenBalance.cacheCall(address);
     }
@@ -140,8 +139,7 @@ export class PointX {
 
   @action.bound
   public fetchRewardResultByUserAddress(rewardId: number, userAddress: string) : void {
-    console.log('fetchRewardResultByUserAddress', rewardId, userAddress);
-
+    // console.log('fetchRewardResultByUserAddress', rewardId, userAddress);
     this.contractsCall.getRewardResultByAddress.cacheCall(rewardId, userAddress);
   }
 
@@ -152,21 +150,20 @@ export class PointX {
   }
 
   @action.bound
-  public fetchUserHistory() : void {
-    if (this.store.user.address && this.store.user.address !== '') {
-      const taskLength = this.tasksCount;
-      const rewardsLength = this.rewardsCount;
-      Array.from({ length: taskLength }, (_, i) => {
-        try { this.fetchTaskResultByUserAddress(i + 1, this.store.user.address) }
-        catch (error) {
+  async fetchUserHistory() : Promise<void> {
+    const { address } = await this.getUserCredentials();
+    this.fetchTaskResultByUserAddress(2, '0x0065a05a6e05f17869fe9f0daf65333ad17d7791');
+    const taskLength = this.tasksCount;
+    const rewardsLength = this.rewardsCount;
+    Array.from({ length: taskLength }, (_, i) => {
+      try { this.fetchTaskResultByUserAddress(i + 1, address) }
+      catch (error) {}
+    });
+    Array.from({ length: rewardsLength }, (_, i) => {
+      try { this.fetchRewardResultByUserAddress(i + 1, address) }
+      catch (error) {}
+    });
 
-        }
-      });
-      Array.from({ length: rewardsLength }, (_, i) => {
-        try { this.fetchRewardResultByUserAddress(i + 1, this.store.user.address) }
-        catch (error) {}
-      });
-    }
   }
 
   @action.bound
@@ -193,7 +190,7 @@ export class PointX {
 
   @action.bound
   public fetchPartnerByAddress(address: string): void {
-    console.log('fetchPartnerByAddress', address);
+    // console.log('fetchPartnerByAddress', address);
     this.contractsCall.getPartnerByAddress.cacheCall(address);
   }
 
@@ -208,10 +205,12 @@ export class PointX {
   @action.bound
   public fetchAllPartners(): void {
     const length = this.partnersCount;
-    Array.from({ length }, (_, i) => {
-      try { this.fetchPartnerById(i + 1); }
-      catch (e) { }
-    });
+
+    this.fetchPartnerById(1);
+    this.fetchPartnerById(2);
+    this.fetchPartnerById(3);
+    this.fetchPartnerById(4);
+    this.fetchPartnerById(5);
   }
 
   @action.bound
@@ -230,7 +229,10 @@ export class PointX {
       const keys = Object.keys(tasks);
       keys.map(e => {
         if (tasks[e].value[0] !== '') {
-          results.push(tasks[e].value);
+          const partner = this.selectPartnerByOwner(tasks[e].value[4]);
+          const memo = tasks[e].value;
+          memo.push(partner);
+          results.push(memo);
         }
       })
     }
@@ -298,8 +300,13 @@ export class PointX {
 
   @computed // todo: make cleaner and perfomance optimize
   public get userHistory() {
-    const rewardResults = this.contractsGet.fetchRewardResultByUserAddress;
-    const taskResults = this.contractsGet.fetchTaskResultByUserAddress;
+    const rewardResults = this.contractsGet.getRewardResultByAddress;
+    const taskResults = this.contractsGet.getTaskResultByAddress;
+
+    console.log('task len history ->', taskResults && taskResults.length);
+    console.log('reward len history ->', rewardResults && rewardResults.length);
+
+
     const historyResults : HistoryItem[] = [];
     if (rewardResults && !isEmpty(rewardResults)) {
       const keys = Object.keys(rewardResults);
@@ -313,7 +320,9 @@ export class PointX {
               name,
               description,
               value,
-              image
+              image,
+              id: rewardId,
+              type: 'reward'
             });
           }
         }
@@ -326,14 +335,19 @@ export class PointX {
           const [name, description, image, value] = this.selectTaskById(taskId);
           historyResults.push({
             date: '21 Nov',
+            type: 'task',
             name,
             description,
             image,
-            value
+            value,
+            taskId
           });
         }
       });
     }
+
+    console.log('len history ->', historyResults && historyResults.length);
+
     return historyResults.length > 0 ? historyResults : undefined;
   }
 
@@ -377,12 +391,13 @@ export class PointX {
     return results.length > 0 ? results : undefined;
   }
 
+
   @computed
   public get userBalance() {
     const userBalance = this.contractsGet.getTokenBalance;
     if (!isEmpty(userBalance)) {
       const [key] = Object.keys(userBalance);
-      return parseInt(userBalance[key].value)
+      return parseInt(userBalance[key].value);
     }
     return 0;
   }
@@ -394,7 +409,7 @@ export class PointX {
       const key = Object.keys(tasksCount)[0];
       return parseInt(tasksCount[key].value);
     }
-    return 10; // Here should be default minimal number of tasks, in that case we don't have to wait till it loaded
+    return 10;
   }
 
   @computed

@@ -12,7 +12,7 @@ type TProps = {
   onPartnerClick: any;
 };
 
-export const TaskListItem = React.memo(({ task, theme, onClick, onPartnerClick } : TProps) : JSX.Element => {
+export const TaskListItem = ({ task, theme, onClick, onPartnerClick } : TProps) : JSX.Element => {
   const { style, color } = theme;
   return (
     <Observer>
@@ -29,7 +29,10 @@ export const TaskListItem = React.memo(({ task, theme, onClick, onPartnerClick }
               <Text style={[style.caption2, color.gray3]}>{task.description && task.description.substr(0, 65)}...</Text>
             </View>
             <View style={styles.containerRowRight}>
-              <Text style={[style.companyName, color.title]}>{task.value}</Text>
+              <View style={{ alignItems: 'center' }}>
+                <Text style={[style.companyName, color.title]}>{task.value}</Text>
+                {task && task.completed ? <Text style={{ fontSize: 6, color: '#65C366' }}>completed</Text> : null}
+              </View>
               <TouchableOpacity onPress={() => onPartnerClick(task && task.partner)}>
                 <Text style={[style.caption2, color.gray1]}>{task && task.partner && task.partner.name}</Text>
               </TouchableOpacity>
@@ -41,7 +44,7 @@ export const TaskListItem = React.memo(({ task, theme, onClick, onPartnerClick }
       )}
     </Observer>
   )
-});
+};
 
 
 const styles = StyleSheet.create({

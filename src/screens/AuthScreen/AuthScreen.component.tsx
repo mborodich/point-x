@@ -59,7 +59,7 @@ export class LoginScreen extends React.Component<LoginScreenProps> {
   };
 
   async componentDidMount(): Promise<void> {
-    this.props.pointX.prefetchAll();
+    await this.props.pointX.prefetchAll();
     const carouselViewed = await AsyncStorage.getItem('@carouselViewed');
     const viewed = Boolean(carouselViewed) ? 1 : 0;
     if (viewed) {

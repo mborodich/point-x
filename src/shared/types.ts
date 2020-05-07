@@ -10,6 +10,7 @@ export type Reward = {
   number: number;
   expirationDate: number;
   partner: Partner;
+  completed: boolean;
 }
 
 export type HistoryItem = {
@@ -18,6 +19,8 @@ export type HistoryItem = {
   value: number;
   date: string;
   image: string;
+  type: 'reward' | 'task';
+  id: number;
 }
 
 export type User = {
@@ -52,5 +55,6 @@ export type Task = {
   totalAmount: number;
   resultsAmount: number;
   number: number;
+  completed: boolean;
   expirationDate?: string;
 };

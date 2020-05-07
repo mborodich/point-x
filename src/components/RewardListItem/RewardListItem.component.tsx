@@ -49,11 +49,16 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
               {_renderItemsLeft()}
             </View>
             <View style={styles.containerRowRight}>
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Text style={{ fontSize: 6, lineHeight: 7, textTransform: "uppercase", color: '#828282', alignSelf: 'flex-end' }}> pntx</Text>
-                <Text style={{ color: '#4F4F4F', fontSize: 14, lineHeight: 16 }}>
-                  {item.value}
-                </Text>
+              <View  style={{ alignItems: 'center' }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Text style={{ fontSize: 6, lineHeight: 7, textTransform: "uppercase", color: '#828282', alignSelf: 'flex-end' }}> pntx</Text>
+                  <Text style={{ color: '#4F4F4F', fontSize: 14, lineHeight: 16 }}>
+                    {item.value}
+                  </Text>
+                </View>
+                {
+                  item && item.completed ? <Text style={{ fontSize: 6, color: '#65C366' }}>completed</Text> : null
+                }
               </View>
               <CompanyLabel
                 company={partner && partner.name}

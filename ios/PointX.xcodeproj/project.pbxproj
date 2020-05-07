@@ -16,9 +16,7 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* PointXTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* PointXTests.m */; };
-		5B53F61824572D55001A24B8 /* SFProDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B53F61724572D55001A24B8 /* SFProDisplay.ttf */; };
 		AE87B7F9844D638C782BEF94 /* libPods-PointX-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 053477BC8E3547B012CDBE0D /* libPods-PointX-tvOS.a */; };
-		CADCE36E1B834D64A5335D37 /* SFProDisplay.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DC8670CC004C449FA1F0C78E /* SFProDisplay.ttf */; };
 		D1D7DBDF5D774A550C9EF440 /* libPods-PointXTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA5819F3D0BDBC50C01EFFF7 /* libPods-PointXTests.a */; };
 		D1E39D1557B8031785FBC5A1 /* libPods-PointX.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B5D2398CFCC0ABDDACF6CFB0 /* libPods-PointX.a */; };
 		F5D9C037589C5EA51DF947D1 /* libPods-PointX-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E2E36C0C1FA525A0573F1CD7 /* libPods-PointX-tvOSTests.a */; };
@@ -83,7 +81,7 @@
 		BB75843491D54787BE6545A4 /* Zocial.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Zocial.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Zocial.ttf"; sourceTree = "<group>"; };
 		C2EE152F48044DDF98210906 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		CA5819F3D0BDBC50C01EFFF7 /* libPods-PointXTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointXTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC8670CC004C449FA1F0C78E /* SFProDisplay.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SFProDisplay.ttf; path = ../src/assets/fonts/SFProDisplay.ttf; sourceTree = "<group>"; };
+		DC8670CC004C449FA1F0C78E /* SFProDisplay.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SFProDisplay.ttf; path = ../src/assets/fonts/SFProDisplay.ttf; sourceTree = "<group>"; };
 		E2E36C0C1FA525A0573F1CD7 /* libPods-PointX-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PointX-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -393,8 +391,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				5B53F61824572D55001A24B8 /* SFProDisplay.ttf in Resources */,
-				CADCE36E1B834D64A5335D37 /* SFProDisplay.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,13 +20,6 @@ export type PointXStore = {
 };
 
 export class PointX {
-  @observable public store : PointXStore = {
-    user: {
-      address: '',
-      pubKey: '',
-      privKey: ''
-    }
-  };
   private contractsCall: any;
   private contractsGet: any;
 
@@ -36,12 +29,13 @@ export class PointX {
   }
 
   @action.bound
-  public prefetchAll() {
+  public async prefetchAll() {
     this.fetchTasksCount();
     this.fetchRewardsCount();
-    this.fetchUsersCount();
+
+    await this.fetchUserHistory();
+
     this.fetchPartnersCount();
-    this.fetchAdminsCount();
     this.fetchAllTasks();
     this.fetchAllRewards();
     this.fetchAllPartners();
@@ -66,8 +60,7 @@ export class PointX {
     if (bip39.validateMnemonic(v)) {
       await AsyncStorage.setItem('@login', v);
       const { address, privKey, pubKey } = await getCredentialsFromMnemonic(v);
-
-      console.log('Address ->', address);
+      console.log('address ->', address);
       return {
         address,
         privKey,
@@ -100,18 +93,8 @@ export class PointX {
   }
 
   @action.bound
-  public fetchUsersCount(): void {
-    this.contractsCall.getUsersCount.cacheCall();
-  }
-
-  @action.bound
   public fetchPartnersCount(): void {
     this.contractsCall.getPartnersCount.cacheCall();
-  }
-
-  @action.bound
-  public fetchAdminsCount(): void {
-    this.contractsCall.getAdminsCount.cacheCall();
   }
 
   @action.bound
@@ -131,21 +114,19 @@ export class PointX {
 
   @action.bound
   async fetchTokenBalance() : Promise<void> {
-    const { address } = await this.getUserCredentials();
-    if (web3.utils.isAddress(address)) {
+    const { address = undefined } = await this.getUserCredentials();
+    if (address && web3.utils.isAddress(address)) {
       this.contractsCall.getTokenBalance.cacheCall(address);
     }
   }
 
   @action.bound
   public fetchRewardResultByUserAddress(rewardId: number, userAddress: string) : void {
-    // console.log('fetchRewardResultByUserAddress', rewardId, userAddress);
     this.contractsCall.getRewardResultByAddress.cacheCall(rewardId, userAddress);
   }
 
   @action.bound
   public fetchTaskResultByUserAddress(taskId: number, userAddress: string) : void {
-    console.log('fetchTaskResultByUserAddress', taskId, userAddress);
     this.contractsCall.getTaskResultByAddress.cacheCall(taskId, userAddress);
   }
 
@@ -169,28 +150,25 @@ export class PointX {
   @action.bound
   async completeReward(id: number) : Promise<void> {
     const { address, privKey } = await this.getUserCredentials();
-    const res = await request({
+    await request({
       endpoint: '/completeReward',
       opts: { method: 'POST' },
       payload: { id, address, privKey }
     });
-    console.log('Result is over here, look over ->', res);
   }
 
   @action.bound
   async completeTask(id: number, answers: string[] | number[]) : Promise<void> {
     const { address, privKey } = await this.getUserCredentials();
-    const res = await request({
+    await request({
       endpoint: '/completeTask',
       opts: { method: 'POST' },
       payload: { id, answers, address, privKey }
     });
-    console.log('Result is over here, look over ->', res);
   }
 
   @action.bound
   public fetchPartnerByAddress(address: string): void {
-    // console.log('fetchPartnerByAddress', address);
     this.contractsCall.getPartnerByAddress.cacheCall(address);
   }
 
@@ -202,10 +180,9 @@ export class PointX {
     });
   }
 
+
   @action.bound
   public fetchAllPartners(): void {
-    const length = this.partnersCount;
-
     this.fetchPartnerById(1);
     this.fetchPartnerById(2);
     this.fetchPartnerById(3);
@@ -229,14 +206,56 @@ export class PointX {
       const keys = Object.keys(tasks);
       keys.map(e => {
         if (tasks[e].value[0] !== '') {
-          const partner = this.selectPartnerByOwner(tasks[e].value[4]);
-          const memo = tasks[e].value;
-          memo.push(partner);
-          results.push(memo);
+          // const partner = this.selectPartnerByOwner(tasks[e].value[4]);
+          // // const completed = this.checkCompleted(parseInt(tasks[e].value[10]), 'task');
+          // const memo = tasks[e].value;
+          // memo.push(partner);
+          // // memo.push(completed || false);
+          results.push(tasks[e].value);
         }
       })
     }
     return results.length > 0 ? results : undefined;
+  }
+
+  @computed
+  public get tasksListWithCompleted() {
+    return this.tasksList && this.tasksList.map((i) => {
+      const id = i[10];
+
+      const [
+        caption,
+        description,
+        image,
+        value,
+        owner,
+        status,
+        itemType,
+        taskData,
+        totalAmount,
+        resultsAmount,
+        number
+      ] = i;
+
+      const completed = this.checkCompleted(id, 'task');
+      const partner = this.selectPartnerByOwner(owner);
+
+      return [
+        caption,
+        description,
+        image,
+        value,
+        owner,
+        status,
+        itemType,
+        taskData,
+        totalAmount,
+        resultsAmount,
+        number,
+        partner,
+        completed
+      ];
+    });
   }
 
   @computed
@@ -262,6 +281,14 @@ export class PointX {
   }
 
   @action.bound
+  public checkCompleted(id : any, type: 'reward' | 'task') : boolean {
+    const haveCompleted = this.userHistory && this.userHistory.find((i : HistoryItem) => {
+      return i.id === parseInt(id) && i.type === type;
+    });
+    return !!haveCompleted;
+  }
+
+  @action.bound
   public selectPartnerByOwner(owner: string) : Partner[] {
     return this.partnersList &&
       this.partnersList.find((i : Partner) => i.account === owner) || [];
@@ -283,14 +310,13 @@ export class PointX {
 
   @action.bound
   public selectTaskById(id: number) : any[] {
-    return this.tasksList &&
-      this.tasksList.find(i => i[10].id === id) // i[10] - task id
+    return this.tasksList && this.tasksList.find(i => i[10] == id) // i[10] - task id
   }
 
   @action.bound
   public selectRewardById(id: number) : Reward {
     return this.rewardsList &&
-      this.rewardsList.find((i: Reward) => i.number === id) // i[10] - task id
+      this.rewardsList.find((i: Reward) => i.number == id) // i[10] - task id
   }
 
   @computed
@@ -298,56 +324,53 @@ export class PointX {
     return (this.userHistory && this.userHistory.length) || 0;
   }
 
-  @computed // todo: make cleaner and perfomance optimize
+  @computed
   public get userHistory() {
     const rewardResults = this.contractsGet.getRewardResultByAddress;
     const taskResults = this.contractsGet.getTaskResultByAddress;
-
-    console.log('task len history ->', taskResults && taskResults.length);
-    console.log('reward len history ->', rewardResults && rewardResults.length);
-
 
     const historyResults : HistoryItem[] = [];
     if (rewardResults && !isEmpty(rewardResults)) {
       const keys = Object.keys(rewardResults);
       keys.map(e => {
         if (rewardResults[e].value && rewardResults[e].value[0] !== '' ) {
-          const [status, _, __, rewardId] = rewardResults[e].value;
+          const [, , status, rewardId] = rewardResults[e].value;
           if (status && parseInt(status) === 1) {
             const { caption : name, description, value, image } = this.selectRewardById(parseInt(rewardId));
             historyResults.push({
-              date: '21 Nov', // todo: Kirill should add dates to results
+              date: '21 Nov',
+              type: 'reward',
+              id: rewardId,
               name,
               description,
               value,
               image,
-              id: rewardId,
-              type: 'reward'
             });
           }
         }
       });
-    } else if (taskResults && !isEmpty(taskResults)) {
+    }
+    if (taskResults && !isEmpty(taskResults)) {
       const keys = Object.keys(taskResults);
       keys.map(e => {
         if (taskResults[e].value && taskResults[e].value[0] !== '' ) {
-          const taskId : number = parseInt(taskResults[e].value[3]);
-          const [name, description, image, value] = this.selectTaskById(taskId);
-          historyResults.push({
-            date: '21 Nov',
-            type: 'task',
-            name,
-            description,
-            image,
-            value,
-            taskId
-          });
+          const status = taskResults[e].value[2];
+          if (status && parseInt(status) > 0) {
+            const taskId : number = parseInt(taskResults[e].value[3]);
+            const [name, description, image, value] = this.selectTaskById(taskId) || [];
+            historyResults.push({
+              date: '21 Nov',
+              type: 'task',
+              id: taskId,
+              name,
+              description,
+              image,
+              value
+            });
+          }
         }
       });
     }
-
-    console.log('len history ->', historyResults && historyResults.length);
-
     return historyResults.length > 0 ? historyResults : undefined;
   }
 
@@ -370,9 +393,10 @@ export class PointX {
             resultsAmount,
             number
           ] = rewards[e].value;
+          const completed = this.checkCompleted(parseInt(number), 'reward');
+
 
           const partner = this.selectPartnerByOwner(owner);
-
           results.push({
             caption,
             description,
@@ -383,14 +407,14 @@ export class PointX {
             totalAmount,
             resultsAmount,
             number,
-            partner
+            partner,
+            completed
           });
         }
       })
     }
     return results.length > 0 ? results : undefined;
   }
-
 
   @computed
   public get userBalance() {

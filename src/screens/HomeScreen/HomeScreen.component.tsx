@@ -42,6 +42,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
   async componentDidMount(): Promise<void> {
     const { pointX } = this.props;
     await pointX.fetchTokenBalance();
+    await this.props.pointX.prefetchAll();
   }
 
   @computed
@@ -59,7 +60,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
       <TasksList
         theme={this.props.theme}
         onTaskClick={this._onTaskClick}
-        tasks={pointX.tasksList}
+        tasks={pointX.tasksListWithCompleted}
         count={pointX.tasksCount}
       />
     );

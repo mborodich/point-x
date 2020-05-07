@@ -121,17 +121,17 @@ contract PointX {
 		return Getters.getReward(core, id);
 	}
 
-    function getRewardResultByNumber(uint id, uint num) external view returns(Core.RewardResult memory) {
-    	return Getters.getRewardResultByNumber(core, id, num);
-    }
+  function getRewardResultByNumber(uint id, uint num) external view returns(Core.RewardResult memory) {
+    return Getters.getRewardResultByNumber(core, id, num);
+  }
 
-    function getRewardResultByAddress(uint id, address acc) external view returns(Core.RewardResult memory) {
-    	return Getters.getRewardResultByAddress(core, id, acc);
-    }
+  function getRewardResultByAddress(uint id, address acc) external view returns(Core.RewardResult memory) {
+    return Getters.getRewardResultByAddress(core, id, acc);
+  }
 
-    function getRewardsCount() public view returns(uint) {
-    	return Getters.getRewardsCount(core);
-    }
+  function getRewardsCount() public view returns(uint) {
+    return Getters.getRewardsCount(core);
+  }
 
 
 	// --------------------------- TASK ---------------------------
@@ -151,13 +151,13 @@ contract PointX {
 		return Getters.getTask(core, id);
 	}
 
-    function getTaskResultByNumber(uint id, uint num) external view returns(Core.TaskResult memory) {
-    	return Getters.getTaskResultByNumber(core, id, num);
-    }
+  function getTaskResultByNumber(uint id, uint num) external view returns(Core.TaskResult memory) {
+    return Getters.getTaskResultByNumber(core, id, num);
+  }
 
-    function getTaskResultByAddress(uint id, address acc) external view returns(Core.TaskResult memory) {
-    	return Getters.getTaskResultByAddress(core, id, acc);
-    }
+  function getTaskResultByAddress(uint id, address acc) external view returns(Core.TaskResult memory) {
+    return Getters.getTaskResultByAddress(core, id, acc);
+  }
 
 	function getTasksCount() public view returns(uint) {
 		return Getters.getTasksCount(core);

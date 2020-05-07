@@ -30,9 +30,9 @@ export class TasksScreen extends React.Component<dataStoreProps> {
           backgroundColor="#fff"
         />
         <TasksList
-          tasks={pointX.tasksList}
+          tasks={pointX.tasksListWithCompleted}
           theme={this.props.theme}
-          count={pointX.rewardsList}
+          count={pointX.tasksCount}
           onTaskClick={this._onTaskClick}
           onPartnerClick={this._onPartnerClick}
           navigation={this.props.navigation}

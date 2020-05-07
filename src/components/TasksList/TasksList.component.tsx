@@ -30,9 +30,21 @@ export const TasksList = React.memo((props: TProps) => {
         value,
         owner,
       ] = task;
+
+      const partner = task && task[11];
+      const completed = task && task[12];
+
       return (
         <TaskListItem
-          task={{ caption, description, image, value, owner, partner: task && task[11] }}
+          task={{
+            partner,
+            completed,
+            caption,
+            description,
+            image,
+            value,
+            owner
+          }}
           theme={props.theme}
           onClick={() => props.onTaskClick(task)}
           onPartnerClick={props.onPartnerClick}
@@ -41,7 +53,7 @@ export const TasksList = React.memo((props: TProps) => {
       )
     }
     return undefined;
-  }, [props.count]);
+  }, [props.count, props.tasks]);
 
   return (
     <FlatList

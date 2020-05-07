@@ -46,6 +46,7 @@ export class PointX {
     const mnemonics = await AsyncStorage.getItem('@login');
     if (mnemonics && bip39.validateMnemonic(mnemonics)) {
       const { address, privKey, pubKey } = await getCredentialsFromMnemonic(mnemonics);
+      console.log('User address ->', address);
       return {
         address,
         privKey,

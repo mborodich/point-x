@@ -4,8 +4,9 @@ import {AirbnbRating, Tile, Text, Header, Avatar, Header as Header_} from 'react
 import { Drizzle, DrizzleProps } from '@app/shared/Drizzle';
 import {TouchableOpacity, ScrollView, View, StyleSheet, ActivityIndicator} from 'react-native';
 import * as Progress from 'react-native-progress';
-import { action, observable } from 'mobx';
-import CircularProgress from '@app/components/CircularProgress/CircularProgress.component'
+import {action, computed, observable} from 'mobx';
+import {calcRest} from "@app/utils";
+import {CircularProgress, ProgressBar} from '@app/components'
 import E16 from '@app/utils/E16';
 
 const LIST = Array.from({ length: 5 }, (_, i) => i);
@@ -53,6 +54,12 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
     const { title, rows } = this._decodeTaskDetails();
 
+    let progress = 0;
+    if (totalAmount && resultsAmount) {
+      progress = calcRest(totalAmount - resultsAmount, totalAmount);
+    }
+
+
     return (
       <ScrollView>
         {this._renderHeader(partner)}
@@ -68,10 +75,17 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <View style={{ marginTop: 30 }}>
                 <View style={{ flex: 1, flexDirection: 'row', width: 150, justifyContent: 'space-between' }}>
-                  <Text style={[style.caption2, color.title]}>Left {resultsAmount}</Text>
+                  <Text style={[style.caption2, color.title]}>Left {totalAmount - resultsAmount}</Text>
                   <Text style={[style.caption2, color.title]}>Total {totalAmount}</Text>
                 </View>
-                <Progress.Bar progress={0.0} width={150} color={colorsMap.accent} />
+                <ProgressBar
+                  progress={progress}
+                  withCaption={false}
+                  totalAmount={totalAmount}
+                  amountLeft={totalAmount - resultsAmount}
+                  unfilledColor="#E0E0E0"
+                  width={150}
+                />
               </View>
               <View>
                 <Text style={[style.title, color.gray1, { textAlign: 'right', marginTop: 12, marginBottom: 9 }]}>Price {value}</Text>
@@ -162,8 +176,8 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
       status,
       itemType,
       taskData,
-      totalAmount,
-      resultsAmount,
+      totalAmount: parseInt(totalAmount),
+      resultsAmount: parseInt(resultsAmount),
       number,
       partner
     };

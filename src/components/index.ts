@@ -18,6 +18,8 @@ export { Header } from './HeaderComponent/Header.component'
 export { MnemonicArea } from './MnemonicArea/MnemonicArea.component';
 export { TabViewWrapper } from './TabView/TabView.component';
 
+
+export { CircularProgress } from './CircularProgress/CircularProgress.component';
 export { HistoryItem } from './HistoryItem/HistoryItem.component';
 export { SettingsMenuItem } from './SettingsMenuItem/SettingsMenuItem.component';
 export { TasksList } from './TasksList/TasksList.component';

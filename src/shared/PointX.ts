@@ -228,8 +228,6 @@ export class PointX {
       copy.completed = completed;
       copy.partner = partner;
 
-      console.log('Copy _>', copy.completed);
-
       return copy;
     });
   }
@@ -352,11 +350,10 @@ export class PointX {
         if (rewardResults[e].value && rewardResults[e].value[0] !== '' ) {
           const [ , , status, rewardId] = rewardResults[e].value;
 
-          console.log(rewardResults[e].value);
 
           if (status && parseInt(status) > 0) {
             const reward = this.selectRewardById(parseInt(rewardId));
-            const { caption : name = null, description = null, value = null, image = null } = reward;
+            const { caption : name = null, description = null, value = null, image = null } = reward || {};
             historyResults.push({
               date: '21 Nov',
               type: 'reward',

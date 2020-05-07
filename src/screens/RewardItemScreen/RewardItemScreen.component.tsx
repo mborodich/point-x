@@ -79,16 +79,18 @@ export class RewardItemScreen extends React.PureComponent<Props> {
           <View style={styles.descContainer}>
             <View style={{ height: 20 }}>
               <ProgressBar
-                totalAmount={170}
-                amountLeft={50}
+                totalAmount={reward && reward.totalAmount}
+                amountLeft={
+                  (reward && reward.totalAmount) - (reward && reward.resultsAmount)
+                }
                 unfilledColor="#E0E0E0"
                 borderWidth={0}
                 width={95}
                 height={2}
               />
             </View>
-            <Text style={styles.price}>{reward.caption}</Text>
-            <Text style={styles.desc}>{reward.description}</Text>
+            <Text style={styles.price}>{reward && reward.caption}</Text>
+            <Text style={styles.desc}>{reward && reward.description}</Text>
           </View>
         </View>
         { this.qrCode ? <View style={styles.qrCodeContainer}>

@@ -2,7 +2,7 @@ import React from 'react'
 import Pie from 'react-native-pie'
 import { Text, View } from 'react-native';
 
-export default (props) => {
+export const CircularProgress = (props) => {
   const { activeStep, totalSteps, isComplete } = props;
   const percentage = 100 / totalSteps;
   const sections = Array.from({ length: totalSteps }, (_, i) => {

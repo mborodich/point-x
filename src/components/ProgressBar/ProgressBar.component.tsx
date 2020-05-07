@@ -9,11 +9,12 @@ import { PROGRESS_COLORS } from "../../utils/const";
 interface TProps extends Progress.BarPropTypes {
   totalAmount: number;
   amountLeft: number;
+  withCaption?: boolean;
   containerStyle?: object;
 }
 
 export const ProgressBar = (props: TProps) : JSX.Element => {
-  const { totalAmount, amountLeft, ...barProps } = props;
+  const { totalAmount, amountLeft, withCaption = true, ...barProps } = props;
 
 
   const percent = React.useMemo(() => {
@@ -31,7 +32,7 @@ export const ProgressBar = (props: TProps) : JSX.Element => {
 
   return (
     <View style={[styles.container, props.containerStyle]}>
-      <Text style={styles.textStyle}>{amountLeft} of {totalAmount} items left</Text>
+      { withCaption && <Text style={styles.textStyle}>{amountLeft} of {totalAmount} items left</Text> }
       <Progress.Bar
         progress={percent}
         color={color}

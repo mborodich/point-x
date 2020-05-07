@@ -3,7 +3,7 @@ import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { Observer } from 'mobx-react';
 import { Avatar, Text } from 'react-native-elements';
 import { ProgressBar, CompanyLabel } from '@app/components';
-import { Reward, Partner } from "@app/shared/types";
+import { Reward } from "@app/shared/types";
 
 type TProps = {
   item: Reward;
@@ -22,8 +22,8 @@ export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
           width={95}
           height={2}
           borderWidth={0}
-          totalAmount={item.totalAmount}
-          amountLeft={item.resultsAmount}
+          totalAmount={parseInt(item.totalAmount)}
+          amountLeft={parseInt(item.totalAmount) - parseInt(item.resultsAmount)}
         />
       </View>
     );

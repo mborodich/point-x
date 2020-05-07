@@ -355,7 +355,8 @@ export class PointX {
           console.log(rewardResults[e].value);
 
           if (status && parseInt(status) > 0) {
-            const { caption : name = null, description = null, value = null, image = null } = this.selectRewardById(parseInt(rewardId));
+            const reward = this.selectRewardById(parseInt(rewardId));
+            const { caption : name = null, description = null, value = null, image = null } = reward;
             historyResults.push({
               date: '21 Nov',
               type: 'reward',

@@ -133,7 +133,7 @@ export class PointX {
   @action.bound
   async fetchUserHistory() : Promise<void> {
     const { address } = await this.getUserCredentials();
-    this.fetchTaskResultByUserAddress(2, '0x0065a05a6e05f17869fe9f0daf65333ad17d7791');
+    this.fetchTaskResultByUserAddress(2, address);
     const taskLength = this.tasksCount;
     const rewardsLength = this.rewardsCount;
     Array.from({ length: taskLength }, (_, i) => {
@@ -355,6 +355,9 @@ export class PointX {
       keys.map(e => {
         if (taskResults[e].value && taskResults[e].value[0] !== '' ) {
           const status = taskResults[e].value[2];
+
+          console.log(taskResults[e].value);
+
           if (status && parseInt(status) > 0) {
             const taskId : number = parseInt(taskResults[e].value[3]);
             const [name, description, image, value] = this.selectTaskById(taskId) || [];

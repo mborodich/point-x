@@ -242,12 +242,6 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
 
   @action.bound
   async _selectAnswer() {
-    if (this._activeStep === this._totalSteps) {
-      this._isFetching = true;
-      const { number : id } = this._taskDetails();
-      await this.props.pointX.completeTask(id, this._selected);
-      this._isFetching = false;
-    }
 
     if (this._activeItem) {
       this._selected.push(this._activeItem);
@@ -256,6 +250,13 @@ export class TaskItemScreen extends React.Component<DrizzleProps> {
         this._isComplete = true;
       }
       this._activeStep++;
+    }
+
+    if (this._activeStep === this._totalSteps) {
+      this._isFetching = true;
+      const { number : id } = this._taskDetails();
+      await this.props.pointX.completeTask(id, this._selected);
+      this._isFetching = false;
     }
   }
 

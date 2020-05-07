@@ -220,6 +220,21 @@ export class PointX {
   }
 
   @computed
+  public get rewardListWithCompleted() {
+    return this.rewardsList && this.rewardsList.map((i) => {
+      const completed = this.checkCompleted(parseInt(i.number), 'reward');
+      const partner = this.selectPartnerByOwner(i.owner);
+      const copy = i;
+      copy.completed = completed;
+      copy.partner = partner;
+
+      console.log('Copy _>', copy.completed);
+
+      return copy;
+    });
+  }
+
+  @computed
   public get tasksListWithCompleted() {
     return this.tasksList && this.tasksList.map((i) => {
       const id = i[10];
@@ -284,7 +299,7 @@ export class PointX {
   @action.bound
   public checkCompleted(id : any, type: 'reward' | 'task') : boolean {
     const haveCompleted = this.userHistory && this.userHistory.find((i : HistoryItem) => {
-      return i.id === parseInt(id) && i.type === type;
+      return parseInt(i.id) === parseInt(id) && i.type === type;
     });
     return !!haveCompleted;
   }
@@ -335,16 +350,19 @@ export class PointX {
       const keys = Object.keys(rewardResults);
       keys.map(e => {
         if (rewardResults[e].value && rewardResults[e].value[0] !== '' ) {
-          const [, , status, rewardId] = rewardResults[e].value;
-          if (status && parseInt(status) === 1) {
-            const { caption : name, description, value, image } = this.selectRewardById(parseInt(rewardId));
+          const [ , , status, rewardId] = rewardResults[e].value;
+
+          console.log(rewardResults[e].value);
+
+          if (status && parseInt(status) > 0) {
+            const { caption : name = null, description = null, value = null, image = null } = this.selectRewardById(parseInt(rewardId));
             historyResults.push({
               date: '21 Nov',
               type: 'reward',
               id: rewardId,
+              value: -value,
               name,
               description,
-              value,
               image,
             });
           }
@@ -356,9 +374,6 @@ export class PointX {
       keys.map(e => {
         if (taskResults[e].value && taskResults[e].value[0] !== '' ) {
           const status = taskResults[e].value[2];
-
-          console.log(taskResults[e].value);
-
           if (status && parseInt(status) > 0) {
             const taskId : number = parseInt(taskResults[e].value[3]);
             const [name, description, image, value] = this.selectTaskById(taskId) || [];
@@ -397,10 +412,6 @@ export class PointX {
             resultsAmount,
             number
           ] = rewards[e].value;
-          const completed = this.checkCompleted(parseInt(number), 'reward');
-
-
-          const partner = this.selectPartnerByOwner(owner);
           results.push({
             caption,
             description,
@@ -410,9 +421,7 @@ export class PointX {
             status,
             totalAmount,
             resultsAmount,
-            number,
-            partner,
-            completed
+            number
           });
         }
       })

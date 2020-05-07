@@ -73,7 +73,7 @@ export class HomeScreen extends React.Component<HomeScreenProps> {
       <RewardsList
         navigation={this.props.navigation}
         theme={this.props.theme}
-        rewards={pointX.rewardsList}
+        rewards={pointX.rewardListWithCompleted}
         rewardsCount={pointX.rewardsCount}
         partnersCount={pointX.partnersCount}
         columnsNum={1}

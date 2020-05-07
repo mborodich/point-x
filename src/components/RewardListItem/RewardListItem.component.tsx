@@ -10,7 +10,7 @@ type TProps = {
   navigation: { navigate: any };
 };
 
-export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Element => {
+export const RewardListItem = ({ item, navigation }: TProps): JSX.Element => {
   const onCompanyPress = React.useCallback(() => navigation.navigate('PartnerScreen', { partner: item.partner }), [item.partner]);
   const onPress = React.useCallback(() => navigation.navigate('RewardItemScreen', { reward: item }), [item]);
 
@@ -57,7 +57,7 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
                   </Text>
                 </View>
                 {
-                  item && item.completed ? <Text style={{ fontSize: 6, color: '#65C366' }}>completed</Text> : null
+                  item && item.completed ? <Text style={{ fontSize: 6, color: '#65C366' }}>received</Text> : null
                 }
               </View>
               <CompanyLabel
@@ -73,7 +73,7 @@ export const RewardListItem = React.memo(({ item, navigation }: TProps): JSX.Ele
       )}
     </Observer>
   );
-});
+};
 
 const styles = StyleSheet.create({
   containerRow: {

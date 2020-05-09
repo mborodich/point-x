@@ -11,7 +11,11 @@ import {
 } from 'react-native-elements';
 import CardFlip from 'react-native-card-flip';
 import LinearGradient from 'react-native-linear-gradient';
+// @ts-ignore
+import QRCode from 'react-native-qrcode-svg';
 import {defaultGradient} from "@app/utils/const";
+
+
 
 const qrCode = require('@app/assets/img/white-qr-code.png');
 const cardBg = require('@app/assets/img/CardBg.png');
@@ -51,7 +55,16 @@ export class CardComponent extends React.PureComponent<TProps> {
           <LinearGradient style={styles.container} colors={defaultGradient}>
             <ImageBackground style={styles.bgContainer} source={cardBg} imageStyle={styles.bgImg}>
               <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                <Image style={styles.qrcode} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
+                <View style={{ marginLeft: 10, top: 10 }}>
+                  <QRCode
+                    value='http://point-x.io'
+                    size={32}
+                    enableLinearGradient={true}
+                    linearGradient={defaultGradient}
+                    color="white"
+                    // backgroundColor="#0D57CA"
+                  />
+                </View>
                 <Image style={styles.smallLogo} containerStyle={{ top: 10 }} source={smallLogo} />
               </View>
               <View style={{ marginLeft: 41 }}>
@@ -67,8 +80,15 @@ export class CardComponent extends React.PureComponent<TProps> {
         </TouchableOpacity>
         <TouchableOpacity style={styles.container} onPress={() => this.card.flip()}>
           <LinearGradient style={styles.container} colors={defaultGradient}>
-              <Image style={styles.qrCodeBack} containerStyle={{ left: 10, top: 10 }} source={qrCode} />
-              <View style={styles.actionsContainer}>
+            <View style={{ top: 10, left: 10 }}>
+              <QRCode
+                value='https://point-x.io'
+                size={88}
+                enableLinearGradient={true}
+                linearGradient={defaultGradient}
+              />
+            </View>
+            <View style={styles.actionsContainer}>
                 <View style={styles.copyContainer}>
                   <Text style={styles.publicKeyCaptionText}>Public Key</Text>
                   <Image
